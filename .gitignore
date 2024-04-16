@@ -1,3 +1,14 @@
 *.o
 *coding-style*
 myrpg
+*.out
+unit_tests
+*.log
+#*#
+*~
+.#*
+*ccore.*
+*.a
+*.gcno
+*.gcda
+compile_flags.txt
