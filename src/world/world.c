@@ -8,7 +8,7 @@
 #include "world.h"
 #include "entity.h"
 
-const int COLLISION_OPACITY = 15;
+const int COLLISION_OPACITY = 30;
 
 world_t init_world(void)
 {
