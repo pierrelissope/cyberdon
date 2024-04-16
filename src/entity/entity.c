@@ -80,14 +80,22 @@ void move_entity(Physical_Entity_t *entity, sfEvent *event, world_t *world)
     sfVector2f movement = {0, 0};
     sfFloatRect new_rect = {0};
 
-    if (event->key.code == sfKeyLeft)
+    if (event->key.code == sfKeyLeft) {
         movement.x = -10;
-    if (event->key.code == sfKeyRight)
-        movement.x = 10;
-    if (event->key.code == sfKeyUp)
-        movement.y = -10;
-    if (event->key.code == sfKeyDown)
         movement.y = 10;
+    }
+    if (event->key.code == sfKeyRight) {
+        movement.x = 10;
+        movement.y = -10;
+    }
+    if (event->key.code == sfKeyUp) {
+        movement.y = -10;
+        movement.x = -10;
+    }
+    if (event->key.code == sfKeyDown) {
+        movement.y = 10;
+        movement.x = 10;
+    }
     new_rect = sfRectangleShape_getGlobalBounds(entity->rect);
     new_rect.left += movement.x;
     new_rect.top += movement.y;
