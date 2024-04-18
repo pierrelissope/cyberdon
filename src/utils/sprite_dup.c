@@ -16,6 +16,8 @@ sfSprite **dup_sprites(sfTexture **array)
 
     for (int i = 0; array && array[i]; i++) {
         new_sprite = sfSprite_create();
+        if (!new_sprite)
+            return NULL;
         sfSprite_setTexture(new_sprite, array[i], sfTrue);
         append_ptr((void ***)&new_array, new_sprite, NULL);
     }

@@ -12,7 +12,9 @@ MAIN =		src/main.c
 MAINOBJ =	$(MAIN:.c=.o)
 
 SRC =		./src/entity/entity.c \
+			./src/entity/collision.c \
 			./src/game/game.c \
+			./src/game/event.c \
 			./src/utils/dict.c \
 			./src/utils/load_map.c \
 			./src/utils/pos_converter.c \
@@ -22,13 +24,15 @@ SRC =		./src/entity/entity.c \
 
 SRCOBJ =	$(SRC:.c=.o)
 
-LIBSRC =	lib/BASICS/my_printf.c \
+LIBSRC =	lib/freef/arr_flags.c \
+			lib/freef/free_flags.c \
+			lib/freef/free_real.c \
+			lib/BASICS/my_printf.c \
 			lib/BASICS/my_printf2.c \
 			lib/BASICS/my_atoi.c \
 			lib/BASICS/my_itoa.c \
 			lib/BASICS/my_put_nbr.c \
 			lib/BASICS/my_putstr.c\
-			lib/BASICS/my_strcat.c \
 			lib/BASICS/my_strcmp.c \
 			lib/BASICS/my_strcpy.c \
 			lib/BASICS/my_strlen.c \
@@ -46,7 +50,7 @@ LIBSRC =	lib/BASICS/my_printf.c \
 LIBOBJ =	$(LIBSRC:.c=.o)
 
 
-CFLAGS = 
+CFLAGS = -Wall -Wextra
 LIBFLAGS = -lcsfml-graphics -lcsfml-window -lcsfml-system
 CPPFLAGS = -iquote ./include
 
@@ -57,7 +61,7 @@ NAME =	myrpg
 
 all: $(NAME)
 
-$(NAME): $(LIBOBJ) $(MAINOBJ) $(SRCOBJ) 
+$(NAME): $(LIBOBJ) $(MAINOBJ) $(SRCOBJ)
 	$(CC) $(LIBOBJ) $(MAINOBJ) $(SRCOBJ) -o $(NAME) \
 	$(CFLAGS) $(LIBFLAGS) $(CPPFLAGS)
 
