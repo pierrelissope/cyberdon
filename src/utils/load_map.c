@@ -16,11 +16,17 @@ char **load_floor(int level)
     char **array = NULL;
     char *map_path = concat_mem((char *)LEVELS_MAP_PATHS, level_str, "/floor");
 
+    if (!map_path) {
+        freef("%a%a%a", map_path, level_str, buffer);
+        return NULL;
+    }
     buffer = open_file(map_path);
-    free(map_path);
-    free(level_str);
+    if (!buffer) {
+        freef("%a%a%a", map_path, level_str, buffer);
+        return NULL;
+    }
     array = my_str_to_all_array(buffer, "\n");
-    free(buffer);
+    freef("%a%a%a", map_path, level_str, buffer);
     return array;
 }
 
@@ -31,10 +37,16 @@ char **load_walls(int level)
     char **array = NULL;
     char *map_path = concat_mem((char *)LEVELS_MAP_PATHS, level_str, "/walls");
 
+    if (!map_path) {
+        freef("%a%a%a", map_path, level_str, buffer);
+        return NULL;
+    }
     buffer = open_file(map_path);
-    free(map_path);
-    free(level_str);
+    if (!buffer) {
+        freef("%a%a%a", map_path, level_str, buffer);
+        return NULL;
+    }
     array = my_str_to_all_array(buffer, "\n");
-    free(buffer);
+    freef("%a%a%a", map_path, level_str, buffer);
     return array;
 }

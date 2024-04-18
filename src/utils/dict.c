@@ -52,6 +52,6 @@ void dict_destroy(dict_t *dict, void (*custom_free)(void *))
         current_dict = current_dict->next;
         free(current_dict->key);
         custom_free(current_dict->value);
-        free(current_dict);
+        free(temp);
     }
 }

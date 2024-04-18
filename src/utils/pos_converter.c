@@ -18,7 +18,7 @@ sfVector2f isom_pos_converter(sfVector2f pos)
         CORNER_PADDING + pos.x * X_OFFSET - pos.y * X_OFFSET,
         CORNER_PADDING + pos.x * Y_OFFSET + pos.y * Y_OFFSET
     };
-    
+
     return newpos;
 }
 
@@ -28,6 +28,6 @@ sfVector2f isom_pos_converter_z(sfVector2f pos)
         CORNER_PADDING + pos.x * X_OFFSET - pos.y * X_OFFSET,
         CORNER_PADDING + pos.x * Y_OFFSET + pos.y * Y_OFFSET - Z_OFFSET
     };
-    
+
     return newpos;
 }

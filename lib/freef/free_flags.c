@@ -10,7 +10,8 @@
 
 void flaga(va_list arg)
 {
-
     char *to_free = va_arg(arg, void *);
-    free(to_free);
+
+    if (to_free != NULL)
+        free(to_free);
 }

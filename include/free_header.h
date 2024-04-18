@@ -11,6 +11,7 @@
 
 void flaga(va_list arg);
 void flagtabf(va_list arg);
+void freesprite(va_list arg);
 
 typedef struct flags {
     char c;
@@ -20,5 +21,6 @@ typedef struct flags {
 static const flagos_t flag_arr[] = {
     {'a', flaga},
     {'t', flagtabf},
+    {'s', freesprite},
     {0, NULL}
 };

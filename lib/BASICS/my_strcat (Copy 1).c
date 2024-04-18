@@ -41,7 +41,7 @@ static int fill_word(char *new_buff, va_list list)
     return offset;
 }
 
-char *my_strcat(size_t n_of_words, ...)
+char *strcat(size_t n_of_words, ...)
 {
     va_list list;
     va_list list_counter;

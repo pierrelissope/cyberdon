@@ -13,12 +13,12 @@
 #include <fcntl.h>
 #include <unistd.h>
 
+void freef(const char *format, ...);
 char *open_file(char *filepath);
 void *smalloc(size_t size);
 int my_strlen(char const *str);
 char *my_strcpy(char *dest, char const *src);
 char *my_strncpy(char *dest, char const *src, int n);
-char *my_strcat(char *dest, char const *src, int u);
 int my_putstr(char const *str);
 int my_put_nbr(long n);
 int display_var2(va_list args, char *str, int i);
