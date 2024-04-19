@@ -16,3 +16,4 @@ char **load_floor(int level);
 char **load_walls(int level);
 sfVector2f isom_pos_converter(sfVector2f pos);
 sfVector2f isom_pos_converter_z(sfVector2f pos);
+sfVector2f normalize(sfVector2f vector);

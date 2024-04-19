@@ -93,6 +93,7 @@ void run_game(game_t *game)
         (sfVideoMode){1920, 1080, 32}, "MyRPG", sfClose, NULL);
     sfRenderWindow_setFramerateLimit(game->window, 60);
     while (sfRenderWindow_isOpen(game->window)) {
+        move_entity(&(game->player), &event, &(game->world));
         if (handle_event(game, &event) == sfEvtClosed)
             return;
         update_entity(&game->player);

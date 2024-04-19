@@ -19,6 +19,7 @@ SRC =		./src/entity/entity.c \
 			./src/utils/load_map.c \
 			./src/utils/pos_converter.c \
 			./src/utils/sprite_dup.c \
+			./src/utils/vector.c \
 			./src/world/world.c \
 			./src/world/parsing.c
 
@@ -51,7 +52,7 @@ LIBOBJ =	$(LIBSRC:.c=.o)
 
 
 CFLAGS = -Wall -Wextra
-LIBFLAGS = -lcsfml-graphics -lcsfml-window -lcsfml-system
+LIBFLAGS = -lcsfml-graphics -lcsfml-window -lcsfml-system -lm
 CPPFLAGS = -iquote ./include
 
 CRITFLAGS = -lcriterion

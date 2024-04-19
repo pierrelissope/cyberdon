@@ -10,7 +10,6 @@
 int handle_event(game_t *game, sfEvent *event)
 {
     while (sfRenderWindow_pollEvent(game->window, event)) {
-        move_entity(&(game->player), event, &(game->world));
         if (event->type == sfEvtClosed)
             return sfEvtClosed;
     }

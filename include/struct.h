@@ -28,6 +28,7 @@ typedef struct Physical_Entity_s {
     int current_spritesheet;
     sfClock *clock;
     sfTime last_animation_update;
+    float velocity;
     int current_frame;
     int animation_cooldown;
 } physical_entity_t;
