@@ -21,6 +21,9 @@ SRC =		./src/entity/entity.c \
 			./src/utils/sprite_dup.c \
 			./src/world/world.c \
 			./src/world/parsing.c
+			./src/fight/fight_events.c
+			./src/fight/fight_display.c
+			./src/fight/fight_loop.c
 
 SRCOBJ =	$(SRC:.c=.o)
 

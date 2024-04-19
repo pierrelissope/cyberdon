@@ -1,0 +1,10 @@
+/*
+** EPITECH PROJECT, 2024
+** my rpg
+** File description:
+** fight movements
+*/
+
+#include "struct.h"
+
+bool jump(game_t *)
