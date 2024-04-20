@@ -31,17 +31,18 @@ static void setup_entity(physical_entity_t *entity, sfVector2f pos)
     sfRectangleShape_setFillColor(entity->rect, sfRed);
     entity->current_frame = 0;
     entity->animation_cooldown = ANIMATION_COOLDOWN;
-    sfSprite_setTextureRect(entity->sprite_sheets[0],
+    for (int i = 0; entity->sprite_sheets[i]; i++)
+        sfSprite_setTextureRect(entity->sprite_sheets[i],
             (sfIntRect){0, 0, FRAME_SIZE.x, FRAME_SIZE.y});
     entity->is_valid = true;
 }
 
-physical_entity_t init_entity(sfVector2f pos, char *type, dict_t *sheets_dict)
+physical_entity_t init_entity(sfVector2f pos, int type, dict_t *sheets_dict)
 {
     physical_entity_t entity = {0};
 
-    my_strcpy(entity.type, type);
-    entity.current_spritesheet = 0;
+    entity.type = type;
+    entity.current_spritesheet = 1;
     entity.sprite_sheets = dup_sprites(dict_get(sheets_dict, type));
     entity.clock = sfClock_create();
     entity.last_animation_update = sfClock_getElapsedTime(entity.clock);

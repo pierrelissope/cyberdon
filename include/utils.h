@@ -11,7 +11,7 @@
 #include <SFML/Window.h>
 #include "dict.h"
 
-sfSprite **dup_sprites(sfTexture **array);
+sfSprite **dup_sprites(dict_t *dict);
 char **load_floor(int level);
 char **load_walls(int level);
 sfVector2f isom_pos_converter(sfVector2f pos);

@@ -15,14 +15,14 @@
 
 typedef struct dict_s {
     bool is_valid;
-    char *key;
+    int key;
     void *value;
     struct dict_s *next;
 } dict_t;
 
 typedef struct Physical_Entity_s {
     bool is_valid;
-    char type[MAX_TYPE_SIZE];
+    int type;
     sfSprite **sprite_sheets;
     sfRectangleShape *rect;
     int current_spritesheet;
@@ -35,7 +35,7 @@ typedef struct Physical_Entity_s {
 
 typedef struct block_s {
     bool is_valid;
-    char type[MAX_TYPE_SIZE];
+    int type;
     sfSprite *sprite;
     sfFloatRect hitbox;
     sfRectangleShape *rect;
