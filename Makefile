@@ -51,9 +51,14 @@ LIBSRC =	lib/freef/arr_flags.c \
 
 LIBOBJ =	$(LIBSRC:.c=.o)
 
+SRC_TEST	=	$(addprefix tests/,\
+			redirect.c	\
+			)
 
-CFLAGS = -Wall -Wextra -g3
-LIBFLAGS = -lcsfml-graphics -lcsfml-window -lcsfml-system -lm
+OBJ_TEST	=	$(SRC_TEST:.c=.o)
+
+CFLAGS = -Wall -Wextra
+LDLIBS = -lcsfml-graphics -lcsfml-window -lcsfml-system -lm
 CPPFLAGS = -iquote ./include
 
 CRITFLAGS = -lcriterion
@@ -61,11 +66,13 @@ GCOVRFLAGS = --coverage
 
 NAME =	myrpg
 
+TEST_NAME	=	unit_tests
+
 all: $(NAME)
 
 $(NAME): $(LIBOBJ) $(MAINOBJ) $(SRCOBJ)
 	$(CC) $(LIBOBJ) $(MAINOBJ) $(SRCOBJ) -o $(NAME) \
-	$(CFLAGS) $(LIBFLAGS) $(CPPFLAGS)
+	$(CFLAGS) $(LDLIBS) $(CPPFLAGS)
 
 clean:
 	$(RM) $(MAINOBJ) $(SRCOBJ) $(LIBOBJ)
@@ -75,4 +82,28 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+debug: CFLAGS += -ggdb3
+debug: re
+
+asan: CC = clang -fsanitize=address
+asan: re
+
+$(TEST_NAME):	$(OBJ_TEST)
+	$(CC) -o $(TEST_NAME) $(CFLAGS) $(CPPFLAGS)	\
+	$(OBJ_TEST) $(SRC) $(LIBSRC) $(LDFLAGS) $(LDLIB)	\
+	$(CRITFLAGS) $(GCOVRFLAGS) $(LDLIBS)
+
+tests_run:	$(TEST_NAME)
+	./$(TEST_NAME)
+
+tests_clean:
+	$(RM) *.gcda
+	$(RM) *.gcno
+	$(RM) coverage*
+	$(RM) unit_tests
+
+coverage:
+	gcovr --html-details coverage && firefox coverage
+
+.PHONY: all clean fclean re debug \
+	tests_run coverage tests_clean
