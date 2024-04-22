@@ -8,11 +8,9 @@
 #include "entity.h"
 #include "world.h"
 #include "basics.h"
+#include "init_entity.h"
 
 const int ANIMATION_COOLDOWN = 200;
-
-const int PLAYER_IDLE_SPRITESHEET = 0;
-const int PLAYER_RUNNING_SPRITESHEET = 1;
 
 const int MAP_TILE_SIZE = 50;
 
@@ -37,20 +35,23 @@ static void setup_entity(physical_entity_t *entity, sfVector2f pos)
     entity->is_valid = true;
 }
 
-physical_entity_t init_entity(sfVector2f pos, int type, dict_t *sheets_dict)
+physical_entity_t *init_entity(sfVector2f pos, int type, char *name,
+    dict_t *sheets_dict)
 {
-    physical_entity_t entity = {0};
+    physical_entity_t *entity = malloc(sizeof(physical_entity_t));
 
-    entity.type = type;
-    entity.current_spritesheet = 1;
-    entity.sprite_sheets = dup_sprites(dict_get(sheets_dict, type));
-    entity.clock = sfClock_create();
-    entity.last_animation_update = sfClock_getElapsedTime(entity.clock);
-    entity.rect = sfRectangleShape_create();
-    entity.velocity = BASE_VELOCITY;
-    if (!entity.rect || !entity.clock || !entity.sprite_sheets)
+    memset(entity, 0, sizeof(physical_entity_t));
+    strcpy(entity->name, name);
+    entity->type = type;
+    entity->current_spritesheet = 1;
+    entity->sprite_sheets = dup_sprites(dict_get(sheets_dict, type));
+    entity->clock = sfClock_create();
+    entity->last_animation_update = sfClock_getElapsedTime(entity->clock);
+    entity->rect = sfRectangleShape_create();
+    entity->velocity = BASE_VELOCITY;
+    if (!entity->rect || !entity->clock || !entity->sprite_sheets)
         return entity;
-    setup_entity(&entity, pos);
+    setup_entity(entity, pos);
     return entity;
 }
 
@@ -119,15 +120,17 @@ void update_entity(physical_entity_t *entity)
     }
 }
 
-void draw_entity(physical_entity_t *entity, sfRenderWindow *window)
+void draw_entity(void *entity, sfRenderWindow *window)
 {
-    sfRenderWindow_drawRectangleShape(window, entity->rect, NULL);
-    sfSprite_setOrigin(entity->sprite_sheets[entity->current_spritesheet],
+    physical_entity_t *nentity = entity;
+
+    sfRenderWindow_drawRectangleShape(window, nentity->rect, NULL);
+    sfSprite_setOrigin(nentity->sprite_sheets[nentity->current_spritesheet],
         (sfVector2f){0, 0.95 * FRAME_SIZE.y});
-    sfSprite_setPosition(entity->sprite_sheets[entity->current_spritesheet],
+    sfSprite_setPosition(nentity->sprite_sheets[nentity->current_spritesheet],
         isom_pos_converter((sfVector2f){
-        sfRectangleShape_getPosition(entity->rect).x / MAP_TILE_SIZE,
-        sfRectangleShape_getPosition(entity->rect).y / MAP_TILE_SIZE}));
+        sfRectangleShape_getPosition(nentity->rect).x / MAP_TILE_SIZE,
+        sfRectangleShape_getPosition(nentity->rect).y / MAP_TILE_SIZE}));
     sfRenderWindow_drawSprite(window,
-        entity->sprite_sheets[entity->current_spritesheet], NULL);
+        nentity->sprite_sheets[nentity->current_spritesheet], NULL);
 }

@@ -8,15 +8,9 @@
 #pragma once
 
 #include "entity.h"
+#include "init_entity.h"
 
-typedef struct init_texture_s {
-    char *texture_path;
-    int texture_name;
-} init_texture_t;
-
-enum Entity {
-    PLAYER = 0,
-};
+#define MAX_SPRITE_SHEETS 100
 
 enum Tiles {
     GRASS_BLOCK = 0,
@@ -26,18 +20,38 @@ enum Tiles {
 };
 
 enum Spritesheets {
-    PLAYER_IDLE = 0,
-    PLAYER_RUNNING = 1
+    IDLE = 0,
+    RUNNING = 1
 };
 
-static const init_texture_t SHEETS_TEXTURE_INIT[] = {
+typedef struct init_texture_s {
+    char *texture_path;
+    int texture_name;
+} init_texture_t;
+
+static const init_texture_t PLAYER_TEXTURE_INIT[MAX_SPRITE_SHEETS] = {
     {
         .texture_path = "./assets/spritesheets/player/idle.png",
-        .texture_name = PLAYER_IDLE
+        .texture_name = IDLE
     },
     {
         .texture_path = "./assets/spritesheets/player/running.png",
-        .texture_name = PLAYER_RUNNING
+        .texture_name = RUNNING
+    },
+    {
+        .texture_path = NULL,
+        .texture_name = 0
+    },
+};
+
+static const init_texture_t VILLAGER_TEXTURE_INIT[MAX_SPRITE_SHEETS] = {
+    {
+        .texture_path = "./assets/spritesheets/player/idle.png",
+        .texture_name = IDLE
+    },
+    {
+        .texture_path = "./assets/spritesheets/player/running.png",
+        .texture_name = RUNNING
     },
     {
         .texture_path = NULL,
