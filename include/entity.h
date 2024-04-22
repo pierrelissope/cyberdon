@@ -17,9 +17,10 @@
 
 #define MAX_TYPE_SIZE 30
 
-physical_entity_t init_entity(sfVector2f pos, char *type, dict_t *sheets_dict);
+physical_entity_t *init_entity(sfVector2f pos, int type, char *name,
+    dict_t *sheets_dict);
 void update_entity(physical_entity_t *entity);
-void draw_entity(physical_entity_t *entity, sfRenderWindow *window);
+void draw_entity(void *entity, sfRenderWindow *window);
 void move_entity(physical_entity_t *entity, sfEvent *event, world_t *world);
 void destroy_entity(physical_entity_t *entity);
 

@@ -6,55 +6,43 @@
 */
 
 #include "game.h"
-
-const char *PLAYER_IDLE_SHEET = "./assets/spritesheets/player/idle.png";
-const char *PLAYER_RUNNING_SHEET = "./assets/spritesheets/player/running.png";
-
-const char *GRASS_PATH = "./assets/blocks/grass.png";
-const char *STONE_PATH = "./assets/blocks/stone.png";
-const char *STONE_WALL_PATH = "./assets/blocks/stone_wall.png";
-const char *WOOD_WALL_PATH = "./assets/blocks/wood_wall.png";
+#include "init_texture.h"
+#include "init_entity.h"
 
 const sfVector2f PLAYER_START_POS = {10, 110};
 
-static sfTexture **load_player_sheets(void)
+static dict_t *load_entity_sheets(const init_texture_t ENTIY_TEXTURE_INIT[])
 {
-    sfTexture **array = NULL;
-    sfTexture *idle = sfTexture_createFromFile(PLAYER_IDLE_SHEET, NULL);
-    sfTexture *running = sfTexture_createFromFile(PLAYER_RUNNING_SHEET, NULL);
+    dict_t *dict = NULL;
+    sfTexture *texture = NULL;
 
-    if (!idle || !running) {
-        sfTexture_destroy(idle);
-        sfTexture_destroy(running);
-        return NULL;
+    for (int i = 0; ENTIY_TEXTURE_INIT[i].texture_path; i++) {
+        texture = sfTexture_createFromFile
+            (ENTIY_TEXTURE_INIT[i].texture_path, NULL);
+        if (!texture)
+            return NULL;
+        dict_insert(&dict, ENTIY_TEXTURE_INIT[i].texture_name, texture);
     }
-    append_ptr((void ***)&array, idle, NULL);
-    if (!array)
-        return NULL;
-    append_ptr((void ***)&array, running, NULL);
-    if (!array)
-        return NULL;
-    return array;
+    return dict;
 }
 
 static int load_assets_dicts(game_t *game)
 {
-    sfTexture *grass = sfTexture_createFromFile(GRASS_PATH, NULL);
-    sfTexture *stone = sfTexture_createFromFile(STONE_PATH, NULL);
-    sfTexture *stone_wall = sfTexture_createFromFile(STONE_WALL_PATH, NULL);
-    sfTexture *wood_wall = sfTexture_createFromFile(WOOD_WALL_PATH, NULL);
-    sfTexture **texture_array = NULL;
+    sfTexture *texture = NULL;
 
-    if (!grass || !stone || !stone_wall || !wood_wall)
+    if (!dict_insert(&game->sheets_dict, PLAYER,
+        load_entity_sheets(PLAYER_TEXTURE_INIT)) ||
+        !dict_insert(&game->sheets_dict, VILLAGER,
+        load_entity_sheets(VILLAGER_TEXTURE_INIT)))
         return EXIT_FAILURE;
-    dict_insert(&game->tiles_dict, "grass", grass);
-    dict_insert(&game->tiles_dict, "stone", stone);
-    dict_insert(&game->tiles_dict, "stone_wall", stone_wall);
-    dict_insert(&game->tiles_dict, "wood_wall", wood_wall);
-    texture_array = load_player_sheets();
-    if (!texture_array)
-        return EXIT_FAILURE;
-    dict_insert(&game->sheets_dict, "player", texture_array);
+    for (int i = 0; TILES_TEXTURE_INIT[i].texture_path; i++) {
+        texture = sfTexture_createFromFile
+            (TILES_TEXTURE_INIT[i].texture_path, NULL);
+        if (!texture)
+            return EXIT_FAILURE;
+        dict_insert(&game->tiles_dict,
+            TILES_TEXTURE_INIT[i].texture_name, texture);
+    }
     return EXIT_SUCCESS;
 }
 
@@ -65,23 +53,24 @@ game_t init_game(void)
     if (load_assets_dicts(&game) == EXIT_FAILURE)
         return game;
     game.world = init_world();
-    game.player = init_entity(PLAYER_START_POS, "player", game.sheets_dict);
-    if (!game.player.is_valid)
+    game.player = init_entity(PLAYER_START_POS, PLAYER, "playername",
+        game.sheets_dict);
+    if (!game.player->is_valid)
         return game;
-    load_level(&game.world, 1, game.tiles_dict);
+    load_level(&game.world, 1, game.tiles_dict, game.sheets_dict);
     game.is_valid = true;
     return game;
 }
 
 void destroy_game(game_t *game)
 {
-    destroy_entity(&(game->player));
+    destroy_entity(game->player);
 }
 
 void draw_game(game_t *game)
 {
     sfRenderWindow_clear(game->window, sfBlack);
-    draw_level(game->window, &game->world, &game->player);
+    draw_level(game->window, &game->world, game->player);
     sfRenderWindow_display(game->window);
 }
 
@@ -93,9 +82,10 @@ void run_game(game_t *game)
         (sfVideoMode){1920, 1080, 32}, "MyRPG", sfClose, NULL);
     sfRenderWindow_setFramerateLimit(game->window, 60);
     while (sfRenderWindow_isOpen(game->window)) {
+        move_entity(game->player, &event, &(game->world));
         if (handle_event(game, &event) == sfEvtClosed)
             return;
-        update_entity(&game->player);
+        update_entity(game->player);
         draw_game(game);
     }
 }
