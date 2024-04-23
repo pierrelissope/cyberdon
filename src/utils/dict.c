@@ -7,14 +7,19 @@
 
 #include "dict.h"
 
-void dict_insert(dict_t **dict, int key, void *value)
+void *dict_insert(dict_t **dict, int key, void *value)
 {
     dict_t *new_head = malloc(sizeof(dict_t));
 
+    if (!new_head || !value) {
+        freef("%a%a", new_head, value);
+        return NULL;
+    }
     new_head->key = key;
     new_head->value = value;
     new_head->next = *dict;
     *dict = new_head;
+    return *dict;
 }
 
 bool dict_include(dict_t *dict, int key)

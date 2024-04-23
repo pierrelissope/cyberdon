@@ -20,6 +20,7 @@ SRC =		./src/entity/entity.c \
 			./src/utils/pos_converter.c \
 			./src/utils/sprite_dup.c \
 			./src/utils/vector.c \
+			./src/utils/sprite_sorting.c \
 			./src/world/world.c \
 			./src/world/parsing.c
 			./src/fight/fight_events.c

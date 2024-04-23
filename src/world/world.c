@@ -17,11 +17,12 @@ world_t init_world(void)
     return world;
 }
 
-int load_level(world_t *world, int level, dict_t *tiles)
+int load_level(world_t *world, int level, dict_t *tiles, dict_t *sheets_dict)
 {
     char **floor = load_floor(level);
     char **walls = load_walls(level);
 
+    world->entities = load_level_entities(level, sheets_dict);
     if (!floor || !walls) {
         freef("%t%t", floor, walls);
         return EXIT_FAILURE;
@@ -40,47 +41,75 @@ int load_level(world_t *world, int level, dict_t *tiles)
     return 0;
 }
 
-static void draw_walls_behind(world_t *world, sfFloatRect *player_bounds,
-    sfRenderWindow *window)
+static void draw_wall(void *wall, sfRenderWindow *window)
 {
-    sfFloatRect wall_bounds = {0};
+    block_t *new_wall = wall;
+
+    sfRenderWindow_drawSprite(window, new_wall->sprite, NULL);
+    sfRenderWindow_drawRectangleShape(window, new_wall->rect, NULL);
+}
+
+static void stack_walls(linked_objects_t ***array, world_t *world)
+{
+    sfFloatRect bounds = {0};
+    linked_objects_t *object = NULL;
 
     for (int i = 0; world->walls && world->walls[i]; i++) {
-        wall_bounds =
-            sfSprite_getGlobalBounds(world->walls[i]->sprite);
-        if (wall_bounds.top > player_bounds->top + COLLISION_OPACITY)
-            continue;
-        sfRenderWindow_drawSprite(window, world->walls[i]->sprite, NULL);
-        sfRenderWindow_drawRectangleShape(window, world->walls[i]->rect, NULL);
+        bounds = sfSprite_getGlobalBounds(world->walls[i]->sprite);
+        object = calloc(1, sizeof(linked_objects_t));
+        object->object = world->walls[i];
+        object->bounds = bounds;
+        object->fct = draw_wall;
+        append_ptr((void ***)array, object, NULL);
     }
 }
 
-static void draw_walls_front(world_t *world, sfFloatRect *player_bounds,
-    sfRenderWindow *window)
+static void stack_entities(linked_objects_t ***array, world_t *world)
 {
-    sfFloatRect wall_bounds = {0};
+    sfFloatRect bounds = {0};
+    linked_objects_t *object = NULL;
 
-    for (int i = 0; world->walls && world->walls[i]; i++) {
-        wall_bounds = sfSprite_getGlobalBounds(world->walls[i]->sprite);
-        if (wall_bounds.top <= player_bounds->top + COLLISION_OPACITY)
-            continue;
-        sfRenderWindow_drawSprite(window, world->walls[i]->sprite, NULL);
-        sfRenderWindow_drawRectangleShape(window, world->walls[i]->rect, NULL);
+    for (int i = 0; world->entities && world->entities[i]; i++) {
+        bounds = sfSprite_getGlobalBounds(world->entities[i]->sprite_sheets
+            [world->entities[i]->current_spritesheet]);
+        bounds.top += COLLISION_OPACITY;
+        object = calloc(1, sizeof(linked_objects_t));
+        object->object = world->entities[i];
+        object->bounds = bounds;
+        object->fct = draw_entity;
+        append_ptr((void ***)array, object, NULL);
     }
+}
+
+static void stack_player(linked_objects_t ***array, physical_entity_t *player)
+{
+    sfFloatRect bounds = {0};
+    linked_objects_t *object = NULL;
+
+    bounds = sfSprite_getGlobalBounds(player->sprite_sheets
+        [player->current_spritesheet]);
+    bounds.top += COLLISION_OPACITY;
+    object = calloc(1, sizeof(linked_objects_t));
+    object->object = player;
+    object->bounds = bounds;
+    object->fct = draw_entity;
+    append_ptr((void ***)array, object, NULL);
 }
 
 void draw_level(sfRenderWindow *window, world_t *world,
     physical_entity_t *player)
 {
-    sfFloatRect player_bounds =
-        sfSprite_getGlobalBounds
-        (player->sprite_sheets[player->current_spritesheet]);
+    linked_objects_t **stack = NULL;
 
     for (int i = 0; world->floor && world->floor[i]; i++) {
         sfRenderWindow_drawSprite(window, world->floor[i]->sprite, NULL);
         sfRenderWindow_drawRectangleShape(window, world->floor[i]->rect, NULL);
     }
-    draw_walls_behind(world, &player_bounds, window);
-    draw_entity(player, window);
-    draw_walls_front(world, &player_bounds, window);
+    stack_walls(&stack, world);
+    stack_entities(&stack, world);
+    stack_player(&stack, player);
+    quicksort(stack, 0, my_arraylen((void **)stack) - 1);
+    for (int i = 0; stack && stack[i]; i++)
+        stack[i]->fct(stack[i]->object, window);
+    free(stack);
 }
