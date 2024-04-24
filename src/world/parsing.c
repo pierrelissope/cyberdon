@@ -26,6 +26,8 @@ static int build_floor_rect(block_t *block, float x, float y)
 static int build_floor(block_t *block, world_t *world,
     int type, dict_t *tiles)
 {
+    sfVector2f origin = {0};
+
     block->type = type;
     block->sprite = sfSprite_create();
     if (!block->sprite) {
@@ -33,6 +35,9 @@ static int build_floor(block_t *block, world_t *world,
         return EXIT_FAILURE;
     }
     sfSprite_setTexture(block->sprite, dict_get(tiles, type), sfTrue);
+    origin = (sfVector2f){sfTexture_getSize(dict_get(tiles, type)).x / 2,
+        sfTexture_getSize(dict_get(tiles, type)).y - 2};
+    sfSprite_setOrigin(block->sprite, origin);
     sfSprite_setPosition(block->sprite, isom_pos_converter(block->pos));
     append_ptr((void ***)&(world->floor), block, NULL);
     if (!world->floor) {
@@ -83,6 +88,8 @@ static int build_walls_rect(block_t *block, float x, float y)
 static int build_wall(block_t *block, world_t *world,
     int type, dict_t *tiles)
 {
+    sfVector2f origin = {0};
+
     block->type = type;
     block->sprite = sfSprite_create();
     if (!block->sprite) {
@@ -90,6 +97,9 @@ static int build_wall(block_t *block, world_t *world,
         return EXIT_FAILURE;
     }
     sfSprite_setTexture(block->sprite, dict_get(tiles, type), sfTrue);
+    origin = (sfVector2f){sfTexture_getSize(dict_get(tiles, type)).x / 2,
+        sfTexture_getSize(dict_get(tiles, type)).y - 2};
+    sfSprite_setOrigin(block->sprite, origin);
     sfSprite_setPosition(block->sprite, isom_pos_converter_z(block->pos));
     append_ptr((void ***)&(world->walls), block, NULL);
     if (!world->walls) {

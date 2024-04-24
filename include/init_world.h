@@ -34,6 +34,14 @@ static const init_world_t FLOOR_BLOCK_INIT[] =
 static const init_world_t WALLS_BLOCK_INIT[] =
 {
     {
+        .c = 'c',
+        .texture_name = COLLISION_BLOCK
+    },
+    {
+        .c = '5',
+        .texture_name = BUILDING_1
+    },
+    {
         .c = '3',
         .texture_name = STONE_WALL
     },

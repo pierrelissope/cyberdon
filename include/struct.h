@@ -30,9 +30,9 @@ typedef struct Physical_Entity_s {
     bool is_valid;
     int type;
     char name[100];
-    sfSprite **sprite_sheets;
+    dict_t *sprite_sheets;
+    sfSprite *current_sprite_sheet;
     sfRectangleShape *rect;
-    int current_spritesheet;
     sfClock *clock;
     sfTime last_animation_update;
     float velocity;
@@ -59,6 +59,7 @@ typedef struct world_s {
 typedef struct game_s {
     bool is_valid;
     sfRenderWindow *window;
+    sfView *player_view;
     dict_t *sheets_dict;
     dict_t *tiles_dict;
     physical_entity_t *player;
