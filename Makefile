@@ -22,7 +22,8 @@ SRC =		./src/entity/entity.c \
 			./src/utils/vector.c \
 			./src/utils/sprite_sorting.c \
 			./src/world/world.c \
-			./src/world/parsing.c
+			./src/world/parsing.c \
+			./src/view/view.c
 
 SRCOBJ =	$(SRC:.c=.o)
 
