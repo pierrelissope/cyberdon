@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include <stddef.h>
+
 enum Entity {
     PLAYER = 0,
     VILLAGER = 1,

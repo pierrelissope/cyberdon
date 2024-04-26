@@ -4,7 +4,6 @@
 ** File description:
 ** loopers for fighting
 */
-
 #include "fight_entity.h"
 #include "fight_macros.h"
 #include "struct.h"

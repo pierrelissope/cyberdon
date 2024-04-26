@@ -8,6 +8,7 @@
 #include <SFML/Graphics/Types.h>
 #include <SFML/Graphics/View.h>
 #include "view.h"
+#include "utils.h"
 
 sfView *init_player_view(void)
 {

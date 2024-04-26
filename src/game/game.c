@@ -9,6 +9,8 @@
 #include "init_texture.h"
 #include "init_entity.h"
 #include "view.h"
+#include "dict.h"
+#include "world.h"
 
 const sfVector2f PLAYER_START_POS = {10, 110};
 
@@ -86,6 +88,7 @@ void run_game(game_t *game)
     game->window = sfRenderWindow_create(
         (sfVideoMode){1920, 1080, 32}, "MyRPG", sfClose, NULL);
     sfRenderWindow_setFramerateLimit(game->window, 60);
+    test(game);
     while (sfRenderWindow_isOpen(game->window)) {
         sfRenderWindow_setView(game->window, game->player_view);
         move_entity(game->player, &event, &(game->world));

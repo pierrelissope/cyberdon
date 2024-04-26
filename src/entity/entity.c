@@ -1,16 +1,15 @@
 /*
 ** EPITECH PROJECT, 2024
-** csfml_isom
+** my rpg
 ** File description:
-** entity
+** entities
 */
 
-#include <math.h>
+#include "dict.h"
+#include "string.h"
 #include "entity.h"
-#include "world.h"
-#include "basics.h"
 #include "init_texture.h"
-#include "init_entity.h"
+#include "utils.h"
 
 const int ANIMATION_COOLDOWN = 110;
 
@@ -33,7 +32,7 @@ static void setup_entity(physical_entity_t *entity, sfVector2f pos)
     sfRectangleShape_setFillColor(entity->rect, sfRed);
     entity->current_frame = 0;
     entity->animation_cooldown = ANIMATION_COOLDOWN;
-    
+
     for (;dict; dict = dict->next)
         sfSprite_setTextureRect(dict->value,
             (sfIntRect){0, 0, FRAME_SIZE.x, FRAME_SIZE.y});

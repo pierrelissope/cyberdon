@@ -5,8 +5,8 @@
 ** movement
 */
 
-#include "fight_entity.h"
 #include "fight.h"
+#include "fight_entity.h"
 #include <SFML/System/Clock.h>
 #include <SFML/System/Types.h>
 
