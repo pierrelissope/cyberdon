@@ -1,16 +1,15 @@
 /*
 ** EPITECH PROJECT, 2024
-** my rpg
+** myrpg
 ** File description:
-** event handling for fighting
+** event
 */
 
 #include "entity.h"
 
-int handle_fight_event(game_t *game, sfEvent *event)
+int handle_event(game_t *game, sfEvent *event)
 {
     while (sfRenderWindow_pollEvent(game->window, event)) {
-        move_entity(&(game->player), event, &(game->world));
         if (event->type == sfEvtClosed)
             return sfEvtClosed;
     }

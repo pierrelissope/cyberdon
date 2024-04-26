@@ -8,6 +8,7 @@
 #include "game.h"
 #include "init_texture.h"
 #include "init_entity.h"
+#include "view.h"
 
 const sfVector2f PLAYER_START_POS = {10, 110};
 
@@ -57,6 +58,9 @@ game_t init_game(void)
         game.sheets_dict);
     if (!game.player->is_valid)
         return game;
+    game.player_view = init_player_view();
+    if(!game.player_view)
+        return game;
     load_level(&game.world, 1, game.tiles_dict, game.sheets_dict);
     game.is_valid = true;
     return game;
@@ -64,7 +68,8 @@ game_t init_game(void)
 
 void destroy_game(game_t *game)
 {
-    destroy_entity(game->player);
+    if (game->player)
+        destroy_entity(game->player);
 }
 
 void draw_game(game_t *game)
@@ -82,10 +87,12 @@ void run_game(game_t *game)
         (sfVideoMode){1920, 1080, 32}, "MyRPG", sfClose, NULL);
     sfRenderWindow_setFramerateLimit(game->window, 60);
     while (sfRenderWindow_isOpen(game->window)) {
+        sfRenderWindow_setView(game->window, game->player_view);
         move_entity(game->player, &event, &(game->world));
         if (handle_event(game, &event) == sfEvtClosed)
             return;
         update_entity(game->player);
+        center_view(game->player_view, game->player->rect);
         draw_game(game);
     }
 }

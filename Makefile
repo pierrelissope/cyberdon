@@ -22,10 +22,15 @@ SRC =		./src/entity/entity.c \
 			./src/utils/vector.c \
 			./src/utils/sprite_sorting.c \
 			./src/world/world.c \
-			./src/world/parsing.c
-			./src/fight/fight_events.c
-			./src/fight/fight_display.c
-			./src/fight/fight_loop.c
+			./src/fight/fight_ai.c	\
+			./src/fight/fight_display.c	\
+			./src/fight/fight_entities.c	\
+			./src/fight/fight_loading.c	\
+			./src/fight/fight_events.c	\
+			./src/fight/fight_loop.c	\
+			./src/fight/fight_movement.c	\
+			./src/world/parsing.c	\
+			./src/view/view.c	\
 
 SRCOBJ =	$(SRC:.c=.o)
 
@@ -50,7 +55,8 @@ LIBSRC =	lib/freef/arr_flags.c \
 			lib/BASICS/my_strchr.c \
 			lib/BASICS/cleanstr.c \
 			lib/BASICS/isdigit.c \
-			lib/BASICS/open_file.c
+			lib/BASICS/open_file.c	\
+			lib/BASICS/my_strcat.c	\
 
 LIBOBJ =	$(LIBSRC:.c=.o)
 

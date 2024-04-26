@@ -8,7 +8,7 @@
 #include "world.h"
 #include "entity.h"
 
-const int COLLISION_OPACITY = 40;
+const int COLLISION_OPACITY = 60;
 
 world_t init_world(void)
 {
@@ -46,16 +46,19 @@ static void draw_wall(void *wall, sfRenderWindow *window)
     block_t *new_wall = wall;
 
     sfRenderWindow_drawSprite(window, new_wall->sprite, NULL);
-    sfRenderWindow_drawRectangleShape(window, new_wall->rect, NULL);
+    //sfRenderWindow_drawRectangleShape(window, new_wall->rect, NULL);
 }
 
 static void stack_walls(linked_objects_t ***array, world_t *world)
 {
     sfFloatRect bounds = {0};
     linked_objects_t *object = NULL;
+    float bottom = 0;
 
     for (int i = 0; world->walls && world->walls[i]; i++) {
         bounds = sfSprite_getGlobalBounds(world->walls[i]->sprite);
+        bottom = bounds.top + bounds.height;
+        bounds.top = bottom - 105;
         object = calloc(1, sizeof(linked_objects_t));
         object->object = world->walls[i];
         object->bounds = bounds;
@@ -70,8 +73,8 @@ static void stack_entities(linked_objects_t ***array, world_t *world)
     linked_objects_t *object = NULL;
 
     for (int i = 0; world->entities && world->entities[i]; i++) {
-        bounds = sfSprite_getGlobalBounds(world->entities[i]->sprite_sheets
-            [world->entities[i]->current_spritesheet]);
+        bounds = sfSprite_getGlobalBounds(
+            world->entities[i]->current_sprite_sheet);
         bounds.top += COLLISION_OPACITY;
         object = calloc(1, sizeof(linked_objects_t));
         object->object = world->entities[i];
@@ -86,8 +89,7 @@ static void stack_player(linked_objects_t ***array, physical_entity_t *player)
     sfFloatRect bounds = {0};
     linked_objects_t *object = NULL;
 
-    bounds = sfSprite_getGlobalBounds(player->sprite_sheets
-        [player->current_spritesheet]);
+    bounds = sfSprite_getGlobalBounds(player->current_sprite_sheet);
     bounds.top += COLLISION_OPACITY;
     object = calloc(1, sizeof(linked_objects_t));
     object->object = player;
@@ -103,7 +105,7 @@ void draw_level(sfRenderWindow *window, world_t *world,
 
     for (int i = 0; world->floor && world->floor[i]; i++) {
         sfRenderWindow_drawSprite(window, world->floor[i]->sprite, NULL);
-        sfRenderWindow_drawRectangleShape(window, world->floor[i]->rect, NULL);
+        //sfRenderWindow_drawRectangleShape(window, world->floor[i]->rect, NULL);
     }
     stack_walls(&stack, world);
     stack_entities(&stack, world);

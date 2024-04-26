@@ -8,6 +8,7 @@
 #pragma once
 
 #include <SFML/Graphics.h>
+#include <SFML/Graphics/Rect.h>
 #include <SFML/Window.h>
 #include <stdbool.h>
 
@@ -30,9 +31,9 @@ typedef struct Physical_Entity_s {
     bool is_valid;
     int type;
     char name[100];
-    sfSprite **sprite_sheets;
+    dict_t *sprite_sheets;
+    sfSprite *current_sprite_sheet;
     sfRectangleShape *rect;
-    int current_spritesheet;
     sfClock *clock;
     sfTime last_animation_update;
     float velocity;
@@ -59,8 +60,18 @@ typedef struct world_s {
 typedef struct game_s {
     bool is_valid;
     sfRenderWindow *window;
+    sfView *player_view;
     dict_t *sheets_dict;
     dict_t *tiles_dict;
     physical_entity_t *player;
     world_t world;
 } game_t;
+
+typedef struct annimation_s {
+    int id;
+    sfIntRect text_rec;
+    sfSprite *sprite_sheet;
+    int cooldown_mili;
+    int n_of_frames;
+    int current_frame;
+} annimation_t;
