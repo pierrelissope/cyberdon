@@ -111,38 +111,24 @@ void move_entity(physical_entity_t *entity, sfEvent *event, world_t *world)
     sfFloatRect new_rect = {0};
     sfVector2f mouvement = get_movement(event);
 
-    if (mouvement.x < 0 && mouvement.y == 0) {
-        entity->current_sprite_sheet = dict_get(entity->sprite_sheets, UP_LEFT);
-        sfSprite_setScale(entity->current_sprite_sheet, (sfVector2f){1, 1});
-    }
-    else if (mouvement.x == 0 && mouvement.y < 0) {
-        entity->current_sprite_sheet = dict_get(entity->sprite_sheets, UP_LEFT);
-        sfSprite_setScale(entity->current_sprite_sheet, (sfVector2f){-1, 1});
-    }
-    else if (mouvement.x == 0 && mouvement.y > 0) {
-        entity->current_sprite_sheet = dict_get(entity->sprite_sheets, DOWN_LEFT);
-        sfSprite_setScale(entity->current_sprite_sheet, (sfVector2f){1, 1});
-    }
-    else if (mouvement.x > 0 && mouvement.y == 0) {
-        entity->current_sprite_sheet = dict_get(entity->sprite_sheets, DOWN_LEFT);
-        sfSprite_setScale(entity->current_sprite_sheet, (sfVector2f){-1, 1});
-    }
-    else if (mouvement.x < 0 && mouvement.y > 0) {
-        entity->current_sprite_sheet = dict_get(entity->sprite_sheets, LEFT);
-        sfSprite_setScale(entity->current_sprite_sheet, (sfVector2f){1, 1});
-    }
-    else if (mouvement.x > 0 && mouvement.y < 0) {
-        entity->current_sprite_sheet = dict_get(entity->sprite_sheets, LEFT);
-        sfSprite_setScale(entity->current_sprite_sheet, (sfVector2f){-1, 1});
-    }
-    else if (mouvement.x < 0 && mouvement.y < 0) {
-        entity->current_sprite_sheet = dict_get(entity->sprite_sheets, UP);
-        sfSprite_setScale(entity->current_sprite_sheet, (sfVector2f){1, 1});
-    }
-    else if (mouvement.x > 0 && mouvement.y > 0) {
-        entity->current_sprite_sheet = dict_get(entity->sprite_sheets, DOWN);
-        sfSprite_setScale(entity->current_sprite_sheet, (sfVector2f){1, 1});
-    }
+    // if (mouvement.x < 0 && mouvement.y == 0)
+        // entity->current_sprite_sheet = dict_get(entity->sprite_sheets, UP_LEFT);
+    // else if (mouvement.x == 0 && mouvement.y < 0)
+        // entity->current_sprite_sheet = dict_get(entity->sprite_sheets, UP_RIGHT);
+    // else if (mouvement.x == 0 && mouvement.y > 0)
+        // entity->current_sprite_sheet = dict_get(entity->sprite_sheets, DOWN_LEFT);
+    // else if (mouvement.x > 0 && mouvement.y == 0)
+        // entity->current_sprite_sheet = dict_get(entity->sprite_sheets, DOWN_RIGHT);
+    // else if (mouvement.x < 0 && mouvement.y > 0)
+        // entity->current_sprite_sheet = dict_get(entity->sprite_sheets, LEFT);
+    // else if (mouvement.x > 0 && mouvement.y < 0)
+        // entity->current_sprite_sheet = dict_get(entity->sprite_sheets, RIGHT);
+    // else if (mouvement.x < 0 && mouvement.y < 0)
+        // entity->current_sprite_sheet = dict_get(entity->sprite_sheets, UP);
+    // else if (mouvement.x > 0 && mouvement.y > 0)
+        // entity->current_sprite_sheet = dict_get(entity->sprite_sheets, DOWN);
+    // else
+        // entity->current_sprite_sheet = dict_get(entity->sprite_sheets, IDLE);
     new_rect = sfRectangleShape_getGlobalBounds(entity->rect);
     new_rect.left += mouvement.x * entity->velocity;
     new_rect.top += mouvement.y * entity->velocity;

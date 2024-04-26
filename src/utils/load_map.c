@@ -8,8 +8,27 @@
 #include "basics.h"
 #include "entity.h"
 #include "init_entity.h"
+#include "init_texture.h"
 
 const char *LEVELS_MAP_PATHS = "./levels/";
+
+sfIntRect get_tile_rect(int name)
+{
+    for (int i = 0; TILES_TEXTURE_INIT[i].texture_path; i++) {
+        if (name == TILES_TEXTURE_INIT[i].texture_name)
+            return TILES_TEXTURE_INIT[i].rect;
+    }
+    return (sfIntRect){0, 0, 128, 128};
+}
+
+int get_tile_frames(int name)
+{
+    for (int i = 0; TILES_TEXTURE_INIT[i].texture_path; i++) {
+        if (name == TILES_TEXTURE_INIT[i].texture_name)
+            return TILES_TEXTURE_INIT[i].frame_nb;
+    }
+    return 1;
+}
 
 char **load_floor(int level)
 {

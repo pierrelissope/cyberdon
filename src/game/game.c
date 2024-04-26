@@ -84,13 +84,14 @@ void run_game(game_t *game)
     sfEvent event;
 
     game->window = sfRenderWindow_create(
-        (sfVideoMode){1920, 1080, 32}, "MyRPG", sfClose, NULL);
+        (sfVideoMode){1920, 1080, 32}, "MyRPG", sfClose | sfResize, NULL);
     sfRenderWindow_setFramerateLimit(game->window, 60);
     while (sfRenderWindow_isOpen(game->window)) {
         sfRenderWindow_setView(game->window, game->player_view);
-        move_entity(game->player, &event, &(game->world));
         if (handle_event(game, &event) == sfEvtClosed)
             return;
+        move_entity(game->player, &event, &(game->world));
+        animate_world(&(game->world));
         update_entity(game->player);
         center_view(game->player_view, game->player->rect);
         draw_game(game);

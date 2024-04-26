@@ -43,10 +43,15 @@ typedef struct Physical_Entity_s {
 typedef struct block_s {
     bool is_valid;
     int type;
+    int frame_nb;
+    int current_frame;
+    sfIntRect sprite_rect;
     sfSprite *sprite;
     sfFloatRect hitbox;
     sfRectangleShape *rect;
     sfVector2f pos;
+    sfClock *clock;
+    sfTime last_animation_update;
 } block_t;
 
 typedef struct world_s {

@@ -27,16 +27,21 @@ static int build_floor(block_t *block, world_t *world,
     int type, dict_t *tiles)
 {
     sfVector2f origin = {0};
-
+    
+    block->sprite_rect = get_tile_rect(type);
+    block->frame_nb = get_tile_frames(type);
     block->type = type;
     block->sprite = sfSprite_create();
+    if (block->frame_nb > 1)
+        block->clock = sfClock_create();
     if (!block->sprite) {
         freef("%s%a", block->sprite, block);
         return EXIT_FAILURE;
     }
     sfSprite_setTexture(block->sprite, dict_get(tiles, type), sfTrue);
-    origin = (sfVector2f){sfTexture_getSize(dict_get(tiles, type)).x / 2,
-        sfTexture_getSize(dict_get(tiles, type)).y - 2};
+    sfSprite_setTextureRect(block->sprite, block->sprite_rect);
+    origin = (sfVector2f){block->sprite_rect.width / 2,
+        block->sprite_rect.height - 2};
     sfSprite_setOrigin(block->sprite, origin);
     sfSprite_setPosition(block->sprite, isom_pos_converter(block->pos));
     append_ptr((void ***)&(world->floor), block, NULL);
@@ -56,7 +61,7 @@ int parse_floor_line(char **floor, world_t *world,
     for (int x = 0; floor[y][x]; x++) {
         if (floor[y][x] == '0')
             continue;
-        block = malloc(sizeof(block_t));
+        block = calloc(1, sizeof(block_t));
         if (!block)
             return EXIT_FAILURE;
         block->pos = (sfVector2f){x, y};
@@ -90,15 +95,20 @@ static int build_wall(block_t *block, world_t *world,
 {
     sfVector2f origin = {0};
 
+    block->sprite_rect = get_tile_rect(type);
+    block->frame_nb = get_tile_frames(type);
     block->type = type;
     block->sprite = sfSprite_create();
+    if (block->frame_nb > 1)
+        block->clock = sfClock_create();
     if (!block->sprite) {
         freef("%s%a", block->sprite, block);
         return EXIT_FAILURE;
     }
     sfSprite_setTexture(block->sprite, dict_get(tiles, type), sfTrue);
-    origin = (sfVector2f){sfTexture_getSize(dict_get(tiles, type)).x / 2,
-        sfTexture_getSize(dict_get(tiles, type)).y - 2};
+    sfSprite_setTextureRect(block->sprite, block->sprite_rect);
+    origin = (sfVector2f){block->sprite_rect.width / 2,
+        block->sprite_rect.height- 2};
     sfSprite_setOrigin(block->sprite, origin);
     sfSprite_setPosition(block->sprite, isom_pos_converter_z(block->pos));
     append_ptr((void ***)&(world->walls), block, NULL);
@@ -118,7 +128,7 @@ int parse_walls_line(char **walls, world_t *world,
     for (int x = 0; walls[y][x]; x++) {
         if (walls[y][x] == '0')
             continue;
-        block = malloc(sizeof(block_t));
+        block = calloc(1, sizeof(block_t));
         if (!block)
             free(block);
         block->pos = (sfVector2f){x, y};

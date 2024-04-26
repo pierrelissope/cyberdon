@@ -50,6 +50,10 @@ static const init_world_t WALLS_BLOCK_INIT[] =
         .texture_name = WOOD_WALL
     },
     {
+        .c = 'l',
+        .texture_name = STREET_LAMP
+    },
+    {
         .c = -1,
         .texture_name = 0
     },
