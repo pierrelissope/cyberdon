@@ -16,10 +16,10 @@ int run_fight(game_t *game, physical_entity_t *player,
     fight_t *fight = load_fight(game, player, npc, arena);
 
     while (sfRenderWindow_isOpen(game->window)) {
+        update_fight(fight);
         if (handle_fight_event(game, fight, &event) == sfEvtClosed)
             return -1;
         draw_fight(fight, game->window);
-        update_fight(fight);
     }
     return 0;
 }

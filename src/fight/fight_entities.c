@@ -22,7 +22,8 @@
 #include <stdbool.h>
 #include "stdio.h"
 
-static sfSprite *init_fight_sprite(fighter_entity_t *entity, int moves_index, dict_t *text_dict)
+static sfSprite *init_fight_sprite(fighter_entity_t *entity,
+    int moves_index, dict_t *text_dict)
 {
     sfSprite *sp = sfSprite_create();
 
@@ -62,6 +63,8 @@ fighter_entity_t *init_fighter_entity(physical_entity_t *entity_stats, fight_t *
     fighter_entity_t *entity = calloc(1, sizeof(fighter_entity_t));
 
     entity->clock = sfClock_create();
+    entity->ability_clock = sfClock_create();
+    entity->ability_cooldown = COOLDOWN;
     entity->velocity = BASE_FIGHTER_VELOCITY;
     if (entity_stats->type == 0) {
         entity->looking_right = true;

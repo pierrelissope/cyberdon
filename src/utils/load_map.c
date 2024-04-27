@@ -8,6 +8,7 @@
 #include "basics.h"
 #include "entity.h"
 #include "init_entity.h"
+#include <string.h>
 
 const char *LEVELS_MAP_PATHS = "./levels/";
 

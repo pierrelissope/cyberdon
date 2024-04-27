@@ -29,6 +29,8 @@ SRC =		./src/entity/entity.c \
 			./src/fight/fight_events.c	\
 			./src/fight/fight_loop.c	\
 			./src/fight/fight_movement.c	\
+			./src/fight/movement_actions.c	\
+			./src/fight/attack_actions.c	\
 			./src/view/view.c	\
 			./src/world/parsing.c	\
 

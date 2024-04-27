@@ -84,6 +84,7 @@ fight_t *load_fight(game_t *game, physical_entity_t *player,
     fight->player_stats = player;
     fight->view = init_fight_view();
     sfRenderWindow_setView(game->window, fight->view);
+    sfRenderWindow_setKeyRepeatEnabled(game->window, sfFalse);
     load_text(fight);
     load_arena(fight);
     load_fighters(fight);

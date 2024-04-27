@@ -59,8 +59,8 @@ static const movement_init_t MOVES_INIT[] = {
     {
         JUMP,
         "jump.png",
-        600,
-        {0, 0, 50, 100},
+        175,
+        {0, 0, 51, 100},
         6
     },
     {
@@ -106,4 +106,5 @@ static const movement_init_t MOVES_INIT[] = {
 static const sfVector2f PLAYER_SPAWN = {200, 200};
 static const sfVector2f NPC_SPAWN = {800, 200};
 static const sfVector2f BASE_FIGHTER_VELOCITY = {0, 0};
+static const int COOLDOWN = 25;
 #endif

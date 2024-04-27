@@ -8,6 +8,7 @@
 #pragma once
 
 #include <SFML/Graphics.h>
+#include <SFML/Graphics/Rect.h>
 #include <SFML/Graphics/Types.h>
 #include <SFML/System/Vector2.h>
 #include <SFML/Window.h>
@@ -24,10 +25,13 @@ typedef struct Fighter_Entity_s {
 
     annimation_t **annimation_sheets;
     fighter_state_t state;
+    int ability_cooldown;
 
+    sfClock *ability_clock;
     sfClock *clock;
     sfVector2f sprite_pos;
     sfVector2f velocity;
+    sfFloatRect hitbox;
 } fighter_entity_t;
 
 typedef struct fight_s {
