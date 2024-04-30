@@ -9,6 +9,8 @@
 
 #include "entity.h"
 
+#define FONT    sfFont_createFromFile("assets/font/default.ttf")
+
 game_t init_game(void);
 int handle_event(game_t *game, sfEvent *event);
 void run_game(game_t *game);

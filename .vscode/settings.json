@@ -1,0 +1,23 @@
+{
+    "files.associations": {
+        "cstdlib": "c",
+        "entity.h": "c",
+        "basics.h": "c",
+        "stdarg.h": "c",
+        "free_header.h": "c",
+        "freef.h": "c",
+        "stdlib.h": "c",
+        "compare": "c",
+        "type_traits": "c",
+        "string.h": "c",
+        "strings.h": "c",
+        "world.h": "c",
+        "init_entity.h": "c",
+        "init_texture.h": "c",
+        "math.h": "c",
+        "view.h": "c",
+        "dict.h": "c",
+        "window.h": "c",
+        "graphics.h": "c"
+    }
+}

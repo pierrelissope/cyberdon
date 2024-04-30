@@ -20,6 +20,9 @@ enum Tiles {
     BUILDING_1,
     COLLISION_BLOCK,
     STREET_LAMP,
+    BEDROOM_WALL,
+    BEDROOM_POSTER_WALL,
+    WOOD_FLOOR,
 };
 
 enum Spritesheets {
@@ -43,39 +46,39 @@ typedef struct init_texture_s {
 
 static const init_texture_t PLAYER_TEXTURE_INIT[MAX_SPRITE_SHEETS] = {
     {
-        .texture_path = "./assets/spritesheets/player/player_idle.png",
+        .texture_path = "./assets/spritesheets/player/idle.png",
         .texture_name = IDLE
     },
     {
-        .texture_path = "./assets/spritesheets/player/player_up.png",
+        .texture_path = "./assets/spritesheets/player/up.png",
         .texture_name = UP
     },
     {
-        .texture_path = "./assets/spritesheets/player/player_down.png",
+        .texture_path = "./assets/spritesheets/player/down.png",
         .texture_name = DOWN
     },
     {
-        .texture_path = "./assets/spritesheets/player/player_left.png",
+        .texture_path = "./assets/spritesheets/player/left.png",
         .texture_name = LEFT
     },
     {
-        .texture_path = "./assets/spritesheets/player/player_right.png",
+        .texture_path = "./assets/spritesheets/player/right.png",
         .texture_name = RIGHT
     },
     {
-        .texture_path = "./assets/spritesheets/player/player_up_left.png",
+        .texture_path = "./assets/spritesheets/player/up_left.png",
         .texture_name = UP_LEFT
     },
     {
-        .texture_path = "./assets/spritesheets/player/player_up_right.png",
+        .texture_path = "./assets/spritesheets/player/up_right.png",
         .texture_name = UP_RIGHT
     },
     {
-        .texture_path = "./assets/spritesheets/player/player_down_left.png",
+        .texture_path = "./assets/spritesheets/player/down_left.png",
         .texture_name = DOWN_LEFT
     },
     {
-        .texture_path = "./assets/spritesheets/player/player_down_right.png",
+        .texture_path = "./assets/spritesheets/player/down_right.png",
         .texture_name = DOWN_RIGHT
     },
     {
@@ -86,39 +89,39 @@ static const init_texture_t PLAYER_TEXTURE_INIT[MAX_SPRITE_SHEETS] = {
 
 static const init_texture_t VILLAGER_TEXTURE_INIT[MAX_SPRITE_SHEETS] = {
     {
-        .texture_path = "./assets/spritesheets/player/player_up.png",
+        .texture_path = "./assets/spritesheets/player/up.png",
         .texture_name = IDLE
     },
     {
-        .texture_path = "./assets/spritesheets/player/player_up.png",
+        .texture_path = "./assets/spritesheets/player/up.png",
         .texture_name = UP
     },
     {
-        .texture_path = "./assets/spritesheets/player/player_down.png",
+        .texture_path = "./assets/spritesheets/player/down.png",
         .texture_name = DOWN
     },
     {
-        .texture_path = "./assets/spritesheets/player/player_left.png",
+        .texture_path = "./assets/spritesheets/player/left.png",
         .texture_name = LEFT
     },
     {
-        .texture_path = "./assets/spritesheets/player/player_right.png",
+        .texture_path = "./assets/spritesheets/player/right.png",
         .texture_name = RIGHT
     },
     {
-        .texture_path = "./assets/spritesheets/player/player_up_left.png",
+        .texture_path = "./assets/spritesheets/player/up_left.png",
         .texture_name = UP_LEFT
     },
     {
-        .texture_path = "./assets/spritesheets/player/player_up_right.png",
+        .texture_path = "./assets/spritesheets/player/up_right.png",
         .texture_name = UP_RIGHT
     },
     {
-        .texture_path = "./assets/spritesheets/player/player_down_left.png",
+        .texture_path = "./assets/spritesheets/player/down_left.png",
         .texture_name = DOWN_LEFT
     },
     {
-        .texture_path = "./assets/spritesheets/player/player_down_right.png",
+        .texture_path = "./assets/spritesheets/player/down_right.png",
         .texture_name = DOWN_RIGHT
     },
     {
@@ -141,6 +144,12 @@ static const init_texture_t TILES_TEXTURE_INIT[] = {
         .frame_nb = 1
     },
     {
+        .texture_path = "./assets/blocks/wood_floor.png",
+        .texture_name = WOOD_FLOOR,
+        .rect = {0, 0, 128, 105},
+        .frame_nb = 1
+    },
+    {
         .texture_path = "./assets/blocks/stone.png",
         .texture_name = STONE_BLOCK,
         .rect = {0, 0, 128, 128},
@@ -149,6 +158,18 @@ static const init_texture_t TILES_TEXTURE_INIT[] = {
     {
         .texture_path = "./assets/blocks/stone_wall.png",
         .texture_name = STONE_WALL,
+        .rect = {0, 0, 128, 230},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/bedroom_wall.png",
+        .texture_name = BEDROOM_WALL,
+        .rect = {0, 0, 128, 230},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/bedroom_poster_wall.png",
+        .texture_name = BEDROOM_POSTER_WALL,
         .rect = {0, 0, 128, 230},
         .frame_nb = 1
     },

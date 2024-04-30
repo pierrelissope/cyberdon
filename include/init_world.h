@@ -26,6 +26,10 @@ static const init_world_t FLOOR_BLOCK_INIT[] =
         .texture_name = STONE_BLOCK
     },
     {
+        .c = 'w',
+        .texture_name = WOOD_FLOOR
+    },
+    {
         .c = -1,
         .texture_name = 0
     },
@@ -52,6 +56,14 @@ static const init_world_t WALLS_BLOCK_INIT[] =
     {
         .c = 'l',
         .texture_name = STREET_LAMP
+    },
+    {
+        .c = 'b',
+        .texture_name = BEDROOM_WALL
+    },
+    {
+        .c = 'd',
+        .texture_name = BEDROOM_POSTER_WALL
     },
     {
         .c = -1,

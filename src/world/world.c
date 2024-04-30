@@ -8,7 +8,8 @@
 #include "world.h"
 #include "entity.h"
 
-const int COLLISION_OPACITY = 60;
+const int COLLISION_OPACITY = 155;
+const int TILE_SIZE = 50;
 
 world_t init_world(void)
 {
@@ -71,11 +72,16 @@ static void stack_entities(linked_objects_t ***array, world_t *world)
 {
     sfFloatRect bounds = {0};
     linked_objects_t *object = NULL;
+    sfVector2f center = {0};
 
     for (int i = 0; world->entities && world->entities[i]; i++) {
-        bounds = sfSprite_getGlobalBounds(
-            world->entities[i]->current_sprite_sheet);
-        bounds.top += COLLISION_OPACITY;
+        bounds = sfRectangleShape_getGlobalBounds(world->entities[i]->rect);
+        center = (sfVector2f){
+            (bounds.left) / 50, (bounds.top) / 50};
+        center = isom_pos_converter(center);
+        bounds.left = center.x;
+        bounds.top = center.y;
+        bounds.top -= COLLISION_OPACITY;
         object = calloc(1, sizeof(linked_objects_t));
         object->object = world->entities[i];
         object->bounds = bounds;
@@ -86,11 +92,16 @@ static void stack_entities(linked_objects_t ***array, world_t *world)
 
 static void stack_player(linked_objects_t ***array, physical_entity_t *player)
 {
-    sfFloatRect bounds = {0};
     linked_objects_t *object = NULL;
-
-    bounds = sfSprite_getGlobalBounds(player->current_sprite_sheet);
-    bounds.top += COLLISION_OPACITY;
+    sfFloatRect bounds = sfRectangleShape_getGlobalBounds(player->rect);
+    sfVector2f center = {
+        (bounds.left) / 50,
+        (bounds.top) / 50,
+    };
+    center = isom_pos_converter(center);
+    bounds.left = center.x;
+    bounds.top = center.y;
+    bounds.top -= COLLISION_OPACITY;
     object = calloc(1, sizeof(linked_objects_t));
     object->object = player;
     object->bounds = bounds;
