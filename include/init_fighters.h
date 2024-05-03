@@ -32,7 +32,7 @@ static const movement_init_t MOVES_INIT[] = {
         IDLE,
         "idle.png",
         200,
-        {0, 0, 55, 100},
+        {0, 0, 52, 100},
         3
     },
     {
@@ -53,49 +53,49 @@ static const movement_init_t MOVES_INIT[] = {
         CROUCH,
         "crouch.png",
         150,
-        {0, 0, 55, 100},
+        {0, 0, 50, 100},
         2
     },
     {
         JUMP,
         "jump.png",
         125,
-        {0, 0, 51, 100},
+        {0, 0, 50, 100},
         6
     },
     {
         ATTACK,
         "attack.png",
         100,
-        {0, 0, 66, 100},
+        {0, 0, 80, 100},
         3
     },
     {
         ATTACK_UP,
         "attack_up.png",
         100,
-        {0, 0, 65, 100},
+        {0, 0, 80, 150},
         3
     },
     {
         ATTACK_DOWN,
         "attack_down.png",
         100,
-        {0, 0, 65, 100},
+        {0, 0, 80, 100},
         3
     },
     {
         ATTACK_CROUCH,
         "attack_crouch.png",
         100,
-        {0, 0, 65, 100},
+        {0, 0, 75, 100},
         3
     },
     {
         ATTACK_JUMP,
         "attack_jump.png",
         100,
-        {0, 0, 65, 100},
+        {0, 0, 80, 100},
         3
     },
     {

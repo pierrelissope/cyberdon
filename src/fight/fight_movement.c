@@ -123,15 +123,20 @@ static void reverse_side(fighter_entity_t *entity)
 
 static void update_fighter_dir(fight_t *fight)
 {
-    if (sfFloatRect_intersects(&(fight->player->hitbox), &(fight->npc->hitbox), NULL))
-        return;
-    if (fight->player->hitbox.left > fight->npc->hitbox.left) {
+    float npc_left_point = fight->npc->hitbox.left - fight->npc->hitbox.width;
+    float player_left_point = fight->player->hitbox.left - fight->player->hitbox.width;
+    sfFloatRect intersection;
+
+    printf("npc : %f, player : %f\n", npc_left_point, player_left_point);
+    sfFloatRect_intersects(&(fight->player->hitbox), &(fight->npc->hitbox), &intersection);
+    printf("rec: top :%f, left :%f, h :%f, w :%f\n", intersection.top, intersection.left, intersection.height, intersection.width);
+
+    if (player_left_point > fight->npc->hitbox.left) {
         fight->player->looking_left = true;
         fight->player->looking_right = false;
         fight->npc->looking_right = true;
         fight->npc->looking_left = false;
-    }
-    if (fight->player->hitbox.left < fight->npc->hitbox.left) {
+    } else if (fight->player->hitbox.left < npc_left_point) {
         fight->player->looking_right = true;
         fight->player->looking_left = false;
         fight->npc->looking_right = false;
@@ -148,6 +153,7 @@ static bool check_colisions(fight_t *fight)
         printf("npc HIT !\n");
     }
 }
+
 void update_fight(fight_t *fight)
 {
     update_fighter_dir(fight);
