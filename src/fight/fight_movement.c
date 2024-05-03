@@ -123,9 +123,12 @@ static void reverse_side(fighter_entity_t *entity)
 
 static void update_fighter_dir(fight_t *fight)
 {
-    float npc_left_point = fight->npc->hitbox.left - fight->npc->hitbox.width;
-    float player_left_point = fight->player->hitbox.left - fight->player->hitbox.width;
+    float npc_left_point = fight->npc->hitbox.left - (fight->npc->hitbox.width / 2);
+    float player_left_point = fight->player->hitbox.left - (fight->player->hitbox.width / 2);
     sfFloatRect intersection;
+
+    sfVector2f player_pos = sfSprite_getPosition(fight->player->annimation_sheets[fight->player->state]);
+    sfVector2f npc_pos = sfSprite_getPosition(fight->npc->annimation_sheets[fight->npc->state]);
 
     printf("npc : %f, player : %f\n", npc_left_point, player_left_point);
     sfFloatRect_intersects(&(fight->player->hitbox), &(fight->npc->hitbox), &intersection);
