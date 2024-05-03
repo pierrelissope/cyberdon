@@ -29,7 +29,7 @@ static teleporter_t *create_teleporter(char *coords, dict_t *tiles)
     teleporter->rect = sfRectangleShape_create();
     if (!teleporter->rect)
         return NULL;
-    sfRectangleShape_setPosition(teleporter->rect, (sfVector2f){50 * pos.x, 50 * pos.y});
+    sfRectangleShape_setPosition(teleporter->rect, (sfVector2f){TILE_SIZE.x * pos.x, TILE_SIZE.y * pos.y});
     sfRectangleShape_setSize(teleporter->rect, (sfVector2f){50, 50});
     sfRectangleShape_setFillColor(teleporter->rect, sfTransparent);
     sfRectangleShape_setOutlineColor(teleporter->rect, sfWhite);
@@ -45,7 +45,7 @@ static sfVector2f get_destination_coords(char *coords)
 {
     char **tokens = my_str_to_all_array(coords, ":");
     sfVector2f pos = 
-        {atof(tokens[0]) * TILE_SIZE.x, atof(tokens[1]) * TILE_SIZE.x};
+        {atof(tokens[0]) * TILE_SIZE.x, atof(tokens[1]) * TILE_SIZE.y};
 
     free_str_array(tokens);
     return pos;

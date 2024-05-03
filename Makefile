@@ -26,7 +26,9 @@ SRC =		./src/entity/entity.c \
 			./src/world/animate.c \
 			./src/view/view.c \
 			./src/teleporter/parsing.c \
-			./src/teleporter/teleport.c
+			./src/teleporter/teleport.c \
+			./src/status/status.c \
+			./src/menus/loading_screen.c
 
 SRCOBJ =	$(SRC:.c=.o)
 

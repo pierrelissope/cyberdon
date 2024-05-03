@@ -21,7 +21,7 @@ const int ENTITY_RECT_SIZE = 15;
 const sfVector2f FRAME_SIZE = {1024 / 8, 128};
 const int FRAME_NUMBER = 8;
 
-const int BASE_VELOCITY = 4;
+const float BASE_VELOCITY = 4.3;
 
 static void setup_entity(physical_entity_t *entity, sfVector2f pos)
 {

@@ -13,6 +13,7 @@
 #define MAX_SPRITE_SHEETS 100
 
 enum Tiles {
+    LOADING_PAGE_SHEET,
     GRASS_BLOCK,
     STONE_BLOCK,
     STONE_WALL,
@@ -132,6 +133,12 @@ static const init_texture_t VILLAGER_TEXTURE_INIT[MAX_SPRITE_SHEETS] = {
 };
 
 static const init_texture_t TILES_TEXTURE_INIT[] = {
+    {
+        .texture_path = "./assets/spritesheets/loading_page/element.png",
+        .texture_name = LOADING_PAGE_SHEET,
+        .rect = {0, 0, 1134 / 5, 168},
+        .frame_nb = 5,
+    },
     {
         .texture_path = "./assets/blocks/collision_block.png",
         .texture_name = COLLISION_BLOCK,

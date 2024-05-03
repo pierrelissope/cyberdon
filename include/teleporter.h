@@ -10,4 +10,5 @@
 #include "struct.h"
 
 teleporter_t **load_level_teleporters(char *level, dict_t *tiles);
-void teleport_player(game_t *game, teleporter_t **teleporters);
+void teleport_player(game_t *game, teleporter_t **teleporters,
+    status_t *status);

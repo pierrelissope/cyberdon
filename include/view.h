@@ -10,4 +10,4 @@
 #include "entity.h"
 
 sfView *init_player_view(void);
-void center_view(sfView *view, sfRectangleShape *player_rect);
+void center_view(sfView *view, sfRectangleShape *player_rect, game_t *game);
