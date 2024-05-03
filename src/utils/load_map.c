@@ -7,10 +7,11 @@
 
 #include "basics.h"
 #include "entity.h"
+#include "world.h"
 #include "init_entity.h"
 #include "init_texture.h"
 
-const char *LEVELS_MAP_PATHS = "./levels/";
+static const char *LEVELS_MAP_PATHS = "./levels/";
 
 sfIntRect get_tile_rect(int name)
 {
@@ -30,45 +31,43 @@ int get_tile_frames(int name)
     return 1;
 }
 
-char **load_floor(int level)
+char **load_floor(char *level)
 {
-    char *level_str = my_itoa(level);
     char *buffer = NULL;
     char **array = NULL;
-    char *map_path = concat_mem((char *)LEVELS_MAP_PATHS, level_str, "/floor");
+    char *map_path = concat_mem((char *)LEVELS_MAP_PATHS, level, "/floor.conf");
 
     if (!map_path) {
-        freef("%a%a%a", map_path, level_str, buffer);
+        freef("%a%a", map_path, buffer);
         return NULL;
     }
     buffer = open_file(map_path);
     if (!buffer) {
-        freef("%a%a%a", map_path, level_str, buffer);
+        freef("%a%a", map_path, buffer);
         return NULL;
     }
     array = my_str_to_all_array(buffer, "\n");
-    freef("%a%a%a", map_path, level_str, buffer);
+    freef("%a%a", map_path, buffer);
     return array;
 }
 
-char **load_walls(int level)
+char **load_walls(char *level)
 {
-    char *level_str = my_itoa(level);
     char *buffer = NULL;
     char **array = NULL;
-    char *map_path = concat_mem((char *)LEVELS_MAP_PATHS, level_str, "/walls");
+    char *map_path = concat_mem((char *)LEVELS_MAP_PATHS, level, "/walls.conf");
 
     if (!map_path) {
-        freef("%a%a%a", map_path, level_str, buffer);
+        freef("%a%a", map_path, buffer);
         return NULL;
     }
     buffer = open_file(map_path);
     if (!buffer) {
-        freef("%a%a%a", map_path, level_str, buffer);
+        freef("%a%a", map_path, buffer);
         return NULL;
     }
     array = my_str_to_all_array(buffer, "\n");
-    freef("%a%a%a", map_path, level_str, buffer);
+    freef("%a%a", map_path, buffer);
     return array;
 }
 
@@ -100,24 +99,24 @@ static int parse_level_entities(char **lines,
             return EXIT_FAILURE;
         append_ptr((void ***)entities, entity, NULL);
     }
+    free_str_array(lines);
     return EXIT_SUCCESS;
 }
 
-physical_entity_t **load_level_entities(int level, dict_t *sheets_dict)
+physical_entity_t **load_level_entities(char *level, dict_t *sheets_dict)
 {
-    char *level_str = my_itoa(level);
-    char *path = concat_mem((char *)LEVELS_MAP_PATHS, level_str, "/entities");
+    char *path = concat_mem((char *)LEVELS_MAP_PATHS, level, "/entities.conf");
     char *buffer = NULL;
     char **lines = NULL;
     physical_entity_t **entities = NULL;
 
     if (!path) {
-        freef("%a%a%a", path, level_str, buffer);
+        freef("%a%a", path, buffer);
         return NULL;
     }
     buffer = open_file(path);
     if (!buffer) {
-        freef("%a%a%a", path, level_str, buffer);
+        freef("%a%a", path, buffer);
         return NULL;
     }
     lines = my_str_to_all_array(buffer, "\n");

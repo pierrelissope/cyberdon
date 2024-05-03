@@ -18,11 +18,12 @@ world_t init_world(void)
     return world;
 }
 
-int load_level(world_t *world, int level, dict_t *tiles, dict_t *sheets_dict)
+int load_level(world_t *world, char *level, dict_t *tiles, dict_t *sheets_dict)
 {
     char **floor = load_floor(level);
     char **walls = load_walls(level);
 
+    world->teleporters = load_level_teleporters(level, tiles);
     world->entities = load_level_entities(level, sheets_dict);
     if (!floor || !walls) {
         freef("%t%t", floor, walls);
@@ -109,15 +110,65 @@ static void stack_player(linked_objects_t ***array, physical_entity_t *player)
     append_ptr((void ***)array, object, NULL);
 }
 
+void draw_teleporters(void *entity, sfRenderWindow *window)
+{
+    sfRenderWindow_drawSprite(window, ((teleporter_t *)entity)->sprite, NULL);
+}
+
+void draw_floor(void *entity, sfRenderWindow *window)
+{
+    sfRenderWindow_drawSprite(window, ((block_t *)entity)->sprite, NULL);
+}
+
+static void stack_floors(linked_objects_t ***array, world_t *world)
+{
+    sfFloatRect bounds = {0};
+    linked_objects_t *object = NULL;
+    sfVector2f center = {0};
+    float bottom = 0;
+
+    for (int i = 0; world->floor && world->floor[i]; i++) {
+        bounds = sfSprite_getGlobalBounds(world->floor[i]->sprite);
+        bottom = bounds.top + bounds.height;
+        object = calloc(1, sizeof(linked_objects_t));
+        object->object = world->floor[i];
+        object->bounds = bounds;
+        object->fct = draw_floor;
+        append_ptr((void ***)array, object, NULL);
+    }
+}
+
+static void stack_teleporters(linked_objects_t ***array, world_t *world)
+{
+    sfFloatRect bounds = {0};
+    linked_objects_t *object = NULL;
+    sfVector2f center = {0};
+    float bottom = 0;
+
+    for (int i = 0; world->teleporters && world->teleporters[i]; i++) {
+        bounds = sfSprite_getGlobalBounds(world->teleporters[i]->sprite);
+        bottom = bounds.top + bounds.height;
+        object = calloc(1, sizeof(linked_objects_t));
+        object->object = world->teleporters[i];
+        object->priority = true;
+        object->bounds = bounds;
+        object->fct = draw_teleporters;
+        append_ptr((void ***)array, object, NULL);
+    }
+}
+
 void draw_level(sfRenderWindow *window, world_t *world,
     physical_entity_t *player)
 {
     linked_objects_t **stack = NULL;
+    linked_objects_t **floor_stack = NULL;
 
-    for (int i = 0; world->floor && world->floor[i]; i++) {
-        sfRenderWindow_drawSprite(window, world->floor[i]->sprite, NULL);
-        //sfRenderWindow_drawRectangleShape(window, world->floor[i]->rect, NULL);
-    }
+    stack_teleporters(&floor_stack, world);
+    stack_floors(&floor_stack, world);
+    quicksort(floor_stack, 0, my_arraylen((void **)floor_stack) - 1);
+    for (int i = 0; floor_stack && floor_stack[i]; i++)
+        floor_stack[i]->fct(floor_stack[i]->object, window);
+
     stack_walls(&stack, world);
     stack_entities(&stack, world);
     stack_player(&stack, player);

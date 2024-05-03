@@ -23,6 +23,7 @@ enum Tiles {
     BEDROOM_WALL,
     BEDROOM_POSTER_WALL,
     WOOD_FLOOR,
+    TELEPORTER,
 };
 
 enum Spritesheets {
@@ -140,6 +141,12 @@ static const init_texture_t TILES_TEXTURE_INIT[] = {
     {
         .texture_path = "./assets/blocks/grass.png",
         .texture_name = GRASS_BLOCK,
+        .rect = {0, 0, 128, 105},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/tp_floor.png",
+        .texture_name = TELEPORTER,
         .rect = {0, 0, 128, 105},
         .frame_nb = 1
     },

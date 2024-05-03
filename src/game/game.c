@@ -61,7 +61,7 @@ game_t init_game(void)
     game.player_view = init_player_view();
     if(!game.player_view)
         return game;
-    load_level(&game.world, 1, game.tiles_dict, game.sheets_dict);
+    load_level(&game.world, "city", game.tiles_dict, game.sheets_dict);
     game.is_valid = true;
     return game;
 }
@@ -91,6 +91,7 @@ void run_game(game_t *game)
         if (handle_event(game, &event) == sfEvtClosed)
             return;
         move_entity(game->player, &event, &(game->world));
+        teleport_player(game, game->world.teleporters);
         animate_world(&(game->world));
         update_entity(game->player);
         center_view(game->player_view, game->player->rect);

@@ -27,6 +27,7 @@ typedef struct dict_s {
 } dict_t;
 
 typedef struct linked_objects_s {
+    bool priority;
     void *object;
     sfFloatRect bounds;
     void (*fct) (void *, sfRenderWindow *window);
@@ -61,9 +62,18 @@ typedef struct block_s {
     char **dialogs_array;
 } block_t;
 
+typedef struct teleporter_s {
+    bool is_valid;
+    sfSprite *sprite;
+    sfRectangleShape *rect;
+    char *destination_level;
+    sfVector2f destination_coord;
+} teleporter_t;
+
 typedef struct world_s {
     block_t **floor;
     block_t **walls;
+    teleporter_t **teleporters;
     physical_entity_t **entities;
     int current_level;
 } world_t;

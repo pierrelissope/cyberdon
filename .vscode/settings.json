@@ -18,6 +18,8 @@
         "view.h": "c",
         "dict.h": "c",
         "window.h": "c",
-        "graphics.h": "c"
+        "graphics.h": "c",
+        "utils.h": "c",
+        "teleporter.h": "c"
     }
 }

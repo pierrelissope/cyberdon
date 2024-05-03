@@ -12,8 +12,8 @@
 #include "dict.h"
 
 dict_t *dup_sprites(dict_t *dict);
-char **load_floor(int level);
-char **load_walls(int level);
+char **load_floor(char *level);
+char **load_walls(char *level);
 sfVector2f isom_pos_converter(sfVector2f pos);
 sfVector2f isom_pos_converter_z(sfVector2f pos);
 sfVector2f normalize(sfVector2f vector);
