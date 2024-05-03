@@ -7,15 +7,15 @@
 
 #include "fight.h"
 #include "struct.h"
+#include <stdbool.h>
 
 void jump(fighter_entity_t *entity)
 {
     annimation_t *current = entity->annimation_sheets[entity->state];
 
-    if (current->current_frame > current->n_of_frames / 2)
-        entity->velocity.y = 3;
-    else
-        entity->velocity.y = -5;
+    if (current->current_frame < current->n_of_frames / 2)
+        entity->velocity.y = -10;
+    entity->annimation_lock = true;
 }
 
 void idle(fighter_entity_t *entity)

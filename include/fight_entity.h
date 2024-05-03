@@ -24,6 +24,7 @@ typedef struct Fighter_Entity_s {
     bool looking_left;
 
     annimation_t **annimation_sheets;
+    bool annimation_lock;
     fighter_state_t state;
     int ability_cooldown;
 
@@ -32,10 +33,12 @@ typedef struct Fighter_Entity_s {
     sfVector2f sprite_pos;
     sfVector2f velocity;
     sfFloatRect hitbox;
+    sfFloatRect dmgbox;
 } fighter_entity_t;
 
 typedef struct fight_s {
     arenas_t arena;
+    bool debug_mode;
     dict_t *text_dict;
     sfView *view;
     physical_entity_t *player_stats;

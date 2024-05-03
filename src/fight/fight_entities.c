@@ -38,8 +38,10 @@ static sfSprite *init_fight_sprite(fighter_entity_t *entity,
         sfSprite_setPosition(sp, NPC_SPAWN);
         entity->sprite_pos = NPC_SPAWN;
     }
-    sfSprite_setScale(sp, (sfVector2f) {4, 4});
     sfSprite_setTextureRect(sp, MOVES_INIT[moves_index].frame_rec);
+    sfSprite_setOrigin(sp, (sfVector2f) {
+            MOVES_INIT[moves_index].frame_rec.width / 2.0,
+            MOVES_INIT[moves_index].frame_rec.height / 2.0});
     return sp;
 }
 
