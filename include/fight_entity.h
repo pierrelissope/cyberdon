@@ -22,6 +22,7 @@ typedef struct Fighter_Entity_s {
     bool looking_down;
     bool looking_right;
     bool looking_left;
+    bool crouching;
 
     annimation_t **annimation_sheets;
     bool annimation_lock;

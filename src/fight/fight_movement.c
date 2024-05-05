@@ -31,7 +31,6 @@ bool annimation_bypass(fighter_entity_t *entity, fighter_state_t new_state)
 
 void change_state(fighter_entity_t *entity, fighter_state_t new_state)
 {
-    printf("old :%d, new :%d\n", entity->state, new_state);
     if (entity->annimation_lock && !annimation_bypass(entity, new_state))
         return;
     if (entity->state != new_state) {

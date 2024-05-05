@@ -14,7 +14,7 @@ void jump(fighter_entity_t *entity)
     annimation_t *current = entity->annimation_sheets[entity->state];
 
     if (current->current_frame < current->n_of_frames / 2) {
-        entity->velocity.y = -10;
+        entity->velocity.y = -14;
     }
     entity->annimation_lock = true;
 }

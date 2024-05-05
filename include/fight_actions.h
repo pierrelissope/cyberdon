@@ -30,7 +30,7 @@ static void (*FIGHT_ACTIONS[])(fighter_entity_t *) = {
     [ATTACK_JUMP] = attack_jump,
     [JUMP] = jump,
     [FORWARD] = NULL,
-    [CROUCH] = NULL,
+    [CROUCH] = crouch,
     [BACKWARD] = NULL,
-    [IDLE] = NULL,
+    [IDLE] = idle,
 };

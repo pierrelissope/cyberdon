@@ -23,19 +23,22 @@ fighter_state_t pick_attack(fighter_entity_t *fighter, fighter_state_t action)
         return ATTACK_DOWN;
     if (action == ATTACK && fighter->looking_up)
         return ATTACK_UP;
+    if (action == ATTACK && fighter->crouching)
+        return ATTACK_CROUCH;
     return action;
 }
 
-int handle_pre_fight_event(game_t *, fight_t *fight)
+int handle_pre_fight_event(game_t *, fight_t *fight, fighter_state_t *action)
 {
     fight->player->looking_down = false;
     fight->player->looking_up = false;
+    fight->player->crouching = false;
     fight->player->velocity.x = 0;
     if (sfKeyboard_isKeyPressed(sfKeyRight)) {
-        fight->player->velocity.x = 4;
+        fight->player->velocity.x = 10;
     }
     if (sfKeyboard_isKeyPressed(sfKeyLeft)) {
-        fight->player->velocity.x = -4;
+        fight->player->velocity.x = -10;
     }
     if (sfKeyboard_isKeyPressed(sfKeyUp)) {
         fight->player->looking_up = true;
@@ -43,30 +46,33 @@ int handle_pre_fight_event(game_t *, fight_t *fight)
     if (sfKeyboard_isKeyPressed(sfKeyDown)) {
         fight->player->looking_down = true;
     }
+    if (sfKeyboard_isKeyPressed(sfKeyC)) {
+        *action = CROUCH;
+        fight->player->crouching = true;
+    }
     return 0;
 }
 
-bool pick_walking_annimation(fighter_entity_t *entity)
+fighter_state_t pick_walking_annimation(fighter_entity_t *entity, int action)
 {
-    if (entity->state == IDLE && entity->velocity.x != 0) {
+    if (action == IDLE && entity->velocity.x != 0) {
         if (entity->velocity.x > 0)
-            change_state(entity, BACKWARD);
+            return FORWARD;
         if (entity->velocity.x < 0)
-            change_state(entity, FORWARD);
-        return true;
+            return BACKWARD;
     }
-    return false;
+    return action;
 }
 
 int handle_fight_event(game_t *game, fight_t *fight, sfEvent *event)
 {
     fighter_state_t action = IDLE;
 
-    handle_pre_fight_event(game, fight);
+    handle_pre_fight_event(game, fight, &action);
     while (sfRenderWindow_pollEvent(game->window, event)) {
         if (event->type == sfEvtClosed)
             return sfEvtClosed;
-        if (sfEvtKeyPressed == event->type) {
+        if (event->type == sfEvtKeyPressed) {
             if (sfKeyboard_isKeyPressed(sfKeyX))
                 action = ATTACK;
             if (sfKeyboard_isKeyPressed(sfKeySpace) && fight->player->velocity.y == 0)
@@ -74,7 +80,7 @@ int handle_fight_event(game_t *game, fight_t *fight, sfEvent *event)
         }
     }
     action = pick_attack(fight->player, action);
-    pick_walking_annimation(fight->player);
+    action = pick_walking_annimation(fight->player, action);
     change_state(fight->player, action);
     if (FIGHT_ACTIONS[fight->player->state] != NULL)
         FIGHT_ACTIONS[fight->player->state](fight->player);
