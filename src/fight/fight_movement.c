@@ -31,6 +31,7 @@ bool annimation_bypass(fighter_entity_t *entity, fighter_state_t new_state)
 
 void change_state(fighter_entity_t *entity, fighter_state_t new_state)
 {
+    printf("old :%d, new :%d\n", entity->state, new_state);
     if (entity->annimation_lock && !annimation_bypass(entity, new_state))
         return;
     if (entity->state != new_state) {
@@ -38,44 +39,7 @@ void change_state(fighter_entity_t *entity, fighter_state_t new_state)
         entity->annimation_sheets[entity->state]->text_rec.left = 0;
         sfClock_restart(entity->clock);
         entity->state = new_state;
-        if (FIGHT_ACTIONS[entity->state] != NULL)
-            FIGHT_ACTIONS[entity->state](entity);
     }
-}
-
-static void from_movement(fighter_entity_t *entity)
-{
-    if (sfKeyboard_isKeyPressed(sfKeyLeft)) {
-        change_state(entity, FORWARD);
-        entity->velocity.x = -4;
-    }
-    if (sfKeyboard_isKeyPressed(sfKeyRight)) {
-        change_state(entity, BACKWARD);
-        entity->velocity.x = 4;
-    }
-    if (sfKeyboard_isKeyPressed(sfKeyC)) {
-        change_state(entity, CROUCH);
-    }
-}
-
-static bool back_to_idle(void)
-{
-    if (!sfKeyboard_isKeyPressed(sfKeyC) &&
-        !sfKeyboard_isKeyPressed(sfKeyLeft) &&
-        !sfKeyboard_isKeyPressed(sfKeyRight))
-        return true;
-    return false;
-}
-
-static void update_player_state(fighter_entity_t *entity)
-{
-    if (back_to_idle()) {
-        change_state(entity, IDLE);
-    } else
-        from_movement(entity);
-    if (entity->state == JUMP)
-        if (FIGHT_ACTIONS[entity->state] != NULL)
-            FIGHT_ACTIONS[entity->state](entity);
 }
 
 static void apply_movement(fighter_entity_t *entity)
@@ -98,8 +62,6 @@ static void apply_gravity(fighter_entity_t *entity)
 
     if (entity->sprite_pos.y < FLOOR_Y)
         entity->velocity.y += 1;
-    if (entity->sprite_pos.y == FLOOR_Y)
-        entity->velocity.y = 0;
     if (entity->sprite_pos.y > FLOOR_Y) {
         entity->velocity.y = 0;
         entity->sprite_pos.y = FLOOR_Y;
@@ -125,14 +87,6 @@ static void update_fighter_dir(fight_t *fight)
 {
     float npc_left_point = fight->npc->hitbox.left - (fight->npc->hitbox.width / 2);
     float player_left_point = fight->player->hitbox.left - (fight->player->hitbox.width / 2);
-    sfFloatRect intersection;
-
-    sfVector2f player_pos = sfSprite_getPosition(fight->player->annimation_sheets[fight->player->state]);
-    sfVector2f npc_pos = sfSprite_getPosition(fight->npc->annimation_sheets[fight->npc->state]);
-
-    printf("npc : %f, player : %f\n", npc_left_point, player_left_point);
-    sfFloatRect_intersects(&(fight->player->hitbox), &(fight->npc->hitbox), &intersection);
-    printf("rec: top :%f, left :%f, h :%f, w :%f\n", intersection.top, intersection.left, intersection.height, intersection.width);
 
     if (player_left_point > fight->npc->hitbox.left) {
         fight->player->looking_left = true;
@@ -163,8 +117,6 @@ void update_fight(fight_t *fight)
 
     apply_gravity(fight->player);
     apply_gravity(fight->npc);
-
-    update_player_state(fight->player);
 
     reverse_side(fight->player);
     reverse_side(fight->npc);
