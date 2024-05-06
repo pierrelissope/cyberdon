@@ -28,6 +28,7 @@ typedef struct Fighter_Entity_s {
     bool annimation_lock;
     fighter_state_t state;
     int ability_cooldown;
+    bool hit;
 
     sfClock *ability_clock;
     sfClock *clock;

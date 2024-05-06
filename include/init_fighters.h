@@ -67,21 +67,21 @@ static const movement_init_t MOVES_INIT[] = {
         ATTACK,
         "attack.png",
         100,
-        {0, 0, 80, 100},
+        {0, 0, 75, 100},
         3
     },
     {
         ATTACK_UP,
         "attack_up.png",
         100,
-        {0, 0, 80, 150},
+        {0, 0, 75, 150},
         3
     },
     {
         ATTACK_DOWN,
         "attack_down.png",
         100,
-        {0, 0, 80, 100},
+        {0, 0, 75, 100},
         3
     },
     {
@@ -95,7 +95,7 @@ static const movement_init_t MOVES_INIT[] = {
         ATTACK_JUMP,
         "attack_jump.png",
         100,
-        {0, 0, 80, 100},
+        {0, 0, 75, 100},
         3
     },
     {

@@ -26,6 +26,7 @@ static sfSprite *init_fight_sprite(fighter_entity_t *entity,
     int moves_index, dict_t *text_dict)
 {
     sfSprite *sp = sfSprite_create();
+    sfFloatRect bounds = {0};
 
     if (entity->name == PLAYER_FIGHTER) {
         sfSprite_setTexture(sp, dict_get(text_dict,
@@ -39,7 +40,7 @@ static sfSprite *init_fight_sprite(fighter_entity_t *entity,
         entity->sprite_pos = NPC_SPAWN;
     }
     sfSprite_setTextureRect(sp, MOVES_INIT[moves_index].frame_rec);
-    sfFloatRect bounds = sfSprite_getGlobalBounds(sp);
+    bounds = sfSprite_getGlobalBounds(sp);
     sfSprite_setOrigin(sp, (sfVector2f) {bounds.width / 2, 0});
     return sp;
 }

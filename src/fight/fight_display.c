@@ -91,6 +91,8 @@ static void draw_debug(fight_t *fight, sfRenderWindow *win)
 
     draw_rec(&(fight->player->hitbox), &player_origin, win);
     draw_rec(&(fight->npc->hitbox), &npc_origin, win);
+    draw_rec(&(fight->player->dmgbox), &player_origin, win);
+    draw_rec(&(fight->npc->dmgbox), &npc_origin, win);
 }
 
 void draw_fight(fight_t *fight, sfRenderWindow *win)

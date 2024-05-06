@@ -53,6 +53,7 @@ static void apply_movement(fighter_entity_t *entity)
     bounds = sfSprite_getGlobalBounds(entity->annimation_sheets[entity->state]->sprite_sheet);
     entity->sprite_pos = sfSprite_getPosition(entity->annimation_sheets[entity->state]->sprite_sheet);
     entity->hitbox = bounds;
+    entity->hitbox.left += 30;
 }
 
 static void apply_gravity(fighter_entity_t *entity)
@@ -108,6 +109,8 @@ static bool check_colisions(fight_t *fight)
     if (sfFloatRect_intersects(&(fight->npc->hitbox), &(fight->player->dmgbox), NULL)) {
         printf("npc HIT !\n");
     }
+    fight->player->dmgbox = (sfFloatRect) {0, 0, 0, 0};
+    fight->player->dmgbox = (sfFloatRect) {0, 0, 0, 0};
 }
 
 void update_fight(fight_t *fight)
