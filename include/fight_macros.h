@@ -31,6 +31,7 @@ typedef enum fighter_state_e {
     ATTACK_DOWN,
     ATTACK_CROUCH,
     ATTACK_JUMP,
+    HIT,
     STATES_END,
 } fighter_state_t;
 
@@ -44,7 +45,9 @@ typedef enum fight_textures_e {
     PLAYER_ATTACK_UP,
     PLAYER_ATTACK_DOWN,
     PLAYER_ATTACK_CROUCH,
+
     PLAYER_ATTACK_JUMP,
+    PLAYER_HIT_TEXT,
     PLAYER_TEXTURES_END,
 
     NPC_IDLE_TEXT,
@@ -57,6 +60,7 @@ typedef enum fight_textures_e {
     NPC_ATTACK_DOWN_TEXT,
     NPC_ATTACK_CROUCH_TEXT,
     NPC_ATTACK_JUMP_TEXT,
+    NPC_HIT_TEXT,
     NPC_TEXTURES_END,
 
     BACKGROUND_TEXT,
@@ -72,12 +76,13 @@ static const fighter_state_t STATE_LOCKS[] = {
     ATTACK_JUMP,
     ATTACK_CROUCH,
     ATTACK_DOWN,
-    ATTACK_UP
+    ATTACK_UP,
+    HIT,
 };
 static const fighter_state_t STATE_LOCKS_BYPASS[] = {
     ATTACK_JUMP,
 };
-static const fighter_state_t N_OF_LOCKS = 7;
+static const fighter_state_t N_OF_LOCKS = 8;
 static const fighter_state_t N_OF_BYPASS = 1;
 
 #endif

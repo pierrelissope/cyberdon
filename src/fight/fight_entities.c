@@ -47,7 +47,7 @@ static sfSprite *init_fight_sprite(fighter_entity_t *entity,
 
 static annimation_t **init_annimations(fighter_entity_t *entity, dict_t *text_dict)
 {
-    annimation_t **annimations = calloc(STATES_END, sizeof(annimation_t *));
+    annimation_t **annimations = calloc(STATES_END + 1, sizeof(annimation_t *));
 
     for (int i = 0; MOVES_INIT[i].state != STATES_END; i++) {
         annimations[i] = calloc(1, sizeof(annimation_t));

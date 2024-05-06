@@ -6,10 +6,11 @@
 */
 
 #include "fight.h"
-#include "fight_actions.h"
 #include "fight_entity.h"
 #include "fight_macros.h"
 #include "struct.h"
+
+#include <stdio.h>
 #include <SFML/Graphics/Rect.h>
 #include <SFML/Graphics/Sprite.h>
 #include <SFML/Graphics/Types.h>
@@ -19,7 +20,7 @@
 #include <SFML/Window/Keyboard.h>
 #include <stdbool.h>
 
-bool annimation_bypass(fighter_entity_t *entity, fighter_state_t new_state)
+bool annimation_bypass(fighter_entity_t *, fighter_state_t new_state)
 {
     for (fighter_state_t i = 0; i < N_OF_BYPASS; i++) {
         if (new_state == STATE_LOCKS_BYPASS[i]) {
@@ -104,10 +105,10 @@ static void update_fighter_dir(fight_t *fight)
 static bool check_colisions(fight_t *fight)
 {
     if (sfFloatRect_intersects(&(fight->player->hitbox), &(fight->npc->dmgbox), NULL)) {
-        printf("PLAYER HIT !\n");
+        change_state(fight->player, HIT);
     }
     if (sfFloatRect_intersects(&(fight->npc->hitbox), &(fight->player->dmgbox), NULL)) {
-        printf("npc HIT !\n");
+        change_state(fight->npc, HIT);
     }
     fight->player->dmgbox = (sfFloatRect) {0, 0, 0, 0};
     fight->player->dmgbox = (sfFloatRect) {0, 0, 0, 0};

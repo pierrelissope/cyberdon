@@ -15,7 +15,7 @@
 #include <SFML/Window/Keyboard.h>
 #include <stdbool.h>
 
-fighter_state_t pick_attack(fighter_entity_t *fighter, fighter_state_t action)
+static fighter_state_t pick_attack(fighter_entity_t *fighter, fighter_state_t action)
 {
     if (action == ATTACK && fighter->state == JUMP)
         return ATTACK_JUMP;
@@ -28,7 +28,7 @@ fighter_state_t pick_attack(fighter_entity_t *fighter, fighter_state_t action)
     return action;
 }
 
-int handle_pre_fight_event(game_t *, fight_t *fight, fighter_state_t *action)
+static int handle_pre_fight_event(game_t *, fight_t *fight, fighter_state_t *action)
 {
     fight->player->looking_down = false;
     fight->player->looking_up = false;
@@ -53,7 +53,7 @@ int handle_pre_fight_event(game_t *, fight_t *fight, fighter_state_t *action)
     return 0;
 }
 
-fighter_state_t pick_walking_annimation(fighter_entity_t *entity, int action)
+static fighter_state_t pick_walking_annimation(fighter_entity_t *entity, int action)
 {
     if (action == IDLE && entity->velocity.x != 0) {
         if (entity->velocity.x > 0)
@@ -62,6 +62,31 @@ fighter_state_t pick_walking_annimation(fighter_entity_t *entity, int action)
             return BACKWARD;
     }
     return action;
+}
+
+void handle_ai_actions(fight_t *fight)
+{
+    fighter_state_t action = IDLE;
+    fight->npc->looking_down = false;
+    fight->npc->looking_up = false;
+    fight->npc->crouching = false;
+    fight->npc->velocity.x = 0;
+    ai_movement_pick(fight);
+    action = ai_action_pick(fight);
+    action = pick_attack(fight->npc, action);
+    action = pick_walking_annimation(fight->npc, action);
+    change_state(fight->npc, action);
+    if (FIGHT_ACTIONS[fight->npc->state] != NULL)
+        FIGHT_ACTIONS[fight->npc->state](fight->npc);
+}
+
+void handle_player_actions(fight_t *fight, fighter_state_t action)
+{
+    action = pick_attack(fight->player, action);
+    action = pick_walking_annimation(fight->player, action);
+    change_state(fight->player, action);
+    if (FIGHT_ACTIONS[fight->player->state] != NULL)
+        FIGHT_ACTIONS[fight->player->state](fight->player);
 }
 
 int handle_fight_event(game_t *game, fight_t *fight, sfEvent *event)
@@ -79,10 +104,7 @@ int handle_fight_event(game_t *game, fight_t *fight, sfEvent *event)
                 action = JUMP;
         }
     }
-    action = pick_attack(fight->player, action);
-    action = pick_walking_annimation(fight->player, action);
-    change_state(fight->player, action);
-    if (FIGHT_ACTIONS[fight->player->state] != NULL)
-        FIGHT_ACTIONS[fight->player->state](fight->player);
+    handle_player_actions(fight, action);
+    handle_ai_actions(fight);
     return sfEvtCount;
 }

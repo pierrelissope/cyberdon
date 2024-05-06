@@ -99,6 +99,13 @@ static const movement_init_t MOVES_INIT[] = {
         3
     },
     {
+        HIT,
+        "hit.png",
+        100,
+        {0, 0, 52, 100},
+        1
+    },
+    {
         STATES_END, 0, 0, {0}, 0
     },
 };
