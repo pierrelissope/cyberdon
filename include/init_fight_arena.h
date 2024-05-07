@@ -8,10 +8,10 @@
 #ifndef INIT_ARENA_H
     #define INIT_ARENA_H
 
-#include "fight_macros.h"
-#include <SFML/Graphics/Rect.h>
-#include <SFML/System/Vector2.h>
-#include <stddef.h>
+    #include "fight_macros.h"
+    #include <SFML/Graphics/Rect.h>
+    #include <SFML/System/Vector2.h>
+    #include <stddef.h>
 
 static const sfIntRect BACKGROUND_REC = {
     .height = 1920,

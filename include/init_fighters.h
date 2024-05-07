@@ -8,16 +8,9 @@
 #ifndef INIT_FIGHTERS_H
     #define INIT_FIGHTERS_H
 
-#include "fight_macros.h"
-#include <SFML/Graphics/Rect.h>
-#include <SFML/System/Vector2.h>
-#include <stddef.h>
-
-static const char *FIGHTER_FOLDERS[] = {
-    [PLAYER_FIGHTER] = "assets/fighters/player/",
-    [NPC1] = "assets/fighters/npc1/",
-    NULL
-};
+    #include "fight_macros.h"
+    #include <SFML/Graphics/Rect.h>
+    #include <SFML/System/Vector2.h>
 
 typedef struct movement_init_s {
     fighter_state_t state;
@@ -114,4 +107,25 @@ static const sfVector2f PLAYER_SPAWN = {200, 200};
 static const sfVector2f NPC_SPAWN = {800, 200};
 static const sfVector2f BASE_FIGHTER_VELOCITY = {0, 0};
 static const int COOLDOWN = 25;
+
+
+typedef struct fighter_init_s {
+    char *fighter_folder;
+    fight_textures_t text_beg;
+    fight_textures_t text_end;
+} fighter_init_t;
+
+static const fighter_init_t FIGHTER_INIT[] = {
+    [PLAYER_FIGHTER] = {
+        "assets/fighters/player/",
+        PLAYER_IDLE_TEXT,
+        PLAYER_TEXTURES_END
+    },
+    [NPC1] = {
+        "assets/fighters/npc1/",
+        NPC_IDLE_TEXT,
+        NPC_TEXTURES_END
+    },
+};
+
 #endif

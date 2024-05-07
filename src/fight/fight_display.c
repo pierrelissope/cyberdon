@@ -59,13 +59,15 @@ static void draw_fighter(fighter_entity_t *fighter, sfRenderWindow *win)
 {
     annimation_t *current = fighter->annimation_sheets[fighter->state];
 
-    sfSprite_setTextureRect(fighter->annimation_sheets[fighter->state]->sprite_sheet,
+    sfSprite_setTextureRect(
+        fighter->annimation_sheets[fighter->state]->sprite_sheet,
         fighter->annimation_sheets[fighter->state]->text_rec);
     sfRenderWindow_drawSprite(win,
         fighter->annimation_sheets[fighter->state]->sprite_sheet, NULL);
 }
 
-static void draw_rec(sfFloatRect *rec, sfVector2f *origin, sfRenderWindow *window)
+static void draw_rec(sfFloatRect *rec,
+    sfVector2f *origin, sfRenderWindow *window)
 {
     sfRectangleShape *temp = sfRectangleShape_create();
     sfVector2f temp_vec;
@@ -86,8 +88,10 @@ static void draw_rec(sfFloatRect *rec, sfVector2f *origin, sfRenderWindow *windo
 
 static void draw_debug(fight_t *fight, sfRenderWindow *win)
 {
-    sfVector2f npc_origin = sfSprite_getOrigin(fight->npc->annimation_sheets[fight->npc->state]->sprite_sheet);
-    sfVector2f player_origin = sfSprite_getOrigin(fight->player->annimation_sheets[fight->player->state]->sprite_sheet);
+    sfVector2f npc_origin = sfSprite_getOrigin(
+        fight->npc->annimation_sheets[fight->npc->state]->sprite_sheet);
+    sfVector2f player_origin = sfSprite_getOrigin(
+        fight->player->annimation_sheets[fight->player->state]->sprite_sheet);
 
     draw_rec(&(fight->player->hitbox), &player_origin, win);
     draw_rec(&(fight->npc->hitbox), &npc_origin, win);

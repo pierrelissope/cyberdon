@@ -51,8 +51,10 @@ static void apply_movement(fighter_entity_t *entity)
         entity_sprite = entity->annimation_sheets[i]->sprite_sheet;
         sfSprite_move(entity_sprite, entity->velocity);
     }
-    bounds = sfSprite_getGlobalBounds(entity->annimation_sheets[entity->state]->sprite_sheet);
-    entity->sprite_pos = sfSprite_getPosition(entity->annimation_sheets[entity->state]->sprite_sheet);
+    bounds = sfSprite_getGlobalBounds(
+        entity->annimation_sheets[entity->state]->sprite_sheet);
+    entity->sprite_pos = sfSprite_getPosition(
+        entity->annimation_sheets[entity->state]->sprite_sheet);
     entity->hitbox = bounds;
     entity->hitbox.left += 30;
 }
@@ -66,7 +68,8 @@ static void apply_gravity(fighter_entity_t *entity)
     if (entity->sprite_pos.y > FLOOR_Y) {
         entity->velocity.y = 0;
         entity->sprite_pos.y = FLOOR_Y;
-        sfSprite_setPosition(entity->annimation_sheets[entity->state]->sprite_sheet, basepos);
+        sfSprite_setPosition(
+        entity->annimation_sheets[entity->state]->sprite_sheet, basepos);
     }
 }
 
@@ -75,19 +78,23 @@ static void reverse_side(fighter_entity_t *entity)
     annimation_t *current = entity->annimation_sheets[entity->state];
 
     if (entity->looking_left) {
-        sfSprite_setScale(entity->annimation_sheets[entity->state]->sprite_sheet,
-                          (sfVector2f) {-3 , 3});
+        sfSprite_setScale(
+        entity->annimation_sheets[entity->state]->sprite_sheet,
+            (sfVector2f) {-3, 3});
     }
     if (entity->looking_right) {
-        sfSprite_setScale(entity->annimation_sheets[entity->state]->sprite_sheet,
-                          (sfVector2f) {3 , 3});
+        sfSprite_setScale(
+        entity->annimation_sheets[entity->state]->sprite_sheet,
+            (sfVector2f) {3, 3});
     }
 }
 
 static void update_fighter_dir(fight_t *fight)
 {
-    float npc_left_point = fight->npc->hitbox.left - (fight->npc->hitbox.width / 2);
-    float player_left_point = fight->player->hitbox.left - (fight->player->hitbox.width / 2);
+    float npc_left_point = fight->npc->hitbox.left -
+        (fight->npc->hitbox.width / 2);
+    float player_left_point = fight->player->hitbox.left -
+        (fight->player->hitbox.width / 2);
 
     if (player_left_point > fight->npc->hitbox.left) {
         fight->player->looking_left = true;
@@ -102,12 +109,14 @@ static void update_fighter_dir(fight_t *fight)
     }
 }
 
-static bool check_colisions(fight_t *fight)
+static void check_colisions(fight_t *fight)
 {
-    if (sfFloatRect_intersects(&(fight->player->hitbox), &(fight->npc->dmgbox), NULL)) {
+    if (sfFloatRect_intersects(&(fight->player->hitbox),
+        &(fight->npc->dmgbox), NULL)) {
         change_state(fight->player, HIT);
     }
-    if (sfFloatRect_intersects(&(fight->npc->hitbox), &(fight->player->dmgbox), NULL)) {
+    if (sfFloatRect_intersects(&(fight->npc->hitbox),
+        &(fight->player->dmgbox), NULL)) {
         change_state(fight->npc, HIT);
     }
     fight->player->dmgbox = (sfFloatRect) {0, 0, 0, 0};
@@ -117,18 +126,13 @@ static bool check_colisions(fight_t *fight)
 void update_fight(fight_t *fight)
 {
     update_fighter_dir(fight);
-
     apply_gravity(fight->player);
     apply_gravity(fight->npc);
-
     reverse_side(fight->player);
     reverse_side(fight->npc);
-
     apply_movement(fight->player);
     apply_movement(fight->npc);
-
     annimate_fighter(fight->player);
     annimate_fighter(fight->npc);
-
     check_colisions(fight);
 }

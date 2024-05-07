@@ -30,7 +30,7 @@ static sfSprite *init_fight_sprite(fighter_entity_t *entity,
 
     if (entity->name == PLAYER_FIGHTER) {
         sfSprite_setTexture(sp, dict_get(text_dict,
-             MOVES_INIT[moves_index].state), sfFalse);
+            MOVES_INIT[moves_index].state), sfFalse);
         sfSprite_setPosition(sp, PLAYER_SPAWN);
         entity->sprite_pos = PLAYER_SPAWN;
     } else {
@@ -45,9 +45,11 @@ static sfSprite *init_fight_sprite(fighter_entity_t *entity,
     return sp;
 }
 
-static annimation_t **init_annimations(fighter_entity_t *entity, dict_t *text_dict)
+static annimation_t **init_annimations(fighter_entity_t *entity,
+    dict_t *text_dict)
 {
-    annimation_t **annimations = calloc(STATES_END + 1, sizeof(annimation_t *));
+    annimation_t **annimations = calloc(
+        STATES_END + 1, sizeof(annimation_t *));
 
     for (int i = 0; MOVES_INIT[i].state != STATES_END; i++) {
         annimations[i] = calloc(1, sizeof(annimation_t));
@@ -60,7 +62,8 @@ static annimation_t **init_annimations(fighter_entity_t *entity, dict_t *text_di
     return annimations;
 }
 
-fighter_entity_t *init_fighter_entity(physical_entity_t *entity_stats, fight_t *fight)
+fighter_entity_t *init_fighter_entity(physical_entity_t *entity_stats,
+    fight_t *fight)
 {
     fighter_entity_t *entity = calloc(1, sizeof(fighter_entity_t));
 

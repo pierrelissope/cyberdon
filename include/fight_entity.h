@@ -13,6 +13,7 @@
 #include <SFML/System/Vector2.h>
 #include <SFML/Window.h>
 #include <stdbool.h>
+
 #include "fight_macros.h"
 #include "struct.h"
 
