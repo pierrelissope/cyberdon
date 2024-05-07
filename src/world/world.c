@@ -8,7 +8,7 @@
 #include "world.h"
 #include "entity.h"
 
-const int COLLISION_OPACITY = 155;
+const int COLLISION_OPACITY = 145;
 const int TILE_SIZE = 50;
 
 world_t init_world(void)
@@ -16,31 +16,6 @@ world_t init_world(void)
     world_t world = {0};
 
     return world;
-}
-
-int load_level(world_t *world, char *level, dict_t *tiles, dict_t *sheets_dict)
-{
-    char **floor = load_floor(level);
-    char **walls = load_walls(level);
-
-    world->teleporters = load_level_teleporters(level, tiles);
-    world->entities = load_level_entities(level, sheets_dict);
-    if (!floor || !walls) {
-        freef("%t%t", floor, walls);
-        return EXIT_FAILURE;
-    }
-    for (int y = 0; floor[y]; y++)
-        if (parse_floor_line(floor, world, y, tiles) == EXIT_FAILURE) {
-            freef("%t%t", floor, walls);
-            return EXIT_FAILURE;
-        }
-    for (int y = 0; walls[y]; y++)
-        if (parse_walls_line(walls, world, y, tiles) == EXIT_FAILURE) {
-            freef("%t%t", floor, walls);
-            return EXIT_FAILURE;
-        }
-    free_str_array(floor);
-    return 0;
 }
 
 static void draw_wall(void *wall, sfRenderWindow *window)
@@ -168,7 +143,6 @@ void draw_level(sfRenderWindow *window, world_t *world,
     quicksort(floor_stack, 0, my_arraylen((void **)floor_stack) - 1);
     for (int i = 0; floor_stack && floor_stack[i]; i++)
         floor_stack[i]->fct(floor_stack[i]->object, window);
-
     stack_walls(&stack, world);
     stack_entities(&stack, world);
     stack_player(&stack, player);
@@ -176,4 +150,5 @@ void draw_level(sfRenderWindow *window, world_t *world,
     for (int i = 0; stack && stack[i]; i++)
         stack[i]->fct(stack[i]->object, window);
     free(stack);
+    free(floor_stack);
 }

@@ -12,7 +12,7 @@
 #include "status.h"
 #include "mymenu.h"
 
-const sfVector2f PLAYER_START_POS = {10, 110};
+const sfVector2f PLAYER_START_POS = {150, 180};
 
 static dict_t *load_entity_sheets(const init_texture_t ENTIY_TEXTURE_INIT[])
 {
@@ -68,7 +68,7 @@ game_t init_game(void)
     if(!game.status.is_valid)
         return game;
     game.loading_page = init_loading_page(game.tiles_dict);
-    load_level(&game.world, "city", game.tiles_dict, game.sheets_dict);
+    load_level(&game, "city", game.tiles_dict, game.sheets_dict);
     game.is_valid = true;
     return game;
 }

@@ -24,7 +24,17 @@ enum Tiles {
     BEDROOM_WALL,
     BEDROOM_POSTER_WALL,
     WOOD_FLOOR,
+    WOOD_FLOOR2,
+    WHITE_WALL,
     TELEPORTER,
+    BLACK_FLOOR,
+    WHITE_FLOOR,
+    WHITE_PAINTED_WALL,
+    POOR_BED,
+    LIBRARY,
+    CLOSET,
+    POOR_TABLE,
+    ARROW_WALL
 };
 
 enum Spritesheets {
@@ -164,6 +174,24 @@ static const init_texture_t TILES_TEXTURE_INIT[] = {
         .frame_nb = 1
     },
     {
+        .texture_path = "./assets/blocks/black_floor.png",
+        .texture_name = BLACK_FLOOR,
+        .rect = {0, 0, 128, 105},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/white_floor.png",
+        .texture_name = WHITE_FLOOR,
+        .rect = {0, 0, 128, 105},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/wood_floor2.png",
+        .texture_name = WOOD_FLOOR2,
+        .rect = {0, 0, 128, 105},
+        .frame_nb = 1
+    },
+    {
         .texture_path = "./assets/blocks/stone.png",
         .texture_name = STONE_BLOCK,
         .rect = {0, 0, 128, 128},
@@ -173,6 +201,48 @@ static const init_texture_t TILES_TEXTURE_INIT[] = {
         .texture_path = "./assets/blocks/stone_wall.png",
         .texture_name = STONE_WALL,
         .rect = {0, 0, 128, 230},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/white_wall.png",
+        .texture_name = WHITE_WALL,
+        .rect = {0, 0, 128, 327},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/arrow_wall.png",
+        .texture_name = ARROW_WALL,
+        .rect = {0, 0, 256, 327},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/painted_white_wall.png",
+        .texture_name = WHITE_PAINTED_WALL,
+        .rect = {0, 0, 128, 327},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/poor_bed.png",
+        .texture_name = POOR_BED,
+        .rect = {0, 0, 256, 270},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/poor_table.png",
+        .texture_name = POOR_TABLE,
+        .rect = {0, 0, 256, 270},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/closet.png",
+        .texture_name = CLOSET,
+        .rect = {0, 0, 128, 380},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/library.png",
+        .texture_name = LIBRARY,
+        .rect = {0, 0, 256, 380},
         .frame_nb = 1
     },
     {

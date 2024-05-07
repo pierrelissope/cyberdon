@@ -13,6 +13,25 @@
 static const char *LEVELS_MAP_PATHS = "./levels/";
 static const sfVector2f TILE_SIZE = {50, 50};
 
+static teleporter_t *build_teleporter_rect(teleporter_t *teleporter,
+    sfVector2f pos, dict_t *tiles)
+{
+    sfVector2f origin = {0};
+
+    teleporter->rect = sfRectangleShape_create();
+    if (!teleporter->rect)
+        return NULL;
+    sfRectangleShape_setPosition(teleporter->rect,
+        (sfVector2f){TILE_SIZE.x * pos.x, TILE_SIZE.y * pos.y});
+    sfRectangleShape_setSize(teleporter->rect, (sfVector2f){50, 50});
+    origin =
+        (sfVector2f){sfTexture_getSize(dict_get(tiles, TELEPORTER)).x / 2,
+        sfTexture_getSize(dict_get(tiles, TELEPORTER)).y - 2};
+    sfSprite_setOrigin(teleporter->sprite, origin);
+    sfSprite_setPosition(teleporter->sprite, isom_pos_converter(pos));
+    return teleporter;
+}
+
 static teleporter_t *create_teleporter(char *coords, dict_t *tiles)
 {
     teleporter_t *teleporter = calloc(1, sizeof(teleporter_t));
@@ -26,27 +45,18 @@ static teleporter_t *create_teleporter(char *coords, dict_t *tiles)
     pos = (sfVector2f){atof(tokens[0]), atof(tokens[1])};
     sfSprite_setTexture(teleporter->sprite,
         dict_get(tiles, TELEPORTER), sfTrue);
-    teleporter->rect = sfRectangleShape_create();
-    if (!teleporter->rect)
-        return NULL;
-    sfRectangleShape_setPosition(teleporter->rect, (sfVector2f){TILE_SIZE.x * pos.x, TILE_SIZE.y * pos.y});
-    sfRectangleShape_setSize(teleporter->rect, (sfVector2f){50, 50});
-    sfRectangleShape_setFillColor(teleporter->rect, sfTransparent);
-    sfRectangleShape_setOutlineColor(teleporter->rect, sfWhite);
-    sfRectangleShape_setOutlineThickness(teleporter->rect, 2);
-    sfVector2f origin = (sfVector2f){sfTexture_getSize(dict_get(tiles, TELEPORTER)).x / 2,
-        sfTexture_getSize(dict_get(tiles, TELEPORTER)).y - 2};
-    sfSprite_setOrigin(teleporter->sprite, origin);
-    sfSprite_setPosition(teleporter->sprite, isom_pos_converter(pos));
-    return teleporter;
+    return build_teleporter_rect(teleporter, pos, tiles);
 }
 
 static sfVector2f get_destination_coords(char *coords)
 {
+    sfVector2f pos = {0};
     char **tokens = my_str_to_all_array(coords, ":");
-    sfVector2f pos = 
-        {atof(tokens[0]) * TILE_SIZE.x, atof(tokens[1]) * TILE_SIZE.y};
 
+    if (my_strlen_array(tokens) != 2)
+            return (sfVector2f){0, 0};
+    pos = (sfVector2f)
+        {atof(tokens[0]) * TILE_SIZE.x, atof(tokens[1]) * TILE_SIZE.y};
     free_str_array(tokens);
     return pos;
 }
@@ -59,6 +69,8 @@ static int parse_level_teleporters(char **lines,
 
     for (int i = 0; lines[i]; i++) {
         tokens = my_str_to_all_array(lines[i], ";");
+        if (my_strlen_array(tokens) != 3)
+            return EXIT_FAILURE;
         teleporter = create_teleporter(tokens[0], tiles);
         teleporter->destination_level = strdup(tokens[1]);
         teleporter->destination_coord = get_destination_coords(tokens[2]);
@@ -70,7 +82,8 @@ static int parse_level_teleporters(char **lines,
 
 teleporter_t **load_level_teleporters(char *level, dict_t *tiles)
 {
-    char *path = concat_mem((char *)LEVELS_MAP_PATHS, level, "/teleporters.conf");
+    char *path = concat_mem((char *)LEVELS_MAP_PATHS, level,
+        "/teleporters.conf");
     char *buffer = NULL;
     char **lines = NULL;
     teleporter_t **teleporters = NULL;

@@ -60,7 +60,6 @@ typedef struct block_s {
     sfVector2f pos;
     sfClock *clock;
     sfTime last_animation_update;
-    char **dialogs_array;
 } block_t;
 
 typedef struct teleporter_s {
@@ -115,4 +114,5 @@ typedef struct game_s {
     dict_t *tiles_dict;
     physical_entity_t *player;
     world_t world;
+    char **visited_levels;
 } game_t;

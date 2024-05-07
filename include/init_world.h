@@ -22,11 +22,15 @@ static const init_world_t FLOOR_BLOCK_INIT[] =
         .texture_name = GRASS_BLOCK
     },
     {
-        .c = '2',
-        .texture_name = STONE_BLOCK
+        .c = 'b',
+        .texture_name = BLACK_FLOOR
     },
     {
         .c = 'w',
+        .texture_name = WHITE_FLOOR
+    },
+    {
+        .c = 'x',
         .texture_name = WOOD_FLOOR
     },
     {
@@ -40,6 +44,34 @@ static const init_world_t WALLS_BLOCK_INIT[] =
     {
         .c = 'c',
         .texture_name = COLLISION_BLOCK
+    },
+    {
+        .c = 't',
+        .texture_name = WHITE_WALL
+    },
+    {
+        .c = 's',
+        .texture_name = WHITE_PAINTED_WALL
+    },
+    {
+        .c = 'p',
+        .texture_name = POOR_BED
+    },
+    {
+        .c = 'v',
+        .texture_name = POOR_TABLE
+    },
+    {
+        .c = 'r',
+        .texture_name = ARROW_WALL
+    },
+    {
+        .c = 'm',
+        .texture_name = LIBRARY
+    },
+    {
+        .c = 'a',
+        .texture_name = CLOSET
     },
     {
         .c = '5',

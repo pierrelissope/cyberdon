@@ -59,15 +59,6 @@ physical_entity_t *init_entity(sfVector2f pos, int type, char *name,
     return entity;
 }
 
-void destroy_entity(physical_entity_t *entity)
-{
-    if (entity->rect)
-        sfRectangleShape_destroy(entity->rect);
-    if (entity->clock)
-        sfClock_destroy(entity->clock);
-    printf("Entity Destroyed\n");
-}
-
 static sfVector2f get_movement(sfEvent *event)
 {
     sfVector2f movement = {0, 0};

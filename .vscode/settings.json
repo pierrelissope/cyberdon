@@ -7,6 +7,7 @@
         "graphics.h": "c",
         "window.h": "c",
         "struct.h": "c",
-        "menu.h": "c"
+        "menu.h": "c",
+        "world.h": "c"
     }
 }
