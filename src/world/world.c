@@ -7,6 +7,7 @@
 
 #include "world.h"
 #include "entity.h"
+#include "utils.h"
 
 const int COLLISION_OPACITY = 145;
 const int TILE_SIZE = 50;

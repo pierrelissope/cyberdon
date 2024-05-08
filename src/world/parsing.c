@@ -5,9 +5,8 @@
 ** parsing
 */
 
+#include "utils.h"
 #include "world.h"
-#include "entity.h"
-#include "init_texture.h"
 #include "init_world.h"
 
 static int build_floor_rect(block_t *block, float x, float y)

@@ -6,6 +6,8 @@
 */
 
 #include "game.h"
+#include "struct.h"
+#include <SFML/System/Vector2.h>
 #include "basics.h"
 #include <time.h>
 

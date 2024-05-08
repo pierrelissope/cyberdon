@@ -8,6 +8,7 @@
 #pragma once
 
 #include <SFML/Graphics.h>
+#include <SFML/Graphics/Rect.h>
 #include <SFML/Window.h>
 #include <stdbool.h>
 
@@ -116,3 +117,12 @@ typedef struct game_s {
     world_t world;
     char **visited_levels;
 } game_t;
+
+typedef struct annimation_s {
+    int id;
+    sfIntRect text_rec;
+    sfSprite *sprite_sheet;
+    int cooldown_mili;
+    int n_of_frames;
+    int current_frame;
+} annimation_t;

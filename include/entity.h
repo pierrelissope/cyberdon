@@ -9,11 +9,7 @@
 
 #include <SFML/Graphics.h>
 #include <SFML/Window.h>
-#include <string.h>
 #include "struct.h"
-#include "world.h"
-#include "dict.h"
-#include "utils.h"
 
 #define MAX_TYPE_SIZE 30
 

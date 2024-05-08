@@ -9,6 +9,8 @@
 #include "init_texture.h"
 #include "init_entity.h"
 #include "view.h"
+#include "dict.h"
+#include "world.h"
 #include "status.h"
 #include "mymenu.h"
 
@@ -99,6 +101,7 @@ void run_game(game_t *game)
     game->window = sfRenderWindow_create(
         (sfVideoMode){1920, 1080, 32}, "MyRPG", sfClose | sfResize, NULL);
     sfRenderWindow_setFramerateLimit(game->window, 60);
+    test(game);
     while (sfRenderWindow_isOpen(game->window)) {
         if (handle_event(game, &event) == sfEvtClosed)
             return;

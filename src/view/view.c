@@ -5,8 +5,10 @@
 ** view
 */
 
-#include "entity.h"
+#include <SFML/Graphics/Types.h>
+#include <SFML/Graphics/View.h>
 #include "view.h"
+#include "utils.h"
 
 static const float CINEMATIC_TIME = 5;
 
@@ -40,4 +42,12 @@ void center_view(sfView *view, sfRectangleShape *player_rect, game_t *game)
             game->view_pos = (sfVector2f){0, 0};
         }
     }
+}
+
+sfView *init_fight_view(void)
+{
+    sfFloatRect view_rect = {0, 0, 1920, 1080};
+    sfView *view = sfView_createFromRect(view_rect);
+
+    return view;
 }

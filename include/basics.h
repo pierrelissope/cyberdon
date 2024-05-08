@@ -51,3 +51,4 @@ int my_isdigit(const char *str);
 char *my_strstr(char *fullstring, char *substring);
 void **remove_from_array(void ***ptr, int index, int *len);
 char *my_itoa(int nb);
+char *my_strcat(size_t n_of_words, ...);

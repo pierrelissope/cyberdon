@@ -1,16 +1,15 @@
 /*
 ** EPITECH PROJECT, 2024
-** csfml_isom
+** my rpg
 ** File description:
-** entity
+** entities
 */
 
-#include <math.h>
+#include "dict.h"
+#include "string.h"
 #include "entity.h"
-#include "world.h"
-#include "basics.h"
 #include "init_texture.h"
-#include "init_entity.h"
+#include "utils.h"
 
 const int ANIMATION_COOLDOWN = 100;
 

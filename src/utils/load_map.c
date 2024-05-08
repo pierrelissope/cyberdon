@@ -9,6 +9,7 @@
 #include "entity.h"
 #include "world.h"
 #include "init_entity.h"
+#include <string.h>
 #include "init_texture.h"
 
 static const char *LEVELS_MAP_PATHS = "./levels/";
