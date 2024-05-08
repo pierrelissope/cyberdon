@@ -88,6 +88,8 @@ void play_inventory(sfRenderWindow *window, dict_t *items_dict)
 {
     sfVector2f inventory_position = {50.f, 50.f};
     inventory_t *inventory = create_inventory(inventory_position);
+    inventory_t *inventory2 = create_inventory((sfVector2f){1300, 50});
+
     sfVector2f mouse_pos = {0};
     sfEvent event;
     item_t *dragged_item = calloc(1, sizeof(dragged_item));
@@ -98,6 +100,9 @@ void play_inventory(sfRenderWindow *window, dict_t *items_dict)
     insert_item(inventory, STRENGTH_ORB, items_dict);
     insert_item(inventory, STRENGTH_ORB, items_dict);
 
+    insert_item(inventory2, SPEED_ORB, items_dict);
+    insert_item(inventory2, SPEED_ORB, items_dict);
+
     while (sfRenderWindow_isOpen(window)) {
         mouse_pos = (sfVector2f)sfRenderWindow_mapPixelToCoords
             (window, sfMouse_getPositionRenderWindow(window), NULL);
@@ -107,11 +112,15 @@ void play_inventory(sfRenderWindow *window, dict_t *items_dict)
 
         
         update_inventory(inventory, mouse_pos);
+        update_inventory(inventory2, mouse_pos);
 
         dragg_item(inventory, mouse_pos, dragged_item);
+        dragg_item(inventory2, mouse_pos, dragged_item);
 
         sfRenderWindow_clear(window, sfBlack);
         draw_inventory(window, inventory);
+        draw_inventory(window, inventory2);
+
         if (dragged_item != NULL && dragged_item->type != EMPTY_ITEM)
             sfRenderWindow_drawSprite(window, dragged_item->sprite, NULL);
         sfRenderWindow_display(window);
