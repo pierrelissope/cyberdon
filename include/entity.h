@@ -19,6 +19,5 @@ void update_entity(physical_entity_t *entity);
 void draw_entity(void *entity, sfRenderWindow *window);
 void move_entity(physical_entity_t *entity, sfEvent *event, world_t *world);
 void destroy_entity(physical_entity_t *entity);
-
 bool still_collide(sfFloatRect *rect, world_t *world);
 bool dont_collide(sfFloatRect *rect, world_t *world);

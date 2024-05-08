@@ -13,19 +13,38 @@
 #define MAX_SPRITE_SHEETS 100
 
 enum Tiles {
+    LOADING_PAGE_SHEET,
     GRASS_BLOCK,
     STONE_BLOCK,
     STONE_WALL,
     WOOD_WALL,
     BUILDING_1,
     COLLISION_BLOCK,
+    STREET_LAMP,
+    BEDROOM_WALL,
+    BEDROOM_POSTER_WALL,
+    WOOD_FLOOR,
+    WOOD_FLOOR2,
+    WHITE_WALL,
+    TELEPORTER,
+    BLACK_FLOOR,
+    WHITE_FLOOR,
+    WHITE_PAINTED_WALL,
+    POOR_BED,
+    LIBRARY,
+    CLOSET,
+    POOR_TABLE,
+    ARROW_WALL
 };
 
 enum Spritesheets {
-    IDLE ,
+    IDLE,
     DOWN_LEFT,
+    DOWN_RIGHT,
     UP_LEFT,
+    UP_RIGHT,
     LEFT,
+    RIGHT,
     UP,
     DOWN,
 };
@@ -33,32 +52,46 @@ enum Spritesheets {
 typedef struct init_texture_s {
     char *texture_path;
     int texture_name;
+    sfIntRect rect;
+    int frame_nb;
 } init_texture_t;
 
 static const init_texture_t PLAYER_TEXTURE_INIT[MAX_SPRITE_SHEETS] = {
     {
-        .texture_path = "./assets/spritesheets/player/player_up.png",
+        .texture_path = "./assets/spritesheets/player/idle.png",
         .texture_name = IDLE
     },
     {
-        .texture_path = "./assets/spritesheets/player/player_up.png",
+        .texture_path = "./assets/spritesheets/player/up.png",
         .texture_name = UP
     },
     {
-        .texture_path = "./assets/spritesheets/player/player_down.png",
+        .texture_path = "./assets/spritesheets/player/down.png",
         .texture_name = DOWN
     },
     {
-        .texture_path = "./assets/spritesheets/player/player_left.png",
+        .texture_path = "./assets/spritesheets/player/left.png",
         .texture_name = LEFT
     },
     {
-        .texture_path = "./assets/spritesheets/player/player_up_left.png",
+        .texture_path = "./assets/spritesheets/player/right.png",
+        .texture_name = RIGHT
+    },
+    {
+        .texture_path = "./assets/spritesheets/player/up_left.png",
         .texture_name = UP_LEFT
     },
     {
-        .texture_path = "./assets/spritesheets/player/player_down_left.png",
+        .texture_path = "./assets/spritesheets/player/up_right.png",
+        .texture_name = UP_RIGHT
+    },
+    {
+        .texture_path = "./assets/spritesheets/player/down_left.png",
         .texture_name = DOWN_LEFT
+    },
+    {
+        .texture_path = "./assets/spritesheets/player/down_right.png",
+        .texture_name = DOWN_RIGHT
     },
     {
         .texture_path = NULL,
@@ -68,28 +101,40 @@ static const init_texture_t PLAYER_TEXTURE_INIT[MAX_SPRITE_SHEETS] = {
 
 static const init_texture_t VILLAGER_TEXTURE_INIT[MAX_SPRITE_SHEETS] = {
     {
-        .texture_path = "./assets/spritesheets/player/player_up.png",
+        .texture_path = "./assets/spritesheets/player/up.png",
         .texture_name = IDLE
     },
     {
-        .texture_path = "./assets/spritesheets/player/player_up.png",
+        .texture_path = "./assets/spritesheets/player/up.png",
         .texture_name = UP
     },
     {
-        .texture_path = "./assets/spritesheets/player/player_down.png",
+        .texture_path = "./assets/spritesheets/player/down.png",
         .texture_name = DOWN
     },
     {
-        .texture_path = "./assets/spritesheets/player/player_left.png",
+        .texture_path = "./assets/spritesheets/player/left.png",
         .texture_name = LEFT
     },
     {
-        .texture_path = "./assets/spritesheets/player/player_up_left.png",
+        .texture_path = "./assets/spritesheets/player/right.png",
+        .texture_name = RIGHT
+    },
+    {
+        .texture_path = "./assets/spritesheets/player/up_left.png",
         .texture_name = UP_LEFT
     },
     {
-        .texture_path = "./assets/spritesheets/player/player_down_left.png",
+        .texture_path = "./assets/spritesheets/player/up_right.png",
+        .texture_name = UP_RIGHT
+    },
+    {
+        .texture_path = "./assets/spritesheets/player/down_left.png",
         .texture_name = DOWN_LEFT
+    },
+    {
+        .texture_path = "./assets/spritesheets/player/down_right.png",
+        .texture_name = DOWN_RIGHT
     },
     {
         .texture_path = NULL,
@@ -99,28 +144,136 @@ static const init_texture_t VILLAGER_TEXTURE_INIT[MAX_SPRITE_SHEETS] = {
 
 static const init_texture_t TILES_TEXTURE_INIT[] = {
     {
+        .texture_path = "./assets/spritesheets/loading_page/element.png",
+        .texture_name = LOADING_PAGE_SHEET,
+        .rect = {0, 0, 1134 / 5, 168},
+        .frame_nb = 5,
+    },
+    {
         .texture_path = "./assets/blocks/collision_block.png",
-        .texture_name = COLLISION_BLOCK
+        .texture_name = COLLISION_BLOCK,
+        .rect = {0, 0, 128, 128},
+        .frame_nb = 1
     },
     {
         .texture_path = "./assets/blocks/grass.png",
-        .texture_name = GRASS_BLOCK
+        .texture_name = GRASS_BLOCK,
+        .rect = {0, 0, 128, 105},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/tp_floor.png",
+        .texture_name = TELEPORTER,
+        .rect = {0, 0, 128, 105},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/wood_floor.png",
+        .texture_name = WOOD_FLOOR,
+        .rect = {0, 0, 128, 105},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/black_floor.png",
+        .texture_name = BLACK_FLOOR,
+        .rect = {0, 0, 128, 105},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/white_floor.png",
+        .texture_name = WHITE_FLOOR,
+        .rect = {0, 0, 128, 105},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/wood_floor2.png",
+        .texture_name = WOOD_FLOOR2,
+        .rect = {0, 0, 128, 105},
+        .frame_nb = 1
     },
     {
         .texture_path = "./assets/blocks/stone.png",
-        .texture_name = STONE_BLOCK
+        .texture_name = STONE_BLOCK,
+        .rect = {0, 0, 128, 128},
+        .frame_nb = 1
     },
     {
         .texture_path = "./assets/blocks/stone_wall.png",
-        .texture_name = STONE_WALL
+        .texture_name = STONE_WALL,
+        .rect = {0, 0, 128, 230},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/white_wall.png",
+        .texture_name = WHITE_WALL,
+        .rect = {0, 0, 128, 327},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/arrow_wall.png",
+        .texture_name = ARROW_WALL,
+        .rect = {0, 0, 256, 327},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/painted_white_wall.png",
+        .texture_name = WHITE_PAINTED_WALL,
+        .rect = {0, 0, 128, 327},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/poor_bed.png",
+        .texture_name = POOR_BED,
+        .rect = {0, 0, 256, 270},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/poor_table.png",
+        .texture_name = POOR_TABLE,
+        .rect = {0, 0, 256, 270},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/closet.png",
+        .texture_name = CLOSET,
+        .rect = {0, 0, 128, 380},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/library.png",
+        .texture_name = LIBRARY,
+        .rect = {0, 0, 256, 380},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/bedroom_wall.png",
+        .texture_name = BEDROOM_WALL,
+        .rect = {0, 0, 128, 230},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/bedroom_poster_wall.png",
+        .texture_name = BEDROOM_POSTER_WALL,
+        .rect = {0, 0, 128, 230},
+        .frame_nb = 1
     },
     {
         .texture_path = "./assets/blocks/wood_wall.png",
-        .texture_name = WOOD_WALL
+        .texture_name = WOOD_WALL,
+        .rect = {0, 0, 128, 128},
+        .frame_nb = 1
     },
     {
         .texture_path = "./assets/blocks/building_1.png",
-        .texture_name = BUILDING_1
+        .texture_name = BUILDING_1,
+        .rect = {0, 0, 256, 527},
+        .frame_nb = 7
+    },
+    {
+        .texture_path = "./assets/blocks/streetlamp.png",
+        .texture_name = STREET_LAMP,
+        .rect = {0, 0, 128, 230},
+        .frame_nb = 7
     },
     {
         .texture_path = NULL,

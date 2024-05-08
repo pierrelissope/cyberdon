@@ -32,8 +32,16 @@ SRC =		./src/entity/entity.c \
 			./src/fight/fight_movement.c	\
 			./src/fight/movement_actions.c	\
 			./src/fight/attack_actions.c	\
-			./src/view/view.c	\
-			./src/world/parsing.c	\
+			./src/world/load_level.c \
+			./src/world/parsing.c \
+			./src/world/animate.c \
+			./src/view/view.c \
+			./src/teleporter/parsing.c \
+			./src/teleporter/teleport.c \
+			./src/status/status.c \
+			./src/menus/loading_screen.c \
+			./src/entity/destroy.c \
+			./src/world/destroy.c
 
 SRCOBJ =	$(SRC:.c=.o)
 
