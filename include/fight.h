@@ -9,7 +9,7 @@
 
 #include "fight_entity.h"
 
-void destroy_fighter_entity(fighter_entity_t *entity);
+void destroy_fight(fight_t *fight);
 int handle_fight_event(game_t *game, fight_t *fight, sfEvent *event);
 fight_t *load_fight(game_t *game, physical_entity_t *player,
     physical_entity_t *npc, arenas_t arena);

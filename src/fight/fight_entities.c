@@ -82,10 +82,3 @@ fighter_entity_t *init_fighter_entity(physical_entity_t *entity_stats,
     entity->state = IDLE;
     return entity;
 }
-
-void destroy_fighter_entity(fighter_entity_t *entity)
-{
-    if (entity->clock)
-        sfClock_destroy(entity->clock);
-    printf("Entity Destroyed\n");
-}

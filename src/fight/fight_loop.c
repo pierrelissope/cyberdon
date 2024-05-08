@@ -19,10 +19,13 @@ int run_fight(game_t *game, physical_entity_t *player,
         return -1;
     while (sfRenderWindow_isOpen(game->window)) {
         update_fight(fight);
-        if (handle_fight_event(game, fight, &event) == sfEvtClosed)
+        if (handle_fight_event(game, fight, &event) == sfEvtClosed) {
+            destroy_fight(fight);
             return -1;
+        }
         draw_fight(fight, game->window);
     }
+    destroy_fight(fight);
     return 0;
 }
 
