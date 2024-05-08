@@ -18,12 +18,11 @@ world_t init_world(void)
     return world;
 }
 
-static void draw_wall(void *wall, sfRenderWindow *window)
+void draw_wall(void *wall, sfRenderWindow *window)
 {
     block_t *new_wall = wall;
 
     sfRenderWindow_drawSprite(window, new_wall->sprite, NULL);
-    //sfRenderWindow_drawRectangleShape(window, new_wall->rect, NULL);
 }
 
 static void stack_walls(linked_objects_t ***array, world_t *world)
@@ -74,6 +73,7 @@ static void stack_player(linked_objects_t ***array, physical_entity_t *player)
         (bounds.left) / 50,
         (bounds.top) / 50,
     };
+
     center = isom_pos_converter(center);
     bounds.left = center.x;
     bounds.top = center.y;
@@ -99,12 +99,9 @@ static void stack_floors(linked_objects_t ***array, world_t *world)
 {
     sfFloatRect bounds = {0};
     linked_objects_t *object = NULL;
-    sfVector2f center = {0};
-    float bottom = 0;
 
     for (int i = 0; world->floor && world->floor[i]; i++) {
         bounds = sfSprite_getGlobalBounds(world->floor[i]->sprite);
-        bottom = bounds.top + bounds.height;
         object = calloc(1, sizeof(linked_objects_t));
         object->object = world->floor[i];
         object->bounds = bounds;
@@ -117,12 +114,9 @@ static void stack_teleporters(linked_objects_t ***array, world_t *world)
 {
     sfFloatRect bounds = {0};
     linked_objects_t *object = NULL;
-    sfVector2f center = {0};
-    float bottom = 0;
 
     for (int i = 0; world->teleporters && world->teleporters[i]; i++) {
         bounds = sfSprite_getGlobalBounds(world->teleporters[i]->sprite);
-        bottom = bounds.top + bounds.height;
         object = calloc(1, sizeof(linked_objects_t));
         object->object = world->teleporters[i];
         object->priority = true;

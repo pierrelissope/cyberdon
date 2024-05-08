@@ -49,6 +49,16 @@ static int load_assets_dicts(game_t *game)
     return EXIT_SUCCESS;
 }
 
+static void init_game_components(game_t *game)
+{
+    game->status = init_status();
+    if (!game->status.is_valid)
+        return;
+    game->loading_page = init_loading_page(game->tiles_dict);
+    load_level(game, "city", game->tiles_dict, game->sheets_dict);
+    game->is_valid = true;
+}
+
 game_t init_game(void)
 {
     game_t game = {0};
@@ -62,14 +72,9 @@ game_t init_game(void)
     if (!game.player->is_valid)
         return game;
     game.player_view = init_player_view();
-    if(!game.player_view)
+    if (!game.player_view)
         return game;
-    game.status = init_status();
-    if(!game.status.is_valid)
-        return game;
-    game.loading_page = init_loading_page(game.tiles_dict);
-    load_level(&game, "city", game.tiles_dict, game.sheets_dict);
-    game.is_valid = true;
+    init_game_components(&game);
     return game;
 }
 

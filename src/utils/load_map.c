@@ -35,7 +35,8 @@ char **load_floor(char *level)
 {
     char *buffer = NULL;
     char **array = NULL;
-    char *map_path = concat_mem((char *)LEVELS_MAP_PATHS, level, "/floor.conf");
+    char *map_path = concat_mem((char *)LEVELS_MAP_PATHS,
+        level, "/floor.conf");
 
     if (!map_path) {
         freef("%a%a", map_path, buffer);
@@ -55,7 +56,8 @@ char **load_walls(char *level)
 {
     char *buffer = NULL;
     char **array = NULL;
-    char *map_path = concat_mem((char *)LEVELS_MAP_PATHS, level, "/walls.conf");
+    char *map_path = concat_mem((char *)LEVELS_MAP_PATHS,
+        level, "/walls.conf");
 
     if (!map_path) {
         freef("%a%a", map_path, buffer);

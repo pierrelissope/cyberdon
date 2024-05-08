@@ -23,11 +23,24 @@ static int build_floor_rect(block_t *block, float x, float y)
     return EXIT_SUCCESS;
 }
 
+int build_floor_components(block_t *block, world_t *world,
+    sfVector2f origin)
+{
+    sfSprite_setOrigin(block->sprite, origin);
+    sfSprite_setPosition(block->sprite, isom_pos_converter(block->pos));
+    append_ptr((void ***)&(world->floor), block, NULL);
+    if (!world->floor) {
+        freef("%s%a", block->sprite, block);
+        return EXIT_FAILURE;
+    }
+    return EXIT_SUCCESS;
+}
+
 static int build_floor(block_t *block, world_t *world,
     int type, dict_t *tiles)
 {
     sfVector2f origin = {0};
-    
+
     block->sprite_rect = get_tile_rect(type);
     block->frame_nb = get_tile_frames(type);
     block->type = type;
@@ -42,13 +55,8 @@ static int build_floor(block_t *block, world_t *world,
     sfSprite_setTextureRect(block->sprite, block->sprite_rect);
     origin = (sfVector2f){block->sprite_rect.width / 2,
         block->sprite_rect.height - 2};
-    sfSprite_setOrigin(block->sprite, origin);
-    sfSprite_setPosition(block->sprite, isom_pos_converter(block->pos));
-    append_ptr((void ***)&(world->floor), block, NULL);
-    if (!world->floor) {
-        freef("%s%a", block->sprite, block);
+    if (build_floor_components(block, world, origin) == EXIT_FAILURE)
         return EXIT_FAILURE;
-    }
     return EXIT_SUCCESS;
 }
 
@@ -65,10 +73,9 @@ int parse_floor_line(char **floor, world_t *world,
         if (!block)
             return EXIT_FAILURE;
         block->pos = (sfVector2f){x, y};
-        for (int i = 0; FLOOR_BLOCK_INIT[i].c != -1; i++) {
+        for (int i = 0; FLOOR_BLOCK_INIT[i].c != -1; ++i)
             type = (floor[y][x] == FLOOR_BLOCK_INIT[i].c ?
                 FLOOR_BLOCK_INIT[i].texture_name : type);
-        }
         if (build_floor_rect(block, x, y) == EXIT_FAILURE)
             return EXIT_FAILURE;
         if (build_floor(block, world, type, tiles) == EXIT_FAILURE)
@@ -87,6 +94,19 @@ static int build_walls_rect(block_t *block, float x, float y)
     sfRectangleShape_setFillColor(block->rect, sfTransparent);
     sfRectangleShape_setOutlineColor(block->rect, sfWhite);
     sfRectangleShape_setOutlineThickness(block->rect, 2);
+    return EXIT_SUCCESS;
+}
+
+int build_wall_component(block_t *block, world_t *world,
+    sfVector2f origin)
+{
+    sfSprite_setOrigin(block->sprite, origin);
+    sfSprite_setPosition(block->sprite, isom_pos_converter_z(block->pos));
+    append_ptr((void ***)&(world->walls), block, NULL);
+    if (!world->walls) {
+        freef("%s%a", block->sprite, block);
+        return EXIT_FAILURE;
+    }
     return EXIT_SUCCESS;
 }
 
@@ -109,13 +129,8 @@ static int build_wall(block_t *block, world_t *world,
     sfSprite_setTextureRect(block->sprite, block->sprite_rect);
     origin = (sfVector2f){block->sprite_rect.width / 2,
         block->sprite_rect.height- 2};
-    sfSprite_setOrigin(block->sprite, origin);
-    sfSprite_setPosition(block->sprite, isom_pos_converter_z(block->pos));
-    append_ptr((void ***)&(world->walls), block, NULL);
-    if (!world->walls) {
-        freef("%s%a", block->sprite, block);
+    if (build_wall_component(block, world, origin) == EXIT_FAILURE)
         return EXIT_FAILURE;
-    }
     return EXIT_SUCCESS;
 }
 
@@ -132,7 +147,7 @@ int parse_walls_line(char **walls, world_t *world,
         if (!block)
             free(block);
         block->pos = (sfVector2f){x, y};
-        for (int i = 0; WALLS_BLOCK_INIT[i].c != -1; i++) {
+        for (int i = 0; WALLS_BLOCK_INIT[i].c != -1; ++i) {
             type = (walls[y][x] == WALLS_BLOCK_INIT[i].c ?
                 WALLS_BLOCK_INIT[i].texture_name : type);
         }

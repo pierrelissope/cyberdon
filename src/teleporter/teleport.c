@@ -14,7 +14,7 @@
 static const float TELEPORTATION_COOLDOWN = 1.0;
 
 bool level_have_been_visited(const char *destination_level,
-     char *const *const visited_levels)
+    char *const *const visited_levels)
 {
     for (int i = 0; visited_levels[i] != NULL &&
         visited_levels[i] != NULL; i++) {

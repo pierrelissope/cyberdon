@@ -18,13 +18,13 @@ sfView *init_player_view(void)
     if (!player_view)
         return NULL;
     sfView_zoom(player_view, 0.70);
-    return player_view;            
+    return player_view;
 }
 
 void center_view(sfView *view, sfRectangleShape *player_rect, game_t *game)
 {
     sfFloatRect player_bounds = sfRectangleShape_getGlobalBounds(player_rect);
-    sfVector2f center = {(player_bounds.left) / 50, (player_bounds.top) / 50,};
+    sfVector2f center = {(player_bounds.left) / 50, (player_bounds.top) / 50};
 
     if (game->game_state != IN_CINEMATIC) {
         center = isom_pos_converter(center);

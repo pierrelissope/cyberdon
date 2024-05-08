@@ -38,7 +38,7 @@ enum Tiles {
 };
 
 enum Spritesheets {
-    IDLE ,
+    IDLE,
     DOWN_LEFT,
     DOWN_RIGHT,
     UP_LEFT,

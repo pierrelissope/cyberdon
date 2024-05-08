@@ -31,7 +31,6 @@ loading_page_t init_loading_page(dict_t *tiles_dict)
         }
     sfSprite_setTextureRect(loading_page.element_sprite,
         loading_page.element_rect);
-
     loading_page.is_valid = false;
     return loading_page;
 }
