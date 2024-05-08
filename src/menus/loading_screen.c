@@ -8,7 +8,7 @@
 #include "struct.h"
 #include "init_texture.h"
 #include "entity.h"
-
+#include "dict.h"
 
 static const int ANNIMATION_COOLDOWN = 90;
 static const float LOADING_TIME = 0.6;

@@ -5,8 +5,10 @@
 ** parsing
 */
 
+#include <string.h>
+
 #include "entity.h"
-#include "utils.h"
+#include "myutils.h"
 #include "init_texture.h"
 #include "teleporter.h"
 

@@ -8,7 +8,7 @@
 #include <SFML/Graphics/Types.h>
 #include <SFML/Graphics/View.h>
 #include "view.h"
-#include "utils.h"
+#include "myutils.h"
 
 static const float CINEMATIC_TIME = 5;
 

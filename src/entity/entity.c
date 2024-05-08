@@ -9,7 +9,7 @@
 #include "string.h"
 #include "entity.h"
 #include "init_texture.h"
-#include "utils.h"
+#include "myutils.h"
 
 const int ANIMATION_COOLDOWN = 100;
 

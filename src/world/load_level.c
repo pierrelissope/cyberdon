@@ -5,6 +5,9 @@
 ** load_level
 */
 
+#include <string.h>
+
+#include "myutils.h"
 #include "world.h"
 
 static void init_level(world_t *world, char *level,
