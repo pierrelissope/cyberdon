@@ -5,8 +5,9 @@
 ** parsing
 */
 
+#include "myutils.h"
 #include "world.h"
-#include "entity.h"
+#include "init_world.h"
 
 static int build_floor_rect(block_t *block, float x, float y)
 {
@@ -21,16 +22,10 @@ static int build_floor_rect(block_t *block, float x, float y)
     return EXIT_SUCCESS;
 }
 
-static int build_floor(block_t *block, world_t *world,
-    char *type, dict_t *tiles)
+int build_floor_components(block_t *block, world_t *world,
+    sfVector2f origin)
 {
-    my_strcpy(block->type, type);
-    block->sprite = sfSprite_create();
-    if (!block->sprite) {
-        freef("%s%a", block->sprite, block);
-        return EXIT_FAILURE;
-    }
-    sfSprite_setTexture(block->sprite, dict_get(tiles, type), sfTrue);
+    sfSprite_setOrigin(block->sprite, origin);
     sfSprite_setPosition(block->sprite, isom_pos_converter(block->pos));
     append_ptr((void ***)&(world->floor), block, NULL);
     if (!world->floor) {
@@ -40,25 +35,48 @@ static int build_floor(block_t *block, world_t *world,
     return EXIT_SUCCESS;
 }
 
+static int build_floor(block_t *block, world_t *world,
+    int type, dict_t *tiles)
+{
+    sfVector2f origin = {0};
+
+    block->sprite_rect = get_tile_rect(type);
+    block->frame_nb = get_tile_frames(type);
+    block->type = type;
+    block->sprite = sfSprite_create();
+    if (block->frame_nb > 1)
+        block->clock = sfClock_create();
+    if (!block->sprite) {
+        freef("%s%a", block->sprite, block);
+        return EXIT_FAILURE;
+    }
+    sfSprite_setTexture(block->sprite, dict_get(tiles, type), sfTrue);
+    sfSprite_setTextureRect(block->sprite, block->sprite_rect);
+    origin = (sfVector2f){block->sprite_rect.width / 2,
+        block->sprite_rect.height - 2};
+    if (build_floor_components(block, world, origin) == EXIT_FAILURE)
+        return EXIT_FAILURE;
+    return EXIT_SUCCESS;
+}
+
 int parse_floor_line(char **floor, world_t *world,
     int y, dict_t *tiles)
 {
     block_t *block = NULL;
-    char *type = NULL;
+    int type = 0;
 
     for (int x = 0; floor[y][x]; x++) {
         if (floor[y][x] == '0')
             continue;
-        block = malloc(sizeof(block_t));
+        block = calloc(1, sizeof(block_t));
         if (!block)
             return EXIT_FAILURE;
         block->pos = (sfVector2f){x, y};
-        type = (floor[y][x] == '1' ? "grass" : type);
-        type = (floor[y][x] == '2' ? "stone" : type);
-        if (build_floor_rect(block, x, y) == EXIT_FAILURE) {
-            free(block);
+        for (int i = 0; FLOOR_BLOCK_INIT[i].c != -1; ++i)
+            type = (floor[y][x] == FLOOR_BLOCK_INIT[i].c ?
+                FLOOR_BLOCK_INIT[i].texture_name : type);
+        if (build_floor_rect(block, x, y) == EXIT_FAILURE)
             return EXIT_FAILURE;
-        }
         if (build_floor(block, world, type, tiles) == EXIT_FAILURE)
             return EXIT_FAILURE;
     }
@@ -78,16 +96,10 @@ static int build_walls_rect(block_t *block, float x, float y)
     return EXIT_SUCCESS;
 }
 
-static int build_wall(block_t *block, world_t *world,
-    char *type, dict_t *tiles)
+int build_wall_component(block_t *block, world_t *world,
+    sfVector2f origin)
 {
-    my_strcpy(block->type, type);
-    block->sprite = sfSprite_create();
-    if (!block->sprite) {
-        freef("%s%a", block->sprite, block);
-        return EXIT_FAILURE;
-    }
-    sfSprite_setTexture(block->sprite, dict_get(tiles, type), sfTrue);
+    sfSprite_setOrigin(block->sprite, origin);
     sfSprite_setPosition(block->sprite, isom_pos_converter_z(block->pos));
     append_ptr((void ***)&(world->walls), block, NULL);
     if (!world->walls) {
@@ -97,26 +109,49 @@ static int build_wall(block_t *block, world_t *world,
     return EXIT_SUCCESS;
 }
 
+static int build_wall(block_t *block, world_t *world,
+    int type, dict_t *tiles)
+{
+    sfVector2f origin = {0};
+
+    block->sprite_rect = get_tile_rect(type);
+    block->frame_nb = get_tile_frames(type);
+    block->type = type;
+    block->sprite = sfSprite_create();
+    if (block->frame_nb > 1)
+        block->clock = sfClock_create();
+    if (!block->sprite) {
+        freef("%s%a", block->sprite, block);
+        return EXIT_FAILURE;
+    }
+    sfSprite_setTexture(block->sprite, dict_get(tiles, type), sfTrue);
+    sfSprite_setTextureRect(block->sprite, block->sprite_rect);
+    origin = (sfVector2f){block->sprite_rect.width / 2,
+        block->sprite_rect.height- 2};
+    if (build_wall_component(block, world, origin) == EXIT_FAILURE)
+        return EXIT_FAILURE;
+    return EXIT_SUCCESS;
+}
+
 int parse_walls_line(char **walls, world_t *world,
     int y, dict_t *tiles)
 {
     block_t *block = NULL;
-    char *type = NULL;
+    int type = 0;
 
     for (int x = 0; walls[y][x]; x++) {
         if (walls[y][x] == '0')
             continue;
-        block = malloc(sizeof(block_t));
+        block = calloc(1, sizeof(block_t));
         if (!block)
             free(block);
         block->pos = (sfVector2f){x, y};
-        type = (walls[y][x] == '3' ? "stone_wall" : type);
-        type = (walls[y][x] == '4' ? "wood_wall" : type);
-        if (build_walls_rect(block, x, y) == EXIT_FAILURE) {
-            free(block);
-            return EXIT_FAILURE;
+        for (int i = 0; WALLS_BLOCK_INIT[i].c != -1; ++i) {
+            type = (walls[y][x] == WALLS_BLOCK_INIT[i].c ?
+                WALLS_BLOCK_INIT[i].texture_name : type);
         }
-        if (build_wall(block, world, type, tiles) == EXIT_FAILURE)
+        if (build_walls_rect(block, x, y) == EXIT_FAILURE ||
+            build_wall(block, world, type, tiles) == EXIT_FAILURE)
             return EXIT_FAILURE;
     }
     return 0;

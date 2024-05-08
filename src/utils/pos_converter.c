@@ -7,10 +7,10 @@
 
 #include "entity.h"
 
-const int X_OFFSET = 60;
-const int Y_OFFSET = 24;
-const int Z_OFFSET = 72;
-const int CORNER_PADDING = 200;
+const float X_OFFSET = 63;
+const float Y_OFFSET = 31.5;
+const int Z_OFFSET = 40;
+const int CORNER_PADDING = 0;
 
 sfVector2f isom_pos_converter(sfVector2f pos)
 {

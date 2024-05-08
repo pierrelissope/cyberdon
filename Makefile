@@ -19,8 +19,29 @@ SRC =		./src/entity/entity.c \
 			./src/utils/load_map.c \
 			./src/utils/pos_converter.c \
 			./src/utils/sprite_dup.c \
+			./src/utils/vector.c \
+			./src/utils/sprite_sorting.c \
 			./src/world/world.c \
-			./src/world/parsing.c
+			./src/fight/fight_ai.c	\
+			./src/fight/fight_display.c	\
+			./src/fight/fight_entities.c	\
+			./src/fight/fight_loading.c	\
+			./src/fight/fight_unloading.c	\
+			./src/fight/fight_events.c	\
+			./src/fight/fight_loop.c	\
+			./src/fight/fight_movement.c	\
+			./src/fight/movement_actions.c	\
+			./src/fight/attack_actions.c	\
+			./src/world/load_level.c \
+			./src/world/parsing.c \
+			./src/world/animate.c \
+			./src/view/view.c \
+			./src/teleporter/parsing.c \
+			./src/teleporter/teleport.c \
+			./src/status/status.c \
+			./src/menus/loading_screen.c \
+			./src/entity/destroy.c \
+			./src/world/destroy.c
 
 SRCOBJ =	$(SRC:.c=.o)
 
@@ -45,13 +66,19 @@ LIBSRC =	lib/freef/arr_flags.c \
 			lib/BASICS/my_strchr.c \
 			lib/BASICS/cleanstr.c \
 			lib/BASICS/isdigit.c \
-			lib/BASICS/open_file.c
+			lib/BASICS/open_file.c	\
+			lib/BASICS/my_strcat.c	\
 
 LIBOBJ =	$(LIBSRC:.c=.o)
 
+SRC_TEST	=	$(addprefix tests/,\
+			redirect.c	\
+			)
+
+OBJ_TEST	=	$(SRC_TEST:.c=.o)
 
 CFLAGS = -Wall -Wextra
-LIBFLAGS = -lcsfml-graphics -lcsfml-window -lcsfml-system
+LDLIBS = -lcsfml-graphics -lcsfml-window -lcsfml-system -lm
 CPPFLAGS = -iquote ./include
 
 CRITFLAGS = -lcriterion
@@ -59,11 +86,13 @@ GCOVRFLAGS = --coverage
 
 NAME =	myrpg
 
+TEST_NAME	=	unit_tests
+
 all: $(NAME)
 
 $(NAME): $(LIBOBJ) $(MAINOBJ) $(SRCOBJ)
 	$(CC) $(LIBOBJ) $(MAINOBJ) $(SRCOBJ) -o $(NAME) \
-	$(CFLAGS) $(LIBFLAGS) $(CPPFLAGS)
+	$(CFLAGS) $(LDLIBS) $(CPPFLAGS)
 
 clean:
 	$(RM) $(MAINOBJ) $(SRCOBJ) $(LIBOBJ)
@@ -73,4 +102,28 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+debug: CFLAGS += -ggdb3
+debug: re
+
+asan: CC = clang -fsanitize=address
+asan: re
+
+$(TEST_NAME):	$(OBJ_TEST)
+	$(CC) -o $(TEST_NAME) $(CFLAGS) $(CPPFLAGS)	\
+	$(OBJ_TEST) $(SRC) $(LIBSRC) $(LDFLAGS) $(LDLIB)	\
+	$(CRITFLAGS) $(GCOVRFLAGS) $(LDLIBS)
+
+tests_run:	$(TEST_NAME)
+	./$(TEST_NAME)
+
+tests_clean:
+	$(RM) *.gcda
+	$(RM) *.gcno
+	$(RM) coverage*
+	$(RM) unit_tests
+
+coverage:
+	gcovr --html-details coverage && firefox coverage
+
+.PHONY: all clean fclean re debug \
+	tests_run coverage tests_clean

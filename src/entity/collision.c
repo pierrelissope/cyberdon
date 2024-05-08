@@ -12,7 +12,7 @@ static bool check_still_collide(sfFloatRect *rect, world_t *world, float x)
     bool trigger = false;
     sfFloatRect floor = {0};
 
-    for (float y = rect->top; y < rect->top + rect->height; y++) {
+    for (float y = rect->top; y < rect->top + rect->height; ++y) {
         trigger = false;
         for (int i = 0; world->floor && world->floor[i]; i++) {
             floor = sfRectangleShape_getGlobalBounds(world->floor[i]->rect);
@@ -26,7 +26,7 @@ static bool check_still_collide(sfFloatRect *rect, world_t *world, float x)
 
 bool still_collide(sfFloatRect *rect, world_t *world)
 {
-    for (float x = rect->left; x < rect->left + rect->width; x++) {
+    for (float x = rect->left; x < rect->left + rect->width; ++x) {
         if (check_still_collide(rect, world, x) == false)
             return false;
     }
