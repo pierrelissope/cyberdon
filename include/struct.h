@@ -21,6 +21,13 @@ typedef enum game_state_e {
     IN_CINEMATIC,
 } game_state_t;
 
+typedef enum item_type_e {
+    EMPTY_ITEM = 0,
+    SPEED_ORB,
+    STRENGTH_ORB,
+    STAMINA_ORB,
+} item_type_t;
+
 typedef struct dict_s {
     bool is_valid;
     int key;
@@ -101,6 +108,21 @@ typedef struct status_s {
     sfClock *teleportation_clock;
 } status_t;
 
+typedef struct item_s {
+    item_type_t type;
+    sfSprite *sprite;
+} item_t;
+
+typedef struct slot_s {
+    sfRectangleShape *box;
+    item_t *item;
+} slot_t;
+
+typedef struct inventory_s {
+    sfRectangleShape *box;
+    slot_t **slots;
+} inventory_t;
+
 typedef struct game_s {
     bool is_valid;
     game_state_t game_state;
@@ -113,6 +135,7 @@ typedef struct game_s {
     sfView *player_view;
     dict_t *sheets_dict;
     dict_t *tiles_dict;
+    dict_t *items_dict;
     physical_entity_t *player;
     world_t world;
     char **visited_levels;

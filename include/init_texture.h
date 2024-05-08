@@ -280,3 +280,22 @@ static const init_texture_t TILES_TEXTURE_INIT[] = {
         .texture_name = 0
     },
 };
+
+static const init_texture_t ITEMS_TEXTURE_INIT[] = {
+    {
+        .texture_path = "./assets/items/speed_orb.png",
+        .texture_name = SPEED_ORB,
+        .rect = {0, 0, 80, 80},
+        .frame_nb = 1,
+    },
+    {
+        .texture_path = "./assets/items/strength_orb.png",
+        .texture_name = STRENGTH_ORB,
+        .rect = {0, 0, 80, 80},
+        .frame_nb = 1,
+    },
+    {
+        .texture_path = NULL,
+        .texture_name = 0
+    },
+};

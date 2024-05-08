@@ -12,11 +12,12 @@
 #include "dict.h"
 #include "world.h"
 #include "status.h"
+#include "inventory.h"
 #include "mymenu.h"
 
 const sfVector2f PLAYER_START_POS = {150, 180};
 
-static dict_t *load_entity_sheets(const init_texture_t ENTIY_TEXTURE_INIT[])
+static dict_t *load_textures_dict(const init_texture_t ENTIY_TEXTURE_INIT[])
 {
     dict_t *dict = NULL;
     sfTexture *texture = NULL;
@@ -36,18 +37,12 @@ static int load_assets_dicts(game_t *game)
     sfTexture *texture = NULL;
 
     if (!dict_insert(&game->sheets_dict, PLAYER,
-        load_entity_sheets(PLAYER_TEXTURE_INIT)) ||
+        load_textures_dict(PLAYER_TEXTURE_INIT)) ||
         !dict_insert(&game->sheets_dict, VILLAGER,
-        load_entity_sheets(VILLAGER_TEXTURE_INIT)))
+        load_textures_dict(VILLAGER_TEXTURE_INIT)))
         return EXIT_FAILURE;
-    for (int i = 0; TILES_TEXTURE_INIT[i].texture_path; i++) {
-        texture = sfTexture_createFromFile
-            (TILES_TEXTURE_INIT[i].texture_path, NULL);
-        if (!texture)
-            return EXIT_FAILURE;
-        dict_insert(&game->tiles_dict,
-            TILES_TEXTURE_INIT[i].texture_name, texture);
-    }
+    game->tiles_dict = load_textures_dict(TILES_TEXTURE_INIT);
+    game->items_dict = load_textures_dict(ITEMS_TEXTURE_INIT);
     return EXIT_SUCCESS;
 }
 
@@ -101,6 +96,7 @@ void run_game(game_t *game)
     game->window = sfRenderWindow_create(
         (sfVideoMode){1920, 1080, 32}, "MyRPG", sfClose | sfResize, NULL);
     sfRenderWindow_setFramerateLimit(game->window, 60);
+    play_inventory(game->window, game->items_dict);
     while (sfRenderWindow_isOpen(game->window)) {
         if (handle_event(game, &event) == sfEvtClosed)
             return;
