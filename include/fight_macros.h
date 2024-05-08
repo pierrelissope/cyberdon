@@ -85,4 +85,7 @@ static const fighter_state_t STATE_LOCKS_BYPASS[] = {
 static const fighter_state_t N_OF_LOCKS = 8;
 static const fighter_state_t N_OF_BYPASS = 1;
 
+static const float CROUCH_POS_OFFSET = 50;
+static const float CROUCH_HEIGHT_OFFSET = 1.25;
+
 #endif
