@@ -21,9 +21,13 @@ static int partition(linked_objects_t **array, int low, int high)
     int i = low - 1;
 
     for (int j = low; j <= high - 1; j++) {
-        if (array[j]->bounds.top < pivot) {
+        if (array[j]->bounds.top == pivot && array[j]->priority) {
+            continue;
+        }
+        if (array[j]->bounds.top <= pivot) {
             i++;
             swap(array, i, j);
+            continue;
         }
     }
     swap(array, i + 1, high);

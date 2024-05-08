@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "status.h": "c",
+        "entity.h": "c",
+        "init_texture.h": "c",
+        "teleporter.h": "c",
+        "graphics.h": "c",
+        "window.h": "c",
+        "struct.h": "c",
+        "menu.h": "c",
+        "world.h": "c"
+    }
+}

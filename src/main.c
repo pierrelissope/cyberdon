@@ -7,6 +7,7 @@
 
 #include "game.h"
 #include "basics.h"
+#include <time.h>
 
 int main(int ac, char **av)
 {
