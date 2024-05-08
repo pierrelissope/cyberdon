@@ -6,6 +6,7 @@
 */
 
 #include "entity.h"
+#include "fight.h"
 #include <SFML/Window/Keyboard.h>
 
 int handle_event(game_t *game, sfEvent *event)
