@@ -113,18 +113,21 @@ typedef struct fighter_init_s {
     char *fighter_folder;
     fight_textures_t text_beg;
     fight_textures_t text_end;
+    int iframes;
 } fighter_init_t;
 
 static const fighter_init_t FIGHTER_INIT[] = {
     [PLAYER_FIGHTER] = {
         "assets/fighters/player/",
         PLAYER_IDLE_TEXT,
-        PLAYER_TEXTURES_END
+        PLAYER_TEXTURES_END,
+        20
     },
     [NPC1] = {
         "assets/fighters/npc1/",
         NPC_IDLE_TEXT,
-        NPC_TEXTURES_END
+        NPC_TEXTURES_END,
+        20,
     },
 };
 

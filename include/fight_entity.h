@@ -10,6 +10,7 @@
 #include <SFML/Graphics.h>
 #include <SFML/Graphics/Rect.h>
 #include <SFML/Graphics/Types.h>
+#include <SFML/System/Types.h>
 #include <SFML/System/Vector2.h>
 #include <SFML/Window.h>
 #include <stdbool.h>
@@ -29,7 +30,8 @@ typedef struct Fighter_Entity_s {
     bool annimation_lock;
     fighter_state_t state;
     int ability_cooldown;
-    bool hit;
+    sfClock *i_counter;
+    int iframes;
 
     sfClock *ability_clock;
     sfClock *clock;

@@ -32,7 +32,7 @@ static int fill_word(char *new_buff, va_list list)
     size_t offset = 0;
 
     if (to_copy == NULL)
-        return -1;
+        return 0;
     for (int i = 0; to_copy[i]; i++) {
         *new_buff = to_copy[i];
         new_buff++;
@@ -52,7 +52,7 @@ char *my_strcat(size_t n_of_words, ...)
     va_start(list, n_of_words);
     va_copy(list_counter, list);
     to_allocate = get_allocate_size(n_of_words, list_counter);
-    new_buff = calloc(sizeof(char), (to_allocate + 1));
+    new_buff = calloc((to_allocate + 1), sizeof(char));
     new_copy = new_buff;
     for (size_t i = 0; i != n_of_words; i++) {
         new_buff += fill_word(new_buff, list);
