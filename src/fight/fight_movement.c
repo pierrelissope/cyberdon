@@ -9,7 +9,9 @@
 #include "fight_entity.h"
 #include "fight_macros.h"
 #include "struct.h"
+#include "fight_actions.h"
 
+#include <SFML/System/Time.h>
 #include <stdio.h>
 #include <SFML/Graphics/Rect.h>
 #include <SFML/Graphics/Sprite.h>
@@ -19,28 +21,6 @@
 #include <SFML/System/Vector2.h>
 #include <SFML/Window/Keyboard.h>
 #include <stdbool.h>
-
-bool annimation_bypass(fighter_entity_t *, fighter_state_t new_state)
-{
-    for (fighter_state_t i = 0; i < N_OF_BYPASS; i++) {
-        if (new_state == STATE_LOCKS_BYPASS[i]) {
-            return true;
-        }
-    }
-    return false;
-}
-
-void change_state(fighter_entity_t *entity, fighter_state_t new_state)
-{
-    if (entity->annimation_lock && !annimation_bypass(entity, new_state))
-        return;
-    if (entity->state != new_state) {
-        entity->annimation_sheets[entity->state]->current_frame = 0;
-        entity->annimation_sheets[entity->state]->text_rec.left = 0;
-        sfClock_restart(entity->clock);
-        entity->state = new_state;
-    }
-}
 
 static void apply_movement(fighter_entity_t *entity)
 {
@@ -75,8 +55,6 @@ static void apply_gravity(fighter_entity_t *entity)
 
 static void reverse_side(fighter_entity_t *entity)
 {
-    annimation_t *current = entity->annimation_sheets[entity->state];
-
     if (entity->looking_left) {
         sfSprite_setScale(
         entity->annimation_sheets[entity->state]->sprite_sheet,
@@ -111,28 +89,42 @@ static void update_fighter_dir(fight_t *fight)
 
 static void check_colisions(fight_t *fight)
 {
-    if (sfFloatRect_intersects(&(fight->player->hitbox),
+    if (!fight->player->hit && sfFloatRect_intersects(&(fight->player->hitbox),
         &(fight->npc->dmgbox), NULL)) {
         change_state(fight->player, HIT);
+        fight->player->annimation_lock = true;
     }
-    if (sfFloatRect_intersects(&(fight->npc->hitbox),
+    if (!fight->npc->hit && sfFloatRect_intersects(&(fight->npc->hitbox),
         &(fight->player->dmgbox), NULL)) {
         change_state(fight->npc, HIT);
+        fight->npc->annimation_lock = true;
+        printf("HIT\n");
     }
     fight->player->dmgbox = (sfFloatRect) {0, 0, 0, 0};
     fight->player->dmgbox = (sfFloatRect) {0, 0, 0, 0};
 }
 
+static void update_fighters_hits(fighter_entity_t *entity)
+{
+    if (!entity->hit)
+        return;
+    if (sfTime_asMilliseconds(sfClock_getElapsedTime(entity->i_counter)) >=
+        entity->iframes)
+        entity->hit = false;
+}
+
 void update_fight(fight_t *fight)
 {
     update_fighter_dir(fight);
+    update_fighters_hits(fight->player);
+    update_fighters_hits(fight->player);
+    check_colisions(fight);
     apply_gravity(fight->player);
     apply_gravity(fight->npc);
     reverse_side(fight->player);
     reverse_side(fight->npc);
     apply_movement(fight->player);
     apply_movement(fight->npc);
-    annimate_fighter(fight->player);
     annimate_fighter(fight->npc);
-    check_colisions(fight);
+    annimate_fighter(fight->player);
 }

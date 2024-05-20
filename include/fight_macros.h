@@ -71,16 +71,17 @@ typedef enum fight_textures_e {
 static const int MAX_FRAMES = 255;
 static const int FLOOR_Y = 700;
 static const fighter_state_t STATE_LOCKS[] = {
+    HIT,
     ATTACK,
     JUMP,
     ATTACK_JUMP,
     ATTACK_CROUCH,
     ATTACK_DOWN,
     ATTACK_UP,
-    HIT,
 };
 static const fighter_state_t STATE_LOCKS_BYPASS[] = {
     ATTACK_JUMP,
+    HIT,
 };
 static const fighter_state_t N_OF_LOCKS = 8;
 static const fighter_state_t N_OF_BYPASS = 1;

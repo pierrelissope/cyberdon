@@ -30,10 +30,12 @@ typedef struct Fighter_Entity_s {
     bool annimation_lock;
     fighter_state_t state;
     int ability_cooldown;
+    sfClock *ability_clock;
+
     sfClock *i_counter;
     int iframes;
+    bool hit;
 
-    sfClock *ability_clock;
     sfClock *clock;
     sfVector2f sprite_pos;
     sfVector2f velocity;

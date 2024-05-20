@@ -121,13 +121,13 @@ static const fighter_init_t FIGHTER_INIT[] = {
         "assets/fighters/player/",
         PLAYER_IDLE_TEXT,
         PLAYER_TEXTURES_END,
-        20
+        200
     },
     [NPC1] = {
         "assets/fighters/npc1/",
         NPC_IDLE_TEXT,
         NPC_TEXTURES_END,
-        20,
+        200,
     },
 };
 

@@ -20,7 +20,6 @@
 #include <SFML/System/Time.h>
 #include <SFML/System/Vector2.h>
 #include <stdbool.h>
-#include "stdio.h"
 
 static sfSprite *init_fight_sprite(fighter_entity_t *entity,
     int moves_index, dict_t *text_dict)
@@ -62,6 +61,14 @@ static annimation_t **init_annimations(fighter_entity_t *entity,
     return annimations;
 }
 
+static void init_data(fighter_entity_t *entity)
+{
+    entity->state = IDLE;
+    entity->iframes = FIGHTER_INIT[entity->name].iframes;
+    entity->ability_cooldown = COOLDOWN;
+    entity->velocity = BASE_FIGHTER_VELOCITY;
+}
+
 fighter_entity_t *init_fighter_entity(physical_entity_t *entity_stats,
     fight_t *fight)
 {
@@ -69,8 +76,7 @@ fighter_entity_t *init_fighter_entity(physical_entity_t *entity_stats,
 
     entity->clock = sfClock_create();
     entity->ability_clock = sfClock_create();
-    entity->ability_cooldown = COOLDOWN;
-    entity->velocity = BASE_FIGHTER_VELOCITY;
+    entity->i_counter = sfClock_create();
     if (entity_stats->type == 0) {
         entity->looking_right = true;
         entity->name = PLAYER_FIGHTER;
@@ -79,6 +85,6 @@ fighter_entity_t *init_fighter_entity(physical_entity_t *entity_stats,
         entity->name = NPC1;
     }
     entity->annimation_sheets = init_annimations(entity, fight->text_dict);
-    entity->state = IDLE;
+    init_data(entity);
     return entity;
 }

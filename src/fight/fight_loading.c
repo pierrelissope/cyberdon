@@ -65,6 +65,7 @@ static bool load_fighter_text(fight_t *fight, fighter_init_t const *init_info)
     char *concat_path = NULL;
     int moves_counter = 0;
 
+
     for (fight_textures_t i = init_info->text_beg;
         i < init_info->text_end; ++i) {
         concat_path = my_strcat(2, init_info->fighter_folder,

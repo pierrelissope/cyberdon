@@ -34,6 +34,7 @@ static void destroy_fighter_entity(fighter_entity_t *entity)
 {
     sfClock_destroy(entity->ability_clock);
     sfClock_destroy(entity->clock);
+    sfClock_destroy(entity->i_counter);
     destroy_annimation(entity->annimation_sheets);
 }
 
