@@ -10,16 +10,25 @@
 #include <SFML/System/Vector2.h>
 #include "basics.h"
 #include <time.h>
+#include "menu.h"
+
+game_info_t *init_game_info(void)
+{
+    game_info_t *game_info = malloc(sizeof(game_info_t));
+    if (!game_info) {
+        printf("malloc failled");
+        return NULL;
+    }
+    game_info->save_file = "save/default_save.dat";
+    game_info->screen_res.x = 1920;
+    game_info->screen_res.y = 1080;
+
+    return game_info;
+}
 
 int main(int ac, char **av)
 {
-    game_t game = init_game();
-
-    if (!game.is_valid) {
-        destroy_game(&game);
-        return 84;
-    }
-    run_game(&game);
-    destroy_game(&game);
+    game_info_t *info = init_game_info();
+    menu(info);
     return 0;
 }
