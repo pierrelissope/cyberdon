@@ -38,6 +38,16 @@ static void destroy_fighter_entity(fighter_entity_t *entity)
     destroy_annimation(entity->annimation_sheets);
 }
 
+void destroy_ui(fight_t *fight)
+{
+    sfRectangleShape_destroy(fight->ui.npc_health);
+    sfRectangleShape_destroy(fight->ui.player_health);
+    sfRectangleShape_destroy(fight->ui.npc_stamina);
+    sfRectangleShape_destroy(fight->ui.player_stamina);
+    /* sfRectangleShape_destroy(fight->ui.player_portrait); */
+    /* sfRectangleShape_destroy(fight->ui.npc_portrait); */
+}
+
 void destroy_dict_text(void *to_free)
 {
     sfTexture *to_destroy = to_free;
@@ -53,5 +63,6 @@ void destroy_fight(fight_t *fight)
     sfView_destroy(fight->view);
     sfRectangleShape_destroy(fight->background);
     sfRectangleShape_destroy(fight->foreground);
+    destroy_ui(fight);
     free(fight);
 }

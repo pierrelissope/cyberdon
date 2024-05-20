@@ -7,13 +7,14 @@
 
 #include "dict.h"
 #include "fight_macros.h"
-#include "fight_entity.h"
+#include "fight.h"
 #include "struct.h"
 #include "init_fight_arena.h"
 #include "init_fighters.h"
 #include "view.h"
 
 #include <SFML/Config.h>
+#include <SFML/Graphics/Color.h>
 #include <SFML/Graphics/RectangleShape.h>
 #include <SFML/Graphics/RenderWindow.h>
 #include <SFML/Graphics/Texture.h>
@@ -65,7 +66,6 @@ static bool load_fighter_text(fight_t *fight, fighter_init_t const *init_info)
     char *concat_path = NULL;
     int moves_counter = 0;
 
-
     for (fight_textures_t i = init_info->text_beg;
         i < init_info->text_end; ++i) {
         concat_path = my_strcat(2, init_info->fighter_folder,
@@ -99,6 +99,26 @@ static bool load_fighters(fight_t *fight)
     return false;
 }
 
+static void sync_stats(fight_t *fight)
+{
+    fight->player->stats.defense = 1;
+    fight->player->stats.health = 100;
+    fight->player->stats.speed = 1;
+    fight->player->stats.stamina = 10;
+    fight->player->base_stats.defense = 1;
+    fight->player->base_stats.health = 100;
+    fight->player->base_stats.speed = 1;
+    fight->player->base_stats.stamina = 10;
+    fight->npc->stats.defense = 1;
+    fight->npc->stats.health = 100;
+    fight->npc->stats.speed = 1;
+    fight->npc->stats.stamina = 10;
+    fight->npc->base_stats.defense = 1;
+    fight->npc->base_stats.health = 100;
+    fight->npc->base_stats.speed = 1;
+    fight->npc->base_stats.stamina = 10;
+}
+
 fight_t *load_fight(game_t *game, physical_entity_t *player,
     physical_entity_t *npc, arenas_t arena)
 {
@@ -115,7 +135,9 @@ fight_t *load_fight(game_t *game, physical_entity_t *player,
         return NULL;
     sfRenderWindow_setView(game->window, fight->view);
     sfRenderWindow_setKeyRepeatEnabled(game->window, sfFalse);
-    if (load_text(fight) || load_arena(fight) || load_fighters(fight))
+    if (load_text(fight) || load_arena(fight) ||
+        load_fighters(fight) || load_ui(fight))
         return NULL;
+    sync_stats(fight);
     return fight;
 }

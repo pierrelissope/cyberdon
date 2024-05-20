@@ -8,6 +8,7 @@
 #include "fight_macros.h"
 #include "struct.h"
 #include "fight.h"
+#include <stdio.h>
 
 int run_fight(game_t *game, physical_entity_t *player,
     physical_entity_t *npc, arenas_t arena)
@@ -23,6 +24,10 @@ int run_fight(game_t *game, physical_entity_t *player,
             destroy_fight(fight);
             return -1;
         }
+        if (fight->npc->stats.health <= 0)
+            return 1;
+        if (fight->player->stats.health <= 0)
+            return 2;
         draw_fight(fight, game->window);
     }
     destroy_fight(fight);
@@ -34,5 +39,5 @@ void test(game_t *game)
     physical_entity_t npc_tmp = {0};
 
     npc_tmp.type = 1;
-    run_fight(game, game->player, &npc_tmp, DEFAULT);
+    printf("%d\n", run_fight(game, game->player, &npc_tmp, DEFAULT));
 }

@@ -9,7 +9,7 @@
 #include "fight_entity.h"
 #include "fight_macros.h"
 #include "struct.h"
-#include "fight_actions.h"
+#include "init_ui.h"
 
 #include <SFML/System/Time.h>
 #include <stdio.h>
@@ -91,11 +91,11 @@ static void check_colisions(fight_t *fight)
 {
     if (!fight->player->hit && sfFloatRect_intersects(&(fight->player->hitbox),
         &(fight->npc->dmgbox), NULL)) {
-        on_hit(fight->player);
+        on_hit(fight->player, fight);
     }
     if (!fight->npc->hit && sfFloatRect_intersects(&(fight->npc->hitbox),
         &(fight->player->dmgbox), NULL)) {
-        on_hit(fight->npc);
+        on_hit(fight->npc, fight);
     }
     fight->player->dmgbox = (sfFloatRect) {0, 0, 0, 0};
     fight->player->dmgbox = (sfFloatRect) {0, 0, 0, 0};
@@ -108,6 +108,35 @@ static void update_fighters_hits(fighter_entity_t *entity)
     if (sfTime_asMilliseconds(sfClock_getElapsedTime(entity->i_counter)) >=
         entity->iframes)
         entity->hit = false;
+}
+
+static void update_color(float stamina, sfRectangleShape *rec)
+{
+    if (stamina <= 0.50)
+        sfRectangleShape_setFillColor(rec, LOW_STAMINA);
+}
+
+static void uptdate_stamina_rec_size(fight_t *fight)
+{
+    float player_size = STAMINA_SIZE.x * ((float)fight->player->stats.stamina /
+        fight->player->base_stats.stamina);
+    float npc_size = STAMINA_SIZE.x * ((float) fight->npc->stats.stamina /
+        fight->npc->base_stats.stamina);
+
+    sfRectangleShape_setSize(fight->ui.player_stamina, (sfVector2f) {
+            player_size,
+            STAMINA_SIZE.y,
+        });
+    sfRectangleShape_setSize(fight->ui.npc_stamina, (sfVector2f) {
+            npc_size,
+            STAMINA_SIZE.y,
+        });
+    sfRectangleShape_setPosition(fight->ui.npc_stamina, (sfVector2f)
+        {NPC_STAMINA_POS.x + (STAMINA_SIZE.x - npc_size), NPC_STAMINA_POS.y});
+    update_color((float) fight->npc->stats.stamina /
+        fight->npc->base_stats.stamina, fight->ui.npc_stamina);
+    update_color((float) fight->player->stats.stamina /
+        fight->player->base_stats.stamina, fight->ui.player_stamina);
 }
 
 void update_fight(fight_t *fight)
@@ -124,4 +153,5 @@ void update_fight(fight_t *fight)
     apply_movement(fight->npc);
     annimate_fighter(fight->npc);
     annimate_fighter(fight->player);
+    uptdate_stamina_rec_size(fight);
 }

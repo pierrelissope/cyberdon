@@ -18,6 +18,13 @@
 #include "fight_macros.h"
 #include "struct.h"
 
+typedef struct stats_s {
+    int speed;
+    int health;
+    int defense;
+    int stamina;
+} stats_t;
+
 typedef struct Fighter_Entity_s {
     fighters_t name;
     bool looking_up;
@@ -41,7 +48,18 @@ typedef struct Fighter_Entity_s {
     sfVector2f velocity;
     sfFloatRect hitbox;
     sfFloatRect dmgbox;
+    stats_t stats;
+    stats_t base_stats;
 } fighter_entity_t;
+
+typedef struct ui_s {
+    sfRectangleShape *player_health;
+    sfRectangleShape *npc_health;
+    sfRectangleShape *player_stamina;
+    sfRectangleShape *npc_stamina;
+    sfRectangleShape *npc_portrait;
+    sfRectangleShape *player_portrait;
+} ui_t;
 
 typedef struct fight_s {
     arenas_t arena;
@@ -52,6 +70,7 @@ typedef struct fight_s {
     fighter_entity_t *player;
     physical_entity_t *npc_stats;
     fighter_entity_t *npc;
+    ui_t ui;
     sfRectangleShape *background;
     sfRectangleShape *foreground;
 } fight_t;

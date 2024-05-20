@@ -108,7 +108,6 @@ static const sfVector2f NPC_SPAWN = {800, 200};
 static const sfVector2f BASE_FIGHTER_VELOCITY = {0, 0};
 static const int COOLDOWN = 25;
 
-
 typedef struct fighter_init_s {
     char *fighter_folder;
     fight_textures_t text_beg;
