@@ -20,3 +20,4 @@ void change_state(fighter_entity_t *entity, fighter_state_t new_state);
 fighter_state_t ai_action_pick(fight_t *fight);
 void ai_movement_pick(fight_t *fight);
 void test(game_t *game);
+void on_hit(fighter_entity_t *entity);

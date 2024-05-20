@@ -31,7 +31,7 @@ bool annimation_bypass(fighter_entity_t *, fighter_state_t new_state)
 
 void change_state(fighter_entity_t *entity, fighter_state_t new_state)
 {
-    if (entity->hit && sfTime_asMilliseconds(sfClock_getElapsedTime(entity->i_counter)) %
+    if (entity->hit && sfTime_asMilliseconds(sfClock_getElapsedTime(entity->i_counter)) <
         entity->iframes)
         return;
     if (entity->annimation_lock && !annimation_bypass(entity, new_state))

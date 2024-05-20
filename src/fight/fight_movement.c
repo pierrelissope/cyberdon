@@ -91,14 +91,11 @@ static void check_colisions(fight_t *fight)
 {
     if (!fight->player->hit && sfFloatRect_intersects(&(fight->player->hitbox),
         &(fight->npc->dmgbox), NULL)) {
-        change_state(fight->player, HIT);
-        fight->player->annimation_lock = true;
+        on_hit(fight->player);
     }
     if (!fight->npc->hit && sfFloatRect_intersects(&(fight->npc->hitbox),
         &(fight->player->dmgbox), NULL)) {
-        change_state(fight->npc, HIT);
-        fight->npc->annimation_lock = true;
-        printf("HIT\n");
+        on_hit(fight->npc);
     }
     fight->player->dmgbox = (sfFloatRect) {0, 0, 0, 0};
     fight->player->dmgbox = (sfFloatRect) {0, 0, 0, 0};
