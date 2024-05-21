@@ -51,6 +51,7 @@ bool decrease_stamina(fighter_entity_t *entity, int ammount)
         return true;
     }
 }
+
 bool stamina_regen(fighter_entity_t *entity)
 {
     if (entity->stats.stamina >= entity->base_stats.stamina)

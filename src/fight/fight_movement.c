@@ -42,6 +42,10 @@ static void apply_gravity(fighter_entity_t *entity)
 {
     sfVector2f basepos = {entity->sprite_pos.x, FLOOR_Y};
 
+    if (entity->sprite_pos.x > 1800 && entity->velocity.x > 0)
+        entity->velocity.x = 0;
+    if (entity->sprite_pos.x < 100 && entity->velocity.x < 0)
+        entity->velocity.x = 0;
     if (entity->sprite_pos.y < FLOOR_Y)
         entity->velocity.y += 1;
     if (entity->sprite_pos.y > FLOOR_Y) {
