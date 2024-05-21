@@ -71,17 +71,12 @@ static bool load_fighter_text(fight_t *fight,
     fight_textures_t text_beg = NPC_IDLE_TEXT;
     fight_textures_t text_end = NPC_TEXTURES_END;
 
-<<<<<<< HEAD
-    for (fight_textures_t i = init_info->text_beg;
-        i < init_info->text_end; ++i) {
-=======
     if (player) {
         text_beg = PLAYER_IDLE_TEXT;
         text_end = PLAYER_TEXTURES_END;
     }
     for (fight_textures_t i = text_beg;
         i < text_end; ++i) {
->>>>>>> 0075cc99a01a5a1ead9cb38460c2a65508c62303
         concat_path = my_strcat(2, init_info->fighter_folder,
             MOVES_INIT[moves_counter].text_file);
         dict_insert(&(fight->text_dict), i,

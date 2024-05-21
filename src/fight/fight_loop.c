@@ -52,10 +52,7 @@ void test(game_t *game)
     physical_entity_t npc_tmp = {0};
 
     npc_tmp.type = 1;
-<<<<<<< HEAD
-=======
     npc_tmp.fighter_skin = BIG_DUDE;
     game->player->fighter_skin = EAGLE;
->>>>>>> 0075cc99a01a5a1ead9cb38460c2a65508c62303
     printf("%d\n", run_fight(game, game->player, &npc_tmp, DEFAULT));
 }

@@ -93,12 +93,9 @@ static int key_events(fight_t *fight)
 {
     fighter_state_t action = IDLE;
 
-<<<<<<< HEAD
-=======
     if (sfKeyboard_isKeyPressed(sfKeyD)) {
         fight->debug_mode = !fight->debug_mode;
     }
->>>>>>> 0075cc99a01a5a1ead9cb38460c2a65508c62303
     if (sfKeyboard_isKeyPressed(sfKeyX)) {
         if (decrease_stamina(fight->player, 5))
             action = ATTACK;

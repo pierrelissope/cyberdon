@@ -19,7 +19,7 @@ game_info_t *init_game_info(void)
 
     if (!game_info)
         return NULL;
-    game_info->font = sfFont_createFromFile("assets/font/font.ttf");
+    game_info->font = FONT;
     game_info->save_file = "save/default_save.dat";
     game_info->screen_res.x = 1920;
     game_info->screen_res.y = 1080;

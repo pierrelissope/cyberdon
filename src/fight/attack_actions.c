@@ -55,11 +55,7 @@ void attack_crouch(fighter_entity_t *entity)
         entity->annimation_sheets[entity->state]->current_frame + 1;
 
     pre_attack(entity);
-<<<<<<< HEAD
-    entity->hitbox.top += CROUCH_POS_OFFSET * current_frame;
-=======
     entity->hitbox.top += (CROUCH_POS_OFFSET - 10) * current_frame;
->>>>>>> 0075cc99a01a5a1ead9cb38460c2a65508c62303
     entity->hitbox.height = (entity->hitbox.height / CROUCH_HEIGHT_OFFSET);
     entity->dmgbox = apply_offset(entity);
 }

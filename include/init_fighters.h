@@ -115,18 +115,6 @@ typedef struct fighter_init_s {
 } fighter_init_t;
 
 static const fighter_init_t FIGHTER_INIT[] = {
-<<<<<<< HEAD
-    [PLAYER_FIGHTER] = {
-        "assets/fighters/player/",
-        PLAYER_IDLE_TEXT,
-        PLAYER_TEXTURES_END,
-        300
-    },
-    [NPC1] = {
-        "assets/fighters/npc1/",
-        NPC_IDLE_TEXT,
-        NPC_TEXTURES_END,
-=======
     [BIG_DUDE] = {
         "assets/fighters/big_dude/",
         300
@@ -137,7 +125,6 @@ static const fighter_init_t FIGHTER_INIT[] = {
     },
     [EAGLE] = {
         "assets/fighters/eagle/",
->>>>>>> 0075cc99a01a5a1ead9cb38460c2a65508c62303
         300,
     },
 };
