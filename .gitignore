@@ -12,3 +12,4 @@ unit_tests
 *.gcno
 *.gcda
 compile_flags.txt
+.vscode
