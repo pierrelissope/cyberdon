@@ -40,7 +40,7 @@ static sfSprite *init_fight_sprite(fighter_entity_t *entity,
     }
     sfSprite_setTextureRect(sp, MOVES_INIT[moves_index].frame_rec);
     bounds = sfSprite_getGlobalBounds(sp);
-    sfSprite_setOrigin(sp, (sfVector2f) {bounds.width / 2, 0});
+    sfSprite_setOrigin(sp, (sfVector2f) {bounds.width / 2, bounds.height});
     return sp;
 }
 

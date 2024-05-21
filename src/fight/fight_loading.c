@@ -126,7 +126,7 @@ fight_t *load_fight(game_t *game, physical_entity_t *player,
 
     if (fight == NULL)
         return NULL;
-    fight->debug_mode = true;
+    fight->debug_mode = false;
     fight->arena = arena;
     fight->npc_stats = npc;
     fight->player_stats = player;
