@@ -44,8 +44,6 @@ void destroy_ui(fight_t *fight)
     sfRectangleShape_destroy(fight->ui.player_health);
     sfRectangleShape_destroy(fight->ui.npc_stamina);
     sfRectangleShape_destroy(fight->ui.player_stamina);
-    /* sfRectangleShape_destroy(fight->ui.player_portrait); */
-    /* sfRectangleShape_destroy(fight->ui.npc_portrait); */
 }
 
 void destroy_dict_text(void *to_free)
