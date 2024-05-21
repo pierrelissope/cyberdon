@@ -84,32 +84,57 @@ void dragg_item(inventory_t *inventory, sfVector2f mouse_pos, item_t *dragged_it
     }
 }
 
-void play_inventory(sfRenderWindow *window, dict_t *items_dict)
+void show_single_inventory(sfRenderWindow *window,
+    dict_t *items_dict, physical_entity_t *player)
 {
-    sfVector2f inventory_position = {50.f, 50.f};
-    inventory_t *inventory = create_inventory(inventory_position);
-    inventory_t *inventory2 = create_inventory((sfVector2f){1300, 50});
-
     sfVector2f mouse_pos = {0};
     sfEvent event;
-    item_t *dragged_item = calloc(1, sizeof(dragged_item));
+    item_t *dragged_item = calloc(1, sizeof(item_t));
+    sfVector2u windowSize = sfRenderWindow_getSize(window);
+    sfTexture* texture = sfTexture_create(windowSize.x, windowSize.y);
+    sfTexture_updateFromRenderWindow(texture, window, 0, 0);
+    sfSprite *bg_sprite = sfSprite_create();
 
-    
-    insert_item(inventory, SPEED_ORB, items_dict);
-    insert_item(inventory, SPEED_ORB, items_dict);
-    insert_item(inventory, STRENGTH_ORB, items_dict);
-    insert_item(inventory, STRENGTH_ORB, items_dict);
-
-    insert_item(inventory2, SPEED_ORB, items_dict);
-    insert_item(inventory2, SPEED_ORB, items_dict);
-
+    sfSprite_setTexture(bg_sprite, texture, sfTrue);
+    sfRenderWindow_setView(window, sfRenderWindow_getDefaultView(window));
     while (sfRenderWindow_isOpen(window)) {
         mouse_pos = (sfVector2f)sfRenderWindow_mapPixelToCoords
             (window, sfMouse_getPositionRenderWindow(window), NULL);
         while (sfRenderWindow_pollEvent(window, &event))
-            if (event.type == sfEvtClosed)
-                sfRenderWindow_close(window);
+            if (sfKeyboard_isKeyPressed(sfKeyEscape))
+                return;
+        update_inventory(player->inventory, mouse_pos);
+        dragg_item(player->inventory, mouse_pos, dragged_item);
+        sfRenderWindow_clear(window, sfBlack);
+        sfRenderWindow_drawSprite(window, bg_sprite, NULL);
+        draw_inventory(window, player->inventory);
+        draw_stats_menu(window, &player->stats);
+        if (dragged_item != NULL && dragged_item->type != EMPTY_ITEM)
+            sfRenderWindow_drawSprite(window, dragged_item->sprite, NULL);
+        sfRenderWindow_display(window);
+    }
+    return;
+}
 
+void play_inventory(sfRenderWindow *window, dict_t *items_dict,
+    inventory_t *inventory, inventory_t *inventory2)
+{
+    sfVector2f mouse_pos = {0};
+    sfEvent event;
+    item_t *dragged_item = calloc(1, sizeof(item_t));
+    sfVector2u windowSize = sfRenderWindow_getSize(window);
+    sfTexture* texture = sfTexture_create(windowSize.x, windowSize.y);
+    sfTexture_updateFromRenderWindow(texture, window, 0, 0);
+    sfSprite *bg_sprite = sfSprite_create();
+
+    sfSprite_setTexture(bg_sprite, texture, sfTrue);
+    sfRenderWindow_setView(window, sfRenderWindow_getDefaultView(window));
+    while (sfRenderWindow_isOpen(window)) {
+        mouse_pos = (sfVector2f)sfRenderWindow_mapPixelToCoords
+            (window, sfMouse_getPositionRenderWindow(window), NULL);
+        while (sfRenderWindow_pollEvent(window, &event))
+            if (sfKeyboard_isKeyPressed(sfKeyEscape))
+                return;
         
         update_inventory(inventory, mouse_pos);
         update_inventory(inventory2, mouse_pos);
@@ -118,6 +143,7 @@ void play_inventory(sfRenderWindow *window, dict_t *items_dict)
         dragg_item(inventory2, mouse_pos, dragged_item);
 
         sfRenderWindow_clear(window, sfBlack);
+        sfRenderWindow_drawSprite(window, bg_sprite, NULL);
         draw_inventory(window, inventory);
         draw_inventory(window, inventory2);
 

@@ -14,7 +14,6 @@
 #include "init_entity.h"
 #include "init_texture.h"
 
-static const char *LEVELS_MAP_PATHS = "./levels/";
 
 sfIntRect get_tile_rect(int name)
 {

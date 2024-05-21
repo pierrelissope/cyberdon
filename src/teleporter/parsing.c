@@ -12,9 +12,6 @@
 #include "init_texture.h"
 #include "teleporter.h"
 
-static const char *LEVELS_MAP_PATHS = "./levels/";
-static const sfVector2f TILE_SIZE = {50, 50};
-
 static teleporter_t *build_teleporter_rect(teleporter_t *teleporter,
     sfVector2f pos, dict_t *tiles)
 {
@@ -24,7 +21,7 @@ static teleporter_t *build_teleporter_rect(teleporter_t *teleporter,
     if (!teleporter->rect)
         return NULL;
     sfRectangleShape_setPosition(teleporter->rect,
-        (sfVector2f){TILE_SIZE.x * pos.x, TILE_SIZE.y * pos.y});
+        (sfVector2f){TILE_SIZE * pos.x, TILE_SIZE * pos.y});
     sfRectangleShape_setSize(teleporter->rect, (sfVector2f){50, 50});
     origin =
         (sfVector2f){sfTexture_getSize(dict_get(tiles, TELEPORTER)).x / 2,
@@ -50,15 +47,15 @@ static teleporter_t *create_teleporter(char *coords, dict_t *tiles)
     return build_teleporter_rect(teleporter, pos, tiles);
 }
 
-static sfVector2f get_destination_coords(char *coords)
+sfVector2f get_destination_coords(char *coords)
 {
     sfVector2f pos = {0};
     char **tokens = my_str_to_all_array(coords, ":");
 
     if (my_strlen_array(tokens) != 2)
-            return (sfVector2f){0, 0};
+        return (sfVector2f){0, 0};
     pos = (sfVector2f)
-        {atof(tokens[0]) * TILE_SIZE.x, atof(tokens[1]) * TILE_SIZE.y};
+        {atof(tokens[0]) * TILE_SIZE, atof(tokens[1]) * TILE_SIZE};
     free_str_array(tokens);
     return pos;
 }

@@ -10,7 +10,6 @@
 #include "myutils.h"
 
 const int COLLISION_OPACITY = 145;
-const int TILE_SIZE = 50;
 
 world_t init_world(void)
 {
@@ -24,6 +23,13 @@ void draw_wall(void *wall, sfRenderWindow *window)
     block_t *new_wall = wall;
 
     sfRenderWindow_drawSprite(window, new_wall->sprite, NULL);
+}
+
+void draw_chest(void *chest, sfRenderWindow *window)
+{
+    chest_t *new_chest = chest;
+
+    sfRenderWindow_drawSprite(window, new_chest->sprite, NULL);
 }
 
 static void stack_walls(linked_objects_t ***array, world_t *world)
@@ -40,6 +46,25 @@ static void stack_walls(linked_objects_t ***array, world_t *world)
         object->object = world->walls[i];
         object->bounds = bounds;
         object->fct = draw_wall;
+        append_ptr((void ***)array, object, NULL);
+    }
+}
+
+static void stack_chests(linked_objects_t ***array, world_t *world)
+{
+    sfFloatRect bounds = {0};
+    linked_objects_t *object = NULL;
+    float bottom = 0;
+
+    for (int i = 0; world->chests && world->chests[i]; i++) {
+        bounds = sfSprite_getGlobalBounds(world->chests[i]->sprite);
+        bottom = bounds.top + bounds.height;
+        bounds.top = bottom - 60;
+        object = calloc(1, sizeof(linked_objects_t));
+        object->object = world->chests[i];
+        object->bounds = bounds;
+        bottom = bounds.top + bounds.height;
+        object->fct = draw_chest;
         append_ptr((void ***)array, object, NULL);
     }
 }
@@ -141,6 +166,7 @@ void draw_level(sfRenderWindow *window, world_t *world,
     stack_walls(&stack, world);
     stack_entities(&stack, world);
     stack_player(&stack, player);
+    stack_chests(&stack, world);
     quicksort(stack, 0, my_arraylen((void **)stack) - 1);
     for (int i = 0; stack && stack[i]; i++)
         stack[i]->fct(stack[i]->object, window);

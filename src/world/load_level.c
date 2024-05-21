@@ -9,17 +9,22 @@
 
 #include "myutils.h"
 #include "world.h"
+#include "inventory.h"
 
 static void init_level(world_t *world, char *level,
-    dict_t *tiles, dict_t *sheets_dict)
+    game_t *game)
 {
     char *destination_level = strdup(level);
 
     destroy_world(world);
     *world = (world_t){0};
     world->current_level = destination_level;
-    world->teleporters = load_level_teleporters(destination_level, tiles);
-    world->entities = load_level_entities(destination_level, sheets_dict);
+    world->teleporters = load_level_teleporters(
+        destination_level, game->tiles_dict);
+    world->entities = load_level_entities(
+        destination_level, game->sheets_dict);
+    world->chests = load_level_chests(destination_level, game->tiles_dict,
+        &game->inventories, game->items_dict);
 }
 
 int load_level(game_t *game, char *level, dict_t *tiles, dict_t *sheets_dict)
@@ -30,7 +35,7 @@ int load_level(game_t *game, char *level, dict_t *tiles, dict_t *sheets_dict)
     if (floor == NULL || walls == NULL)
         return EXIT_FAILURE;
     append_ptr((void ***)&game->visited_levels, strdup(level), NULL);
-    init_level(&game->world, level, tiles, sheets_dict);
+    init_level(&game->world, level, game);
     for (int y = 0; floor[y]; ++y)
         if (parse_floor_line(floor, &game->world, y, tiles) == EXIT_FAILURE)
             return EXIT_FAILURE;

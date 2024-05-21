@@ -14,6 +14,7 @@
 
 enum Tiles {
     LOADING_PAGE_SHEET,
+    CHEST,
     GRASS_BLOCK,
     STONE_BLOCK,
     STONE_WALL,
@@ -148,6 +149,12 @@ static const init_texture_t TILES_TEXTURE_INIT[] = {
         .texture_name = LOADING_PAGE_SHEET,
         .rect = {0, 0, 1134 / 5, 168},
         .frame_nb = 5,
+    },
+    {
+        .texture_path = "./assets/blocks/chest.png",
+        .texture_name = CHEST,
+        .rect = {0, 0, 128, 100},
+        .frame_nb = 1
     },
     {
         .texture_path = "./assets/blocks/collision_block.png",

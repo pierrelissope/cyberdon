@@ -44,7 +44,10 @@ SRC =		./src/entity/entity.c \
 			./src/world/destroy.c \
 			./src/inventory/inventory.c \
 			./src/inventory/init.c \
-			./src/inventory/insert.c
+			./src/inventory/insert.c \
+			./src/chest/chest.c \
+			./src/chest/content.c \
+			./src/inventory/stats.c
 
 SRCOBJ =	$(SRC:.c=.o)
 

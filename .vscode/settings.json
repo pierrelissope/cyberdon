@@ -8,6 +8,17 @@
         "window.h": "c",
         "struct.h": "c",
         "menu.h": "c",
-        "world.h": "c"
+        "world.h": "c",
+        "view.h": "c",
+        "mymenu.h": "c",
+        "inventory.h": "c",
+        "init_entity.h": "c",
+        "utils.h": "c",
+        "random": "c",
+        "cstdlib": "c",
+        "basics.h": "c",
+        "myutils.h": "c",
+        "string.h": "c",
+        "dict.h": "c"
     }
 }

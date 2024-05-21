@@ -9,11 +9,10 @@
 #include "string.h"
 #include "entity.h"
 #include "init_texture.h"
+#include "inventory.h"
 #include "myutils.h"
 
 const int ANIMATION_COOLDOWN = 100;
-
-const int MAP_TILE_SIZE = 50;
 
 const int ENTITY_RECT_SIZE = 15;
 
@@ -51,6 +50,8 @@ physical_entity_t *init_entity(sfVector2f pos, int type, char *name,
     entity->last_animation_update = sfClock_getElapsedTime(entity->clock);
     entity->rect = sfRectangleShape_create();
     entity->velocity = BASE_VELOCITY;
+    entity->inventory = create_inventory((sfVector2f){50, 300}, "player_inventory");
+    entity->stats = create_stats(name, sheets_dict);
     if (!entity->rect || !entity->clock || !entity->sprite_sheets)
         return entity;
     setup_entity(entity, pos);
@@ -170,8 +171,8 @@ void draw_entity(void *entity, sfRenderWindow *window)
         (sfVector2f){FRAME_SIZE.x / 2, FRAME_SIZE.y * 1.7});
     sfSprite_setPosition(nentity->current_sprite_sheet,
         isom_pos_converter((sfVector2f){
-        sfRectangleShape_getPosition(nentity->rect).x / MAP_TILE_SIZE,
-        sfRectangleShape_getPosition(nentity->rect).y / MAP_TILE_SIZE}));
+        sfRectangleShape_getPosition(nentity->rect).x / TILE_SIZE,
+        sfRectangleShape_getPosition(nentity->rect).y / TILE_SIZE}));
     sfRenderWindow_drawSprite(window,
         nentity->current_sprite_sheet, NULL);
 }

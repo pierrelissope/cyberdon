@@ -5,6 +5,9 @@
 ** init
 */
 
+#include <string.h>
+
+#include "game.h"
 #include "basics.h"
 #include "struct.h"
 #include "inventory.h"
@@ -14,6 +17,8 @@ static sfRectangleShape *create_inventory_box(sfVector2f position)
     sfRectangleShape *box = sfRectangleShape_create();
 
     sfRectangleShape_setSize(box, (sfVector2f){560.f, 440.f});
+    sfRectangleShape_setOutlineColor(box, LIGHT_WHITE);
+    sfRectangleShape_setOutlineThickness(box, 1);
     sfRectangleShape_setFillColor(box, GREY);
     sfRectangleShape_setPosition(box, position);
     return box;
@@ -47,9 +52,11 @@ static slot_t **create_inventory_slots(sfVector2f position)
     return slots;
 }
 
-inventory_t *create_inventory(sfVector2f position)
+inventory_t *create_inventory(sfVector2f position, char const *name)
 {
     inventory_t *inventory = calloc(1, sizeof(inventory_t));
+
+    inventory->name = strdup(name);
     inventory->box = create_inventory_box(position);
     inventory->slots = create_inventory_slots(position);
     return inventory;
