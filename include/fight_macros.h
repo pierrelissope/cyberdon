@@ -14,12 +14,6 @@ typedef enum arenas_e {
     ARENA_END
 } arenas_t;
 
-typedef enum fighters_e {
-    PLAYER_FIGHTER,
-    NPC1,
-    FIGHTER_END
-} fighters_t;
-
 typedef enum fighter_state_e {
     IDLE,
     FORWARD,
@@ -69,7 +63,7 @@ typedef enum fight_textures_e {
 } fight_textures_t;
 
 static const int MAX_FRAMES = 255;
-static const int FLOOR_Y = 700;
+static const int FLOOR_Y = 900;
 static const fighter_state_t STATE_LOCKS[] = {
     HIT,
     ATTACK,

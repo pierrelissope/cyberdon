@@ -34,6 +34,7 @@ static void apply_movement(fighter_entity_t *entity)
         entity->annimation_sheets[entity->state]->sprite_sheet);
     entity->sprite_pos = sfSprite_getPosition(
         entity->annimation_sheets[entity->state]->sprite_sheet);
+    bounds.top += bounds.height / 2.5;
     entity->hitbox = bounds;
     entity->hitbox.left += 30;
 }

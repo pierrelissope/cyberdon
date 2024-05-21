@@ -8,6 +8,7 @@
 #pragma once
 
 #include "fight_entity.h"
+#include "fight_transfer.h"
 
 void destroy_fight(fight_t *fight);
 int handle_fight_event(game_t *game, fight_t *fight, sfEvent *event);

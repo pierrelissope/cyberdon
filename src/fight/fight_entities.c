@@ -27,7 +27,7 @@ static sfSprite *init_fight_sprite(fighter_entity_t *entity,
     sfSprite *sp = sfSprite_create();
     sfFloatRect bounds = {0};
 
-    if (entity->name == PLAYER_FIGHTER) {
+    if (entity->player == true) {
         sfSprite_setTexture(sp, dict_get(text_dict,
             MOVES_INIT[moves_index].state), sfFalse);
         sfSprite_setPosition(sp, PLAYER_SPAWN);
@@ -40,7 +40,7 @@ static sfSprite *init_fight_sprite(fighter_entity_t *entity,
     }
     sfSprite_setTextureRect(sp, MOVES_INIT[moves_index].frame_rec);
     bounds = sfSprite_getGlobalBounds(sp);
-    sfSprite_setOrigin(sp, (sfVector2f) {bounds.width / 2, 0});
+    sfSprite_setOrigin(sp, (sfVector2f) {bounds.width / 2, bounds.height});
     return sp;
 }
 
@@ -69,18 +69,19 @@ static void init_data(fighter_entity_t *entity)
 }
 
 fighter_entity_t *init_fighter_entity(physical_entity_t *entity_stats,
-    fight_t *fight)
+    fight_t *fight, bool fighter)
 {
     fighter_entity_t *entity = calloc(1, sizeof(fighter_entity_t));
 
+    entity->player = fighter;
     entity->clock = sfClock_create();
     entity->i_counter = sfClock_create();
-    if (entity_stats->type == 0) {
+    if (fighter == true) {
         entity->looking_right = true;
-        entity->name = PLAYER_FIGHTER;
+        entity->name = fight->player_stats->fighter_skin;
     } else {
         entity->looking_left = true;
-        entity->name = NPC1;
+        entity->name = fight->npc_stats->fighter_skin;
     }
     entity->annimation_sheets = init_annimations(entity, fight->text_dict);
     init_data(entity);

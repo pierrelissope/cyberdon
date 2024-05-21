@@ -8,6 +8,7 @@
 #ifndef INIT_FIGHTERS_H
     #define INIT_FIGHTERS_H
 
+    #include "fight_transfer.h"
     #include "fight_macros.h"
     #include <SFML/Graphics/Rect.h>
     #include <SFML/System/Vector2.h>
@@ -25,7 +26,7 @@ static const movement_init_t MOVES_INIT[] = {
         IDLE,
         "idle.png",
         200,
-        {0, 0, 52, 100},
+        {0, 0, 60, 100},
         3
     },
     {
@@ -46,56 +47,56 @@ static const movement_init_t MOVES_INIT[] = {
         CROUCH,
         "crouch.png",
         150,
-        {0, 0, 50, 100},
+        {0, 0, 55, 100},
         2
     },
     {
         JUMP,
         "jump.png",
         125,
-        {0, 0, 50, 100},
+        {0, 0, 70, 100},
         6
     },
     {
         ATTACK,
         "attack.png",
         100,
-        {0, 0, 75, 100},
+        {0, 0, 80, 100},
         3
     },
     {
         ATTACK_UP,
         "attack_up.png",
-        100,
-        {0, 0, 75, 150},
+        150,
+        {0, 0, 80, 130},
         3
     },
     {
         ATTACK_DOWN,
         "attack_down.png",
         100,
-        {0, 0, 75, 100},
+        {0, 0, 80, 100},
         3
     },
     {
         ATTACK_CROUCH,
         "attack_crouch.png",
         100,
-        {0, 0, 75, 100},
+        {0, 0, 80, 110},
         3
     },
     {
         ATTACK_JUMP,
         "attack_jump.png",
         100,
-        {0, 0, 75, 100},
+        {0, 0, 80, 100},
         3
     },
     {
         HIT,
         "hit.png",
         100,
-        {0, 0, 52, 100},
+        {0, 0, 55, 112},
         1
     },
     {
@@ -110,12 +111,11 @@ static const int COOLDOWN = 25;
 
 typedef struct fighter_init_s {
     char *fighter_folder;
-    fight_textures_t text_beg;
-    fight_textures_t text_end;
     int iframes;
 } fighter_init_t;
 
 static const fighter_init_t FIGHTER_INIT[] = {
+<<<<<<< HEAD
     [PLAYER_FIGHTER] = {
         "assets/fighters/player/",
         PLAYER_IDLE_TEXT,
@@ -126,6 +126,18 @@ static const fighter_init_t FIGHTER_INIT[] = {
         "assets/fighters/npc1/",
         NPC_IDLE_TEXT,
         NPC_TEXTURES_END,
+=======
+    [BIG_DUDE] = {
+        "assets/fighters/big_dude/",
+        300
+    },
+    [BLACK_GUY] = {
+        "assets/fighters/black_guy/",
+        300,
+    },
+    [EAGLE] = {
+        "assets/fighters/eagle/",
+>>>>>>> 0075cc99a01a5a1ead9cb38460c2a65508c62303
         300,
     },
 };

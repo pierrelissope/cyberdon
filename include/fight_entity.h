@@ -16,6 +16,7 @@
 #include <stdbool.h>
 
 #include "fight_macros.h"
+#include "fight_transfer.h"
 #include "struct.h"
 
 typedef struct stats_s {
@@ -34,6 +35,7 @@ typedef struct stats_c_s {
 
 typedef struct Fighter_Entity_s {
     fighters_t name;
+    bool player;
     bool looking_up;
     bool looking_down;
     bool looking_right;
@@ -83,4 +85,4 @@ typedef struct fight_s {
 } fight_t;
 
 fighter_entity_t *init_fighter_entity(physical_entity_t *entity_stats,
-    fight_t *fight);
+    fight_t *fight, bool fighter);
