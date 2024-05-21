@@ -26,6 +26,8 @@ typedef enum item_type_e {
     SPEED_ORB,
     STRENGTH_ORB,
     STAMINA_ORB,
+    STAMINA_REGEN_ORB,
+    VITALITY_ORB,
 } item_type_t;
 
 typedef struct dict_s {
@@ -48,6 +50,7 @@ typedef struct slot_s {
 typedef struct inventory_s {
     char *name;
     sfRectangleShape *box;
+    sfText *text;
     slot_t **slots;
 } inventory_t;
 
@@ -62,6 +65,7 @@ typedef struct stats_s {
     char name[100];
     sfRectangleShape *box;
     sfSprite *sprite;
+
     int current_level;
     int current_xp;
     int attack;
@@ -71,6 +75,8 @@ typedef struct stats_s {
     int stamina_regeneration;
     int xp_to_levelup;
 
+    int hp_bonus;
+    int defense_bonus;
     int attack_bonus;
     int speed_bonus;
     int stamina_bonus;
@@ -79,6 +85,7 @@ typedef struct stats_s {
 
     sfRectangleShape *sprite_rect;
     sfRectangleShape *values_rect;
+
     sfText *level_text;
     sfText *xp_text;
     sfText *hp_text;
@@ -88,6 +95,14 @@ typedef struct stats_s {
     sfText *strength_text;
     sfText *stamina_text;
     sfText *stamina_regeneration_text;
+
+    sfText *hp_bonus_text;
+    sfText *defense_bonus_text;
+    sfText *attack_bonus_text;
+    sfText *speed_bonus_text;
+    sfText *strength_bonus_text;
+    sfText *stamina_bonus_text;
+    sfText *stamina_regeneration_bonus_text;
 } stats_t;
 
 typedef struct Physical_Entity_s {
@@ -128,7 +143,7 @@ typedef struct teleporter_s {
     sfVector2f destination_coord;
 } teleporter_t;
 
-typedef struct chest_s{
+typedef struct chest_s {
     char *name;
     sfRectangleShape *rect;
     sfSprite *sprite;

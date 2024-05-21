@@ -37,16 +37,24 @@ void insert_into_slot(slot_t *slot, item_type_t item, dict_t *items_dict)
     sfSprite_setPosition(slot->item->sprite, slot_center_pos);
 }
 
+static bool browse_inventory(inventory_t *inventory,
+    item_type_t item, dict_t *items_dict, size_t y)
+{
+    for (int x = 0; x < INVENTORY_SIZE_X; ++x) {
+        if (inventory->slots[y][x].item->type == EMPTY_ITEM) {
+            insert_into_slot(&inventory->slots[y][x],
+                item, items_dict);
+            return true;
+        }
+    }
+    return false;
+}
+
 void insert_item(inventory_t *inventory,
     item_type_t item, dict_t *items_dict)
 {
-
-    for (int y = 0; y < INVENTORY_SIZE_Y; ++y) {
-        for (int x = 0; x < INVENTORY_SIZE_X; ++x) {
-            if (inventory->slots[y][x].item->type == EMPTY_ITEM) {
-                return insert_into_slot(&inventory->slots[y][x],
-                    item, items_dict);
-            }
-        }
+    for (size_t y = 0; y < INVENTORY_SIZE_Y; ++y) {
+        if (browse_inventory(inventory, item, items_dict, y))
+            return;
     }
 }

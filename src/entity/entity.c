@@ -58,7 +58,7 @@ physical_entity_t *init_entity(sfVector2f pos, int type, char *name,
     return entity;
 }
 
-static sfVector2f get_movement(sfEvent *event)
+static sfVector2f get_movement(void)
 {
     sfVector2f movement = {0, 0};
 
@@ -132,7 +132,7 @@ static void change_entity_sprite(physical_entity_t *entity, sfVector2f mvt)
 void move_entity(physical_entity_t *entity, sfEvent *event, world_t *world)
 {
     sfFloatRect new_rect = {0};
-    sfVector2f mouvement = get_movement(event);
+    sfVector2f mouvement = get_movement();
 
     change_entity_sprite(entity, mouvement);
     new_rect = sfRectangleShape_getGlobalBounds(entity->rect);

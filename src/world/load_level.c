@@ -27,7 +27,7 @@ static void init_level(world_t *world, char *level,
         &game->inventories, game->items_dict);
 }
 
-int load_level(game_t *game, char *level, dict_t *tiles, dict_t *sheets_dict)
+int load_level(game_t *game, char *level, dict_t *tiles)
 {
     char **floor = load_floor(level);
     char **walls = load_walls(level);

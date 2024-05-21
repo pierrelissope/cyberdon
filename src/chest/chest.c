@@ -57,7 +57,8 @@ static inventory_t *build_inventory_content(char const *chest_name,
 
     for (size_t i = 0; lines != NULL && lines[i] != NULL; ++i) {
         tokens = my_str_to_all_array(lines[i], ";");
-        if (my_strlen_array(tokens) == 0 || strcmp(tokens[0], chest_name) != 0) {
+        if (my_strlen_array(tokens) == 0 ||
+            strcmp(tokens[0], chest_name) != 0) {
             free_str_array(tokens);
             continue;
         }
@@ -75,7 +76,8 @@ static inventory_t *get_chest_inventory(const char *chest_name,
 {
     inventory_t *inventory = NULL;
 
-    for (size_t i = 0; (*inventories) != NULL && (*inventories)[i] != NULL; ++i) {
+    for (size_t i = 0; (*inventories) != NULL &&
+        (*inventories)[i] != NULL; ++i) {
         if (strcmp((*inventories)[i]->name, chest_name) == 0)
             return (*inventories)[i];
     }

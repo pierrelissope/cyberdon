@@ -13,11 +13,17 @@
 #include "inventory.h"
 #include "init_texture.h"
 
-static const float open_area = 50; 
+static const float open_area = 50;
+
+static void open_chest(game_t *game, size_t i)
+{
+    if (sfKeyboard_isKeyPressed(sfKeyEnter))
+        play_inventory(game->window, game->player->inventory,
+        game->world.chests[i]->inventory);
+}
 
 void check_openned_chest(game_t *game)
 {
-    static bool in_chest = false;
     sfFloatRect player_hitbox =
         sfRectangleShape_getGlobalBounds(game->player->rect);
     sfFloatRect chest_hitbox = {0};
@@ -34,8 +40,7 @@ void check_openned_chest(game_t *game)
         if (sfFloatRect_intersects(&player_hitbox, &chest_hitbox, NULL)) {
             sfSprite_setTextureRect(game->world.chests[i]->sprite,
                 (sfIntRect){128, 0, 128, 94});
-            if (sfKeyboard_isKeyPressed(sfKeyEnter))
-                play_inventory(game->window, game->items_dict, game->player->inventory, game->world.chests[i]->inventory);
+            open_chest(game, i);
         }
     }
 }

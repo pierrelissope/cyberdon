@@ -31,9 +31,9 @@ static slot_t **create_inventory_slots(sfVector2f position)
     float x_offset = position.x + SLOT_MARGIN;
     float y_offset = position.y + SLOT_MARGIN;
 
-    for (int y = 0; y < INVENTORY_SIZE_Y; ++y) {
+    for (size_t y = 0; y < INVENTORY_SIZE_Y; ++y) {
         slots[y] = calloc(INVENTORY_SIZE_X, sizeof(slot_t));
-        for (int x = 0; x < INVENTORY_SIZE_X; ++x) {
+        for (size_t x = 0; x < INVENTORY_SIZE_X; ++x) {
             slots[y][x].box = sfRectangleShape_create();
             sfRectangleShape_setOutlineColor(slots[y][x].box,
                 LIGHT_WHITE);
@@ -52,11 +52,25 @@ static slot_t **create_inventory_slots(sfVector2f position)
     return slots;
 }
 
+static sfText *create_text(sfVector2f pos, const char *str)
+{
+    sfText *text = sfText_create();
+
+    sfText_setFont(text, FONT);
+    sfText_setCharacterSize(text, 36);
+    sfText_setString(text, str);
+    sfText_setFillColor(text, sfWhite);
+    sfText_setPosition(text, pos);
+    return text;
+}
+
 inventory_t *create_inventory(sfVector2f position, char const *name)
 {
     inventory_t *inventory = calloc(1, sizeof(inventory_t));
 
     inventory->name = strdup(name);
+    inventory->text =
+        create_text((sfVector2f){position.x + 172, position.y + 30}, name);
     inventory->box = create_inventory_box(position);
     inventory->slots = create_inventory_slots(position);
     return inventory;

@@ -302,6 +302,24 @@ static const init_texture_t ITEMS_TEXTURE_INIT[] = {
         .frame_nb = 1,
     },
     {
+        .texture_path = "./assets/items/strength_orb.png",
+        .texture_name = STAMINA_ORB,
+        .rect = {0, 0, 80, 80},
+        .frame_nb = 1,
+    },
+    {
+        .texture_path = "./assets/items/strength_orb.png",
+        .texture_name = STAMINA_REGEN_ORB,
+        .rect = {0, 0, 80, 80},
+        .frame_nb = 1,
+    },
+    {
+        .texture_path = "./assets/items/strength_orb.png",
+        .texture_name = VITALITY_ORB,
+        .rect = {0, 0, 80, 80},
+        .frame_nb = 1,
+    },
+    {
         .texture_path = NULL,
         .texture_name = 0
     },

@@ -32,8 +32,6 @@ static dict_t *load_textures_dict(const init_texture_t ENTIY_TEXTURE_INIT[])
 
 static int load_assets_dicts(game_t *game)
 {
-    sfTexture *texture = NULL;
-
     if (!dict_insert(&game->sheets_dict, PLAYER,
         load_textures_dict(PLAYER_TEXTURE_INIT)) ||
         !dict_insert(&game->sheets_dict, VILLAGER,
@@ -50,7 +48,7 @@ static void init_game_components(game_t *game)
     if (!game->status.is_valid)
         return;
     game->loading_page = init_loading_page(game->tiles_dict);
-    load_level(game, "city", game->tiles_dict, game->sheets_dict);
+    load_level(game, "city", game->tiles_dict);
     game->is_valid = true;
 }
 
@@ -94,14 +92,13 @@ void run_game(game_t *game)
     game->window = sfRenderWindow_create(
         (sfVideoMode){1920, 1080, 32}, "MyRPG", sfClose | sfResize, NULL);
     sfRenderWindow_setFramerateLimit(game->window, 60);
-    //play_inventory(game->window, game->items_dict);
     while (sfRenderWindow_isOpen(game->window)) {
         if (handle_event(game, &event) == sfEvtClosed)
             return;
         if (game->game_state == IN_GAME)
             move_entity(game->player, &event, &(game->world));
         if (sfKeyboard_isKeyPressed(sfKeyE))
-            show_single_inventory(game->window, game->items_dict, game->player);
+            show_single_inventory(game->window, game->player);
         check_openned_chest(game);
         teleport_player(game, game->world.teleporters, &game->status);
         animate_world(&(game->world));

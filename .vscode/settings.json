@@ -19,6 +19,8 @@
         "basics.h": "c",
         "myutils.h": "c",
         "string.h": "c",
-        "dict.h": "c"
+        "dict.h": "c",
+        "any": "c",
+        "complex": "c"
     }
 }
