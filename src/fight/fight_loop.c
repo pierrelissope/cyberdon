@@ -8,30 +8,41 @@
 #include "fight_macros.h"
 #include "struct.h"
 #include "fight.h"
+#include <SFML/System/Clock.h>
+#include <SFML/System/Time.h>
+#include <SFML/System/Types.h>
+#include <SFML/Window/Event.h>
 #include <stdio.h>
+
+static int run_frame(fight_t *fight, game_t *game, sfEvent *event)
+{
+    update_fight(fight);
+    if (handle_fight_event(game, fight, event) == sfEvtClosed)
+        return -1;
+    if (fight->npc->stats.health <= 0)
+        return 1;
+    if (fight->player->stats.health <= 0)
+        return 2;
+    draw_fight(fight, game->window);
+    return 0;
+}
 
 int run_fight(game_t *game, physical_entity_t *player,
     physical_entity_t *npc, arenas_t arena)
 {
     sfEvent event;
     fight_t *fight = load_fight(game, player, npc, arena);
+    int carry = 0;
 
     if (fight == NULL)
         return -1;
     while (sfRenderWindow_isOpen(game->window)) {
-        update_fight(fight);
-        if (handle_fight_event(game, fight, &event) == sfEvtClosed) {
-            destroy_fight(fight);
-            return -1;
-        }
-        if (fight->npc->stats.health <= 0)
-            return 1;
-        if (fight->player->stats.health <= 0)
-            return 2;
-        draw_fight(fight, game->window);
+        carry = run_frame(fight, game, &event);
+        if (carry != 0)
+            break;
     }
     destroy_fight(fight);
-    return 0;
+    return carry;
 }
 
 void test(game_t *game)

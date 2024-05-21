@@ -6,6 +6,7 @@
 */
 
 #include "dict.h"
+#include "fight_entity.h"
 #include "fight_macros.h"
 #include "fight.h"
 #include "struct.h"
@@ -19,6 +20,7 @@
 #include <SFML/Graphics/RenderWindow.h>
 #include <SFML/Graphics/Texture.h>
 #include <SFML/Graphics/Types.h>
+#include <SFML/System/Clock.h>
 #include <SFML/System/Vector2.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -99,24 +101,22 @@ static bool load_fighters(fight_t *fight)
     return false;
 }
 
+static void fill_entity_stats(fighter_entity_t *entity)
+{
+    entity->base_stats.attack = 1;
+    entity->base_stats.speed = 1;
+    entity->base_stats.stamina = 10;
+    entity->base_stats.stamina_regen = 1;
+    entity->base_stats.defense = 1;
+    entity->base_stats.health = 100;
+    entity->stats.health = 100;
+    entity->stats.stamina = 10;
+}
+
 static void sync_stats(fight_t *fight)
 {
-    fight->player->stats.defense = 1;
-    fight->player->stats.health = 100;
-    fight->player->stats.speed = 1;
-    fight->player->stats.stamina = 10;
-    fight->player->base_stats.defense = 1;
-    fight->player->base_stats.health = 100;
-    fight->player->base_stats.speed = 1;
-    fight->player->base_stats.stamina = 10;
-    fight->npc->stats.defense = 1;
-    fight->npc->stats.health = 100;
-    fight->npc->stats.speed = 1;
-    fight->npc->stats.stamina = 10;
-    fight->npc->base_stats.defense = 1;
-    fight->npc->base_stats.health = 100;
-    fight->npc->base_stats.speed = 1;
-    fight->npc->base_stats.stamina = 10;
+    fill_entity_stats(fight->npc);
+    fill_entity_stats(fight->player);
 }
 
 fight_t *load_fight(game_t *game, physical_entity_t *player,
@@ -131,6 +131,8 @@ fight_t *load_fight(game_t *game, physical_entity_t *player,
     fight->npc_stats = npc;
     fight->player_stats = player;
     fight->view = init_fight_view();
+    fight->fps_clock = sfClock_create();
+    fight->stamina_clock = sfClock_create();
     if (fight->view == NULL)
         return NULL;
     sfRenderWindow_setView(game->window, fight->view);

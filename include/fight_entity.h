@@ -21,9 +21,16 @@
 typedef struct stats_s {
     int speed;
     int health;
+    int attack;
     int defense;
     int stamina;
+    int stamina_regen;
 } stats_t;
+
+typedef struct stats_c_s {
+    int health;
+    int stamina;
+} stats_c_t;
 
 typedef struct Fighter_Entity_s {
     fighters_t name;
@@ -36,8 +43,6 @@ typedef struct Fighter_Entity_s {
     annimation_t **annimation_sheets;
     bool annimation_lock;
     fighter_state_t state;
-    int ability_cooldown;
-    sfClock *ability_clock;
 
     sfClock *i_counter;
     int iframes;
@@ -48,7 +53,7 @@ typedef struct Fighter_Entity_s {
     sfVector2f velocity;
     sfFloatRect hitbox;
     sfFloatRect dmgbox;
-    stats_t stats;
+    stats_c_t stats;
     stats_t base_stats;
 } fighter_entity_t;
 
@@ -73,6 +78,8 @@ typedef struct fight_s {
     ui_t ui;
     sfRectangleShape *background;
     sfRectangleShape *foreground;
+    sfClock *fps_clock;
+    sfClock *stamina_clock;
 } fight_t;
 
 fighter_entity_t *init_fighter_entity(physical_entity_t *entity_stats,

@@ -39,16 +39,16 @@ static const sfColor LOW_HEALTH = {
     .a = 240
 };
 
-static const sfColor HIGH_STAMINA = {
+static const sfColor LOW_STAMINA = {
     .r = 117,
     .g = 2,
     .b = 110,
     .a = 240
 };
 
-static const sfColor LOW_STAMINA = {
-    .r = 56,
-    .g = 1,
-    .b = 53,
+static const sfColor HIGH_STAMINA = {
+    .r = 235,
+    .g = 108,
+    .b = 232,
     .a = 240
 };

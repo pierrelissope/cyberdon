@@ -54,12 +54,12 @@ static void uptdate_health_rec_size(fight_t *fight)
         fight->player->base_stats.health, fight->ui.player_health);
 }
 
-void on_hit(fighter_entity_t *entity, fight_t *fight)
+void on_hit(fighter_entity_t *hited, fighter_entity_t *hiter, fight_t *fight)
 {
-    if (!change_state(entity, HIT))
+    if (!change_state(hited, HIT))
         return;
-    entity->annimation_lock = true;
-    sfClock_restart(entity->i_counter);
-    entity->stats.health -= 5;
+    hited->annimation_lock = true;
+    sfClock_restart(hited->i_counter);
+    hited->stats.health -= 1 * hiter->base_stats.attack;
     uptdate_health_rec_size(fight);
 }

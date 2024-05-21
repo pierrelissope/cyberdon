@@ -89,4 +89,6 @@ static const fighter_state_t N_OF_BYPASS = 1;
 static const float CROUCH_POS_OFFSET = 50;
 static const float CROUCH_HEIGHT_OFFSET = 1.25;
 
+static const int STAMINA_REGEN = 250;
+
 #endif

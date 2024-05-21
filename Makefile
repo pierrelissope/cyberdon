@@ -34,6 +34,7 @@ SRC =		./src/entity/entity.c \
 			./src/fight/movement_actions.c	\
 			./src/fight/attack_actions.c	\
 			./src/fight/hit_handling.c	\
+			./src/fight/stamina_handling.c	\
 			./src/fight/state_handling.c	\
 			./src/world/load_level.c \
 			./src/world/parsing.c \

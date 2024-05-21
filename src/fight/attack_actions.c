@@ -5,6 +5,7 @@
 ** movement actions func
 */
 
+#include "fight.h"
 #include "fight_attacks.h"
 #include "fight_entity.h"
 #include <SFML/Graphics/Rect.h>

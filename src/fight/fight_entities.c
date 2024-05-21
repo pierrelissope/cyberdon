@@ -65,7 +65,6 @@ static void init_data(fighter_entity_t *entity)
 {
     entity->state = IDLE;
     entity->iframes = FIGHTER_INIT[entity->name].iframes;
-    entity->ability_cooldown = COOLDOWN;
     entity->velocity = BASE_FIGHTER_VELOCITY;
 }
 
@@ -75,7 +74,6 @@ fighter_entity_t *init_fighter_entity(physical_entity_t *entity_stats,
     fighter_entity_t *entity = calloc(1, sizeof(fighter_entity_t));
 
     entity->clock = sfClock_create();
-    entity->ability_clock = sfClock_create();
     entity->i_counter = sfClock_create();
     if (entity_stats->type == 0) {
         entity->looking_right = true;
