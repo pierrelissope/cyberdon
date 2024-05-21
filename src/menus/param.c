@@ -7,7 +7,7 @@
 
 #include <SFML/Graphics.h>
 #include <stdio.h>
-#include "menu.h"
+#include "mh_menu.h"
 #include "game.h"
 #include <stdbool.h>
 

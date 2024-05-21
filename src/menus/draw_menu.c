@@ -20,13 +20,13 @@ static void init_ressouces(sfFont **font, sfVector2f *jouer_text_pos,
     *quitter_text_pos = (sfVector2f){915, 620};
 }
 
-static void create_menu_texts(sfText **texts, sfFont *font, int selected_item)
+static void create_menu_texts(sfText **texts,
+    sfFont *font, int selected_item, menu_item_t *ptr_fct)
 {
     sfVector2f positions[] = {{915, 500}, {915, 560}, {915, 620}};
-    char *options[] = {"play", "settings", "quit"};
 
     for (int i = 0; i < 3; ++i) {
-        texts[i] = create_text(options[i], positions[i],
+        texts[i] = create_text(ptr_fct[i].selected_item, positions[i],
             font, selected_item == i);
     }
 }
@@ -69,7 +69,7 @@ static void cleanup_resources(sfFont *font, sfText **texts)
 }
 
 void draw_menu(sfRenderWindow *window,
-    sfRectangleShape *rect, int *selected_item)
+    sfRectangleShape *rect, int *selected_item, menu_item_t *ptr_fct)
 {
     sfFont *font;
     sfVector2f jouer_text_pos;
@@ -78,7 +78,7 @@ void draw_menu(sfRenderWindow *window,
     sfText *texts[3];
 
     init_ressouces(&font, &jouer_text_pos, &param_text_pos, &quitter_text_pos);
-    create_menu_texts(texts, font, *selected_item);
+    create_menu_texts(texts, font, *selected_item, ptr_fct);
     update_selected_item(window, selected_item, texts);
     sfRenderWindow_clear(window, sfBlack);
     draw_menu_texts(window, texts);

@@ -10,7 +10,7 @@
 #include <SFML/System/Vector2.h>
 #include "basics.h"
 #include <time.h>
-#include "menu.h"
+#include "mh_menu.h"
 
 game_info_t *init_game_info(void)
 {
@@ -29,8 +29,8 @@ game_info_t *init_game_info(void)
 
 int main(int ac, char **av)
 {
-    game_info_t *info = init_game_info();
+    game_t game = init_game();
 
-    menu(info);
+    run_game(&game);
     return 0;
 }

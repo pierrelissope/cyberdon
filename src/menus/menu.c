@@ -7,9 +7,11 @@
 
 #include <SFML/Graphics.h>
 #include <stdio.h>
-#include "menu.h"
-#include "game.h"
 #include <stdbool.h>
+#include "struct.h"
+#include "mh_menu.h"
+#include "game.h"
+#include "basics.h"
 
 bool my_hover(sfRenderWindow *window, sfText *text)
 {
@@ -41,11 +43,7 @@ static void handle_events(sfRenderWindow *window, int *selected_item,
 
 static void jouer(sfRenderWindow *window, game_info_t *game_info)
 {
-    game_t game = init_game();
-
-    sfRenderWindow_close(window);
-    run_game(&game, game_info);
-    destroy_game(&game);
+    return;
 }
 
 static void quitter(sfRenderWindow *window)
@@ -92,25 +90,41 @@ sfRectangleShape *create_rectangle(void)
     return rect;
 }
 
-void menu(game_info_t *game_info)
+static menu_item_t *my_init_tab(int specifier)
 {
-    sfVideoMode mode = {1920, 1080, 30};
-    sfRenderWindow *window = sfRenderWindow_create(mode,
-        "Menu", sfClose, NULL);
-    menu_item_t menu_items[] = {
-        {"play", jouer},
-        {"settings", parametres},
-        {"quitter", quitter}
-    };
-    sfFont *font = sfFont_createFromFile("assets/font/font.ttf");
+    menu_item_t *menu = malloc(sizeof(menu_item_t) * 3);
+
+    if (specifier == 0){
+        menu[0].selected_item = my_strdup("Play");
+        menu[0].action = jouer;
+        menu[1].selected_item = my_strdup("Settings");
+        menu[1].action = parametres;
+        menu[2].selected_item = my_strdup("Leave");
+        menu[2].action = quitter;
+        return menu;
+    }
+    if (specifier == 1){
+        menu[0].selected_item = my_strdup("Resume");
+        menu[0].action = jouer;
+        menu[1].selected_item = my_strdup("Settings");
+        menu[1].action = parametres;
+        menu[2].selected_item = my_strdup("Leave");
+        menu[2].action = quitter;
+        return menu;
+    }
+}
+
+void menu(game_t *game, int specifier)
+{
+    menu_item_t *menu_items = my_init_tab(specifier);
     int selected_item = 0;
     sfRectangleShape *rect = create_rectangle();
     sfClock *clock = sfClock_create();
 
-    while (sfRenderWindow_isOpen(window)) {
-        handle_events(window, &selected_item,
-            menu_items, game_info);
+    while (sfRenderWindow_isOpen(game->window)) {
+        handle_events(game->window, &selected_item,
+            menu_items, game->game_info);
         blink(clock, rect);
-        draw_menu(window, rect, &selected_item);
+        draw_menu(game->window, rect, &selected_item, menu_items);
     }
 }

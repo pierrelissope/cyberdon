@@ -101,6 +101,14 @@ typedef struct status_s {
     sfClock *teleportation_clock;
 } status_t;
 
+typedef struct game_info {
+    char *save_file;
+    sfVector2u screen_res;
+    sfVector2u sizes[3];
+    sfFont *font;
+    sfRenderWindow *window;
+} game_info_t;
+
 typedef struct game_s {
     bool is_valid;
     game_state_t game_state;
@@ -116,6 +124,7 @@ typedef struct game_s {
     physical_entity_t *player;
     world_t world;
     char **visited_levels;
+    game_info_t *game_info;
 } game_t;
 
 typedef struct annimation_s {
