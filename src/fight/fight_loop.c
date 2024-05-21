@@ -4,8 +4,10 @@
 ** File description:
 ** loopers for fighting
 */
+
 #include "fight_entity.h"
 #include "fight_macros.h"
+#include "fight_transfer.h"
 #include "struct.h"
 #include "fight.h"
 #include <SFML/System/Clock.h>
@@ -50,5 +52,7 @@ void test(game_t *game)
     physical_entity_t npc_tmp = {0};
 
     npc_tmp.type = 1;
+    npc_tmp.fighter_skin = BIG_DUDE;
+    game->player->fighter_skin = EAGLE;
     printf("%d\n", run_fight(game, game->player, &npc_tmp, DEFAULT));
 }

@@ -8,6 +8,7 @@
 #ifndef INIT_FIGHTERS_H
     #define INIT_FIGHTERS_H
 
+    #include "fight_transfer.h"
     #include "fight_macros.h"
     #include <SFML/Graphics/Rect.h>
     #include <SFML/System/Vector2.h>
@@ -110,22 +111,20 @@ static const int COOLDOWN = 25;
 
 typedef struct fighter_init_s {
     char *fighter_folder;
-    fight_textures_t text_beg;
-    fight_textures_t text_end;
     int iframes;
 } fighter_init_t;
 
 static const fighter_init_t FIGHTER_INIT[] = {
-    [PLAYER_FIGHTER] = {
-        "assets/fighters/black_guy/",
-        PLAYER_IDLE_TEXT,
-        PLAYER_TEXTURES_END,
+    [BIG_DUDE] = {
+        "assets/fighters/big_dude/",
         300
     },
-    [NPC1] = {
+    [BLACK_GUY] = {
         "assets/fighters/black_guy/",
-        NPC_IDLE_TEXT,
-        NPC_TEXTURES_END,
+        300,
+    },
+    [EAGLE] = {
+        "assets/fighters/eagle/",
         300,
     },
 };

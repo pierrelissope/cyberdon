@@ -14,12 +14,6 @@ typedef enum arenas_e {
     ARENA_END
 } arenas_t;
 
-typedef enum fighters_e {
-    PLAYER_FIGHTER,
-    NPC1,
-    FIGHTER_END
-} fighters_t;
-
 typedef enum fighter_state_e {
     IDLE,
     FORWARD,
