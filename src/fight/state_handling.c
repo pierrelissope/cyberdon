@@ -29,17 +29,20 @@ bool annimation_bypass(fighter_entity_t *, fighter_state_t new_state)
     return false;
 }
 
-void change_state(fighter_entity_t *entity, fighter_state_t new_state)
+bool change_state(fighter_entity_t *entity, fighter_state_t new_state)
 {
-    if (entity->hit && sfTime_asMilliseconds(sfClock_getElapsedTime(entity->i_counter)) %
+    if (entity->hit &&
+        sfTime_asMilliseconds(sfClock_getElapsedTime(entity->i_counter)) <
         entity->iframes)
-        return;
+        return false;
     if (entity->annimation_lock && !annimation_bypass(entity, new_state))
-        return;
+        return false;
     if (entity->state != new_state) {
         entity->annimation_sheets[entity->state]->current_frame = 0;
         entity->annimation_sheets[entity->state]->text_rec.left = 0;
         sfClock_restart(entity->clock);
         entity->state = new_state;
+        return true;
     }
+    return false;
 }

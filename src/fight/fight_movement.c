@@ -9,7 +9,6 @@
 #include "fight_entity.h"
 #include "fight_macros.h"
 #include "struct.h"
-#include "fight_actions.h"
 
 #include <SFML/System/Time.h>
 #include <stdio.h>
@@ -43,6 +42,10 @@ static void apply_gravity(fighter_entity_t *entity)
 {
     sfVector2f basepos = {entity->sprite_pos.x, FLOOR_Y};
 
+    if (entity->sprite_pos.x > 1800 && entity->velocity.x > 0)
+        entity->velocity.x = 0;
+    if (entity->sprite_pos.x < 100 && entity->velocity.x < 0)
+        entity->velocity.x = 0;
     if (entity->sprite_pos.y < FLOOR_Y)
         entity->velocity.y += 1;
     if (entity->sprite_pos.y > FLOOR_Y) {
@@ -91,14 +94,11 @@ static void check_colisions(fight_t *fight)
 {
     if (!fight->player->hit && sfFloatRect_intersects(&(fight->player->hitbox),
         &(fight->npc->dmgbox), NULL)) {
-        change_state(fight->player, HIT);
-        fight->player->annimation_lock = true;
+        on_hit(fight->player, fight->npc, fight);
     }
     if (!fight->npc->hit && sfFloatRect_intersects(&(fight->npc->hitbox),
         &(fight->player->dmgbox), NULL)) {
-        change_state(fight->npc, HIT);
-        fight->npc->annimation_lock = true;
-        printf("HIT\n");
+        on_hit(fight->npc, fight->player, fight);
     }
     fight->player->dmgbox = (sfFloatRect) {0, 0, 0, 0};
     fight->player->dmgbox = (sfFloatRect) {0, 0, 0, 0};
@@ -127,4 +127,11 @@ void update_fight(fight_t *fight)
     apply_movement(fight->npc);
     annimate_fighter(fight->npc);
     annimate_fighter(fight->player);
+    uptdate_stamina_rec_size(fight);
+    if (sfTime_asMilliseconds(sfClock_getElapsedTime(fight->stamina_clock)) >=
+        STAMINA_REGEN) {
+        stamina_regen(fight->player);
+        stamina_regen(fight->npc);
+        sfClock_restart(fight->stamina_clock);
+    }
 }

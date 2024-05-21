@@ -93,11 +93,15 @@ static int key_events(fight_t *fight)
 {
     fighter_state_t action = IDLE;
 
-    if (sfKeyboard_isKeyPressed(sfKeyX))
-        action = ATTACK;
+    if (sfKeyboard_isKeyPressed(sfKeyX)) {
+        if (decrease_stamina(fight->player, 5))
+            action = ATTACK;
+    }
     if (sfKeyboard_isKeyPressed(sfKeySpace) &&
-        fight->player->velocity.y == 0)
-        action = JUMP;
+        fight->player->velocity.y == 0) {
+        if (decrease_stamina(fight->player, 5))
+            action = JUMP;
+    }
     return action;
 }
 

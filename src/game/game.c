@@ -99,7 +99,8 @@ void run_game(game_t *game, game_info_t *info)
     sfEvent event;
 
     game->window = sfRenderWindow_create(
-        (sfVideoMode){info->screen_res.x, info->screen_res.y, 32}, "MyRPG", sfClose | sfResize, NULL);
+        (sfVideoMode){info->screen_res.x, info->screen_res.y, 32},
+        "MyRPG", sfClose | sfResize, NULL);
     sfRenderWindow_setFramerateLimit(game->window, 60);
     while (sfRenderWindow_isOpen(game->window)) {
         if (handle_event(game, &event) == sfEvtClosed)

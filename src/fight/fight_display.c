@@ -99,6 +99,14 @@ static void draw_debug(fight_t *fight, sfRenderWindow *win)
     draw_rec(&(fight->npc->dmgbox), &npc_origin, win);
 }
 
+static void draw_ui(fight_t *fight, sfRenderWindow *win)
+{
+    sfRenderWindow_drawRectangleShape(win, fight->ui.npc_health, NULL);
+    sfRenderWindow_drawRectangleShape(win, fight->ui.npc_stamina, NULL);
+    sfRenderWindow_drawRectangleShape(win, fight->ui.player_stamina, NULL);
+    sfRenderWindow_drawRectangleShape(win, fight->ui.player_health, NULL);
+}
+
 void draw_fight(fight_t *fight, sfRenderWindow *win)
 {
     sfRenderWindow_clear(win, sfBlack);
@@ -106,6 +114,7 @@ void draw_fight(fight_t *fight, sfRenderWindow *win)
     draw_fighter(fight->player, win);
     if (fight->debug_mode)
         draw_debug(fight, win);
+    draw_ui(fight, win);
     draw_fighter(fight->npc, win);
     sfRenderWindow_drawRectangleShape(win, fight->foreground, NULL);
     sfRenderWindow_display(win);

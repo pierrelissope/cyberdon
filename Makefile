@@ -23,17 +23,21 @@ SRC =		./src/entity/entity.c \
 			./src/utils/sprite_sorting.c \
 			./src/world/world.c \
 			./src/menus/menu.c \
+			./src/menus/draw_menu.c \
+			./src/menus/param.c \
 			./src/fight/fight_ai.c	\
 			./src/fight/fight_display.c	\
 			./src/fight/fight_entities.c	\
 			./src/fight/fight_loading.c	\
 			./src/fight/fight_unloading.c	\
+			./src/fight/fight_ui_loading.c	\
 			./src/fight/fight_events.c	\
 			./src/fight/fight_loop.c	\
 			./src/fight/fight_movement.c	\
 			./src/fight/movement_actions.c	\
 			./src/fight/attack_actions.c	\
 			./src/fight/hit_handling.c	\
+			./src/fight/stamina_handling.c	\
 			./src/fight/state_handling.c	\
 			./src/world/load_level.c \
 			./src/world/parsing.c \
