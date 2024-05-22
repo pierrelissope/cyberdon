@@ -98,6 +98,10 @@ static const init_world_t WALLS_BLOCK_INIT[] =
         .texture_name = COLLISION_BLOCK
     },
     {
+        .c = 'n',
+        .texture_name = SKINNY_BATIMENT2X1
+    },
+    {
         .c = 'b',
         .texture_name = BATIMENT2X2,
     },

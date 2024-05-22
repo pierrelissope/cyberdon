@@ -17,6 +17,7 @@ enum Tiles {
     BATIMENT2X2,
     BATIMENT2X1,
     LITTLE_BATIMENT2X1,
+    SKINNY_BATIMENT2X1,
     CHEST,
     GRASS_BLOCK,
     STONE_BLOCK,
@@ -183,6 +184,12 @@ static const init_texture_t TILES_TEXTURE_INIT[] = {
         .texture_path = "./assets/blocks/little_batiment2x1.png",
         .texture_name = LITTLE_BATIMENT2X1,
         .rect = {0, 0, 256, 294},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/skinny_batiment2x1.png",
+        .texture_name = SKINNY_BATIMENT2X1,
+        .rect = {0, 0, 256, 227},
         .frame_nb = 1
     },
     {
