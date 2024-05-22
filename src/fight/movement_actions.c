@@ -23,6 +23,7 @@ void jump(fighter_entity_t *entity)
 void idle(fighter_entity_t *entity)
 {
     entity->velocity.x = 0;
+    entity->hit = false;
 }
 
 void crouch(fighter_entity_t *entity)

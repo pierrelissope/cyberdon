@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include "fight_transfer.h"
 #include <SFML/Graphics.h>
 #include <SFML/Graphics/Rect.h>
 #include <SFML/Window.h>
@@ -119,6 +120,7 @@ typedef struct Physical_Entity_s {
     float velocity;
     int current_frame;
     int animation_cooldown;
+    fighters_t fighter_skin;
 } physical_entity_t;
 
 typedef struct block_s {

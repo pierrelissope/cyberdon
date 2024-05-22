@@ -5,6 +5,7 @@
 ** movement actions func
 */
 
+#include "fight.h"
 #include "fight_attacks.h"
 #include "fight_entity.h"
 #include <SFML/Graphics/Rect.h>
@@ -50,7 +51,12 @@ void attack(fighter_entity_t *entity)
 
 void attack_crouch(fighter_entity_t *entity)
 {
+    int current_frame =
+        entity->annimation_sheets[entity->state]->current_frame + 1;
+
     pre_attack(entity);
+    entity->hitbox.top += (CROUCH_POS_OFFSET - 10) * current_frame;
+    entity->hitbox.height = (entity->hitbox.height / CROUCH_HEIGHT_OFFSET);
     entity->dmgbox = apply_offset(entity);
 }
 

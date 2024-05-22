@@ -22,6 +22,8 @@ void crouch(fighter_entity_t *entity);
 void forward(fighter_entity_t *entity);
 void backward(fighter_entity_t *entity);
 
+void hit(fighter_entity_t *entity);
+
 static void (*FIGHT_ACTIONS[])(fighter_entity_t *) = {
     [ATTACK] = attack,
     [ATTACK_CROUCH] = attack_crouch,
@@ -32,6 +34,6 @@ static void (*FIGHT_ACTIONS[])(fighter_entity_t *) = {
     [FORWARD] = NULL,
     [CROUCH] = crouch,
     [BACKWARD] = NULL,
-    [HIT] = NULL,
+    [HIT] = hit,
     [IDLE] = idle,
 };
