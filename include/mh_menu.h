@@ -31,8 +31,6 @@ typedef struct menu_item_s {
 game_info_t *init_game_info(void);
 sfRectangleShape *create_rectangle(void);
 void menu(game_t *game);
-sfText *create_text(char *string, sfVector2f position,
-    sfFont *font, bool is_selected);
 void parametres(sfRenderWindow *window, game_info_t *game_info);
 void blink(sfClock *clock, sfRectangleShape *rect);
 void draw_menu(sfRenderWindow *window,

@@ -22,12 +22,38 @@ typedef enum game_state_e {
     IN_CINEMATIC,
 } game_state_t;
 
+typedef enum item_type_e {
+    EMPTY_ITEM = 0,
+    SPEED_ORB,
+    STRENGTH_ORB,
+    STAMINA_ORB,
+    STAMINA_REGEN_ORB,
+    VITALITY_ORB,
+} item_type_t;
+
 typedef struct dict_s {
     bool is_valid;
     int key;
     void *value;
     struct dict_s *next;
 } dict_t;
+
+typedef struct item_s {
+    item_type_t type;
+    sfSprite *sprite;
+} item_t;
+
+typedef struct slot_s {
+    sfRectangleShape *box;
+    item_t *item;
+} slot_t;
+
+typedef struct inventory_s {
+    char *name;
+    sfRectangleShape *box;
+    sfText *text;
+    slot_t **slots;
+} inventory_t;
 
 typedef struct linked_objects_s {
     bool priority;
@@ -36,10 +62,58 @@ typedef struct linked_objects_s {
     void (*fct) (void *, sfRenderWindow *window);
 } linked_objects_t;
 
+typedef struct stats_s {
+    char name[100];
+    sfRectangleShape *box;
+    sfSprite *sprite;
+
+    int current_level;
+    int current_xp;
+    int hp;
+    int attack;
+    int speed;
+    int defense;
+    int stamina;
+    int strength;
+    int stamina_regen;
+    int xp_to_levelup;
+
+    int hp_bonus;
+    int defense_bonus;
+    int attack_bonus;
+    int speed_bonus;
+    int stamina_bonus;
+    int strength_bonus;
+    int stamina_regen_bonus;
+
+    sfRectangleShape *sprite_rect;
+
+    sfText *level_text;
+    sfText *xp_text;
+    sfText *hp_text;
+    sfText *defense_text;
+    sfText *attack_text;
+    sfText *speed_text;
+    sfText *strength_text;
+    sfText *stamina_text;
+    sfText *stamina_regen_text;
+
+    sfText *hp_bonus_text;
+    sfText *defense_bonus_text;
+    sfText *attack_bonus_text;
+    sfText *speed_bonus_text;
+    sfText *strength_bonus_text;
+    sfText *stamina_bonus_text;
+    sfText *stamina_regen_bonus_text;
+} stats_t;
+
 typedef struct Physical_Entity_s {
     bool is_valid;
     int type;
     char name[100];
+    sfFont *font;
+    inventory_t *inventory;
+    stats_t stats;
     dict_t *sprite_sheets;
     sfSprite *current_sprite_sheet;
     sfRectangleShape *rect;
@@ -73,11 +147,19 @@ typedef struct teleporter_s {
     sfVector2f destination_coord;
 } teleporter_t;
 
+typedef struct chest_s {
+    char *name;
+    sfRectangleShape *rect;
+    sfSprite *sprite;
+    inventory_t *inventory;
+} chest_t;
+
 typedef struct world_s {
     block_t **floor;
     block_t **walls;
     teleporter_t **teleporters;
     physical_entity_t **entities;
+    chest_t **chests;
     char *current_level;
 } world_t;
 
@@ -118,14 +200,16 @@ typedef struct game_s {
     loading_page_t loading_page;
     status_t status;
     sfRenderWindow *window;
-    dialog_box_t dialog_box;
     sfClock *clock;
     sfVector2f view_pos;
     sfView *player_view;
+    inventory_t **inventories;
     dict_t *sheets_dict;
     dict_t *tiles_dict;
+    dict_t *items_dict;
     physical_entity_t *player;
     world_t world;
+    sfFont *font;
     char **visited_levels;
     game_info_t *game_info;
 } game_t;

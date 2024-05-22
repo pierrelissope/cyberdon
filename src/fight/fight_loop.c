@@ -21,9 +21,9 @@ static int run_frame(fight_t *fight, game_t *game, sfEvent *event)
     update_fight(fight);
     if (handle_fight_event(game, fight, event) == sfEvtClosed)
         return -1;
-    if (fight->npc->stats.health <= 0)
+    if (fight->npc->stats.hp <= 0)
         return 1;
-    if (fight->player->stats.health <= 0)
+    if (fight->player->stats.hp <= 0)
         return 2;
     draw_fight(fight, game->window);
     return 0;
@@ -53,6 +53,6 @@ void test(game_t *game)
 
     npc_tmp.type = 1;
     npc_tmp.fighter_skin = BIG_DUDE;
-    game->player->fighter_skin = EAGLE;
+    game->player->fighter_skin = BLACK_GUY;
     printf("%d\n", run_fight(game, game->player, &npc_tmp, DEFAULT));
 }

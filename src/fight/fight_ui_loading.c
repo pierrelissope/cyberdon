@@ -18,20 +18,20 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-static bool init_health(ui_t *ui)
+static bool init_hp(ui_t *ui)
 {
-    ui->player_health = sfRectangleShape_create();
-    if (ui->player_health == NULL)
+    ui->player_hp = sfRectangleShape_create();
+    if (ui->player_hp == NULL)
         return true;
-    sfRectangleShape_setSize(ui->player_health, HEALTH_SIZE);
-    sfRectangleShape_setFillColor(ui->player_health, HIGH_HEALTH);
-    sfRectangleShape_setPosition(ui->player_health, PLAYER_HEALTH_POS);
-    ui->npc_health = sfRectangleShape_create();
-    if (ui->npc_health == NULL)
+    sfRectangleShape_setSize(ui->player_hp, hp_SIZE);
+    sfRectangleShape_setFillColor(ui->player_hp, HIGH_hp);
+    sfRectangleShape_setPosition(ui->player_hp, PLAYER_hp_POS);
+    ui->npc_hp = sfRectangleShape_create();
+    if (ui->npc_hp == NULL)
         return true;
-    sfRectangleShape_setSize(ui->npc_health, HEALTH_SIZE);
-    sfRectangleShape_setFillColor(ui->npc_health, HIGH_HEALTH);
-    sfRectangleShape_setPosition(ui->npc_health, NPC_HEALTH_POS);
+    sfRectangleShape_setSize(ui->npc_hp, hp_SIZE);
+    sfRectangleShape_setFillColor(ui->npc_hp, HIGH_hp);
+    sfRectangleShape_setPosition(ui->npc_hp, NPC_hp_POS);
     return false;
 }
 
@@ -59,7 +59,7 @@ static bool init_portraits(fight_t *fight)
 
 bool load_ui(fight_t *fight)
 {
-    if (init_health(&fight->ui))
+    if (init_hp(&fight->ui))
         return true;
     if (init_portraits(fight))
         return true;

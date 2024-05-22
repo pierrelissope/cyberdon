@@ -24,3 +24,17 @@ int handle_event(game_t *game, sfEvent *event)
     }
     return sfEvtCount;
 }
+
+int handle_inventory_event(sfRenderWindow *window, sfEvent *event)
+{
+    while (sfRenderWindow_pollEvent(window, event)) {
+        if (event->type == sfEvtClosed) {
+            sfRenderWindow_close(window);
+            return sfEvtClosed;
+        }
+        if (sfKeyboard_isKeyPressed(sfKeyEscape)) {
+            return sfEvtClosed;
+        }
+    }
+    return sfEvtCount;
+}

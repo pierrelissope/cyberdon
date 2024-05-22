@@ -5,6 +5,7 @@ myrpg
 unit_tests
 *.log
 #*#
+*.json
 *~
 .#*
 *ccore.*

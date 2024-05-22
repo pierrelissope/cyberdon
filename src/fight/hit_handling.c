@@ -23,35 +23,35 @@ void hit(fighter_entity_t *entity)
     entity->hit = true;
 }
 
-static void update_color(float health, sfRectangleShape *rec)
+static void update_color(float hp, sfRectangleShape *rec)
 {
-    if (health <= 0.65)
-        sfRectangleShape_setFillColor(rec, MID_HEALTH);
-    if (health <= 0.30)
-        sfRectangleShape_setFillColor(rec, LOW_HEALTH);
+    if (hp <= 0.65)
+        sfRectangleShape_setFillColor(rec, MID_hp);
+    if (hp <= 0.30)
+        sfRectangleShape_setFillColor(rec, LOW_hp);
 }
 
-static void uptdate_health_rec_size(fight_t *fight)
+static void uptdate_hp_rec_size(fight_t *fight)
 {
-    float player_size = HEALTH_SIZE.x * ((float)fight->player->stats.health /
-        fight->player->base_stats.health);
-    float npc_size = HEALTH_SIZE.x * ((float) fight->npc->stats.health /
-        fight->npc->base_stats.health);
+    float player_size = hp_SIZE.x * ((float)fight->player->stats.hp /
+        fight->player->base_stats.hp);
+    float npc_size = hp_SIZE.x * ((float) fight->npc->stats.hp /
+        fight->npc->base_stats.hp);
 
-    sfRectangleShape_setSize(fight->ui.player_health, (sfVector2f) {
+    sfRectangleShape_setSize(fight->ui.player_hp, (sfVector2f) {
             player_size,
-            HEALTH_SIZE.y,
+            hp_SIZE.y,
         });
-    sfRectangleShape_setSize(fight->ui.npc_health, (sfVector2f) {
+    sfRectangleShape_setSize(fight->ui.npc_hp, (sfVector2f) {
             npc_size,
-            HEALTH_SIZE.y,
+            hp_SIZE.y,
         });
-    sfRectangleShape_setPosition(fight->ui.npc_health, (sfVector2f)
-        {NPC_HEALTH_POS.x + (HEALTH_SIZE.x - npc_size), NPC_HEALTH_POS.y});
-    update_color((float) fight->npc->stats.health /
-        fight->npc->base_stats.health, fight->ui.npc_health);
-    update_color((float) fight->player->stats.health /
-        fight->player->base_stats.health, fight->ui.player_health);
+    sfRectangleShape_setPosition(fight->ui.npc_hp, (sfVector2f)
+        {NPC_hp_POS.x + (hp_SIZE.x - npc_size), NPC_hp_POS.y});
+    update_color((float) fight->npc->stats.hp /
+        fight->npc->base_stats.hp, fight->ui.npc_hp);
+    update_color((float) fight->player->stats.hp /
+        fight->player->base_stats.hp, fight->ui.player_hp);
 }
 
 void on_hit(fighter_entity_t *hited, fighter_entity_t *hiter, fight_t *fight)
@@ -60,6 +60,6 @@ void on_hit(fighter_entity_t *hited, fighter_entity_t *hiter, fight_t *fight)
         return;
     hited->annimation_lock = true;
     sfClock_restart(hited->i_counter);
-    hited->stats.health -= 1 * hiter->base_stats.attack;
-    uptdate_health_rec_size(fight);
+    hited->stats.hp -= 1 * hiter->base_stats.attack;
+    uptdate_hp_rec_size(fight);
 }

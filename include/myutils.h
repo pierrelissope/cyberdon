@@ -20,3 +20,4 @@ sfVector2f normalize(sfVector2f vector);
 void quicksort(linked_objects_t **array, int low, int high);
 sfIntRect get_tile_rect(int name);
 int get_tile_frames(int name);
+sfVector2f get_destination_coords(char *coords);

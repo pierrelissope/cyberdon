@@ -14,6 +14,7 @@
 
 enum Tiles {
     LOADING_PAGE_SHEET,
+    CHEST,
     GRASS_BLOCK,
     STONE_BLOCK,
     STONE_WALL,
@@ -150,6 +151,12 @@ static const init_texture_t TILES_TEXTURE_INIT[] = {
         .frame_nb = 5,
     },
     {
+        .texture_path = "./assets/blocks/chest.png",
+        .texture_name = CHEST,
+        .rect = {0, 0, 128, 100},
+        .frame_nb = 1
+    },
+    {
         .texture_path = "./assets/blocks/collision_block.png",
         .texture_name = COLLISION_BLOCK,
         .rect = {0, 0, 128, 128},
@@ -274,6 +281,43 @@ static const init_texture_t TILES_TEXTURE_INIT[] = {
         .texture_name = STREET_LAMP,
         .rect = {0, 0, 128, 230},
         .frame_nb = 7
+    },
+    {
+        .texture_path = NULL,
+        .texture_name = 0
+    },
+};
+
+static const init_texture_t ITEMS_TEXTURE_INIT[] = {
+    {
+        .texture_path = "./assets/items/speed_orb.png",
+        .texture_name = SPEED_ORB,
+        .rect = {0, 0, 80, 80},
+        .frame_nb = 1,
+    },
+    {
+        .texture_path = "./assets/items/strength_orb.png",
+        .texture_name = STRENGTH_ORB,
+        .rect = {0, 0, 80, 80},
+        .frame_nb = 1,
+    },
+    {
+        .texture_path = "./assets/items/strength_orb.png",
+        .texture_name = STAMINA_ORB,
+        .rect = {0, 0, 80, 80},
+        .frame_nb = 1,
+    },
+    {
+        .texture_path = "./assets/items/strength_orb.png",
+        .texture_name = STAMINA_REGEN_ORB,
+        .rect = {0, 0, 80, 80},
+        .frame_nb = 1,
+    },
+    {
+        .texture_path = "./assets/items/strength_orb.png",
+        .texture_name = VITALITY_ORB,
+        .rect = {0, 0, 80, 80},
+        .frame_nb = 1,
     },
     {
         .texture_path = NULL,

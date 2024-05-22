@@ -35,7 +35,7 @@ void teleporter_detected(game_t *game, teleporter_t *teleporter,
         sfView_zoom(game->player_view, 1.5);
     }
     load_level(game, teleporter->destination_level,
-        game->tiles_dict, game->sheets_dict);
+        game->tiles_dict);
     play_loading_screen(game->window, &game->loading_page);
     sfClock_restart(status->teleportation_clock);
     game->player->current_sprite_sheet =

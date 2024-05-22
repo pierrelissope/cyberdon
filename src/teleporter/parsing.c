@@ -12,9 +12,6 @@
 #include "init_texture.h"
 #include "teleporter.h"
 
-static const char *LEVELS_MAP_PATHS = "./levels/";
-static const sfVector2f TILE_SIZE = {50, 50};
-
 static teleporter_t *build_teleporter_rect(teleporter_t *teleporter,
     sfVector2f pos, dict_t *tiles)
 {
@@ -24,7 +21,7 @@ static teleporter_t *build_teleporter_rect(teleporter_t *teleporter,
     if (!teleporter->rect)
         return NULL;
     sfRectangleShape_setPosition(teleporter->rect,
-        (sfVector2f){TILE_SIZE.x * pos.x, TILE_SIZE.y * pos.y});
+        (sfVector2f){TILE_SIZE * pos.x, TILE_SIZE * pos.y});
     sfRectangleShape_setSize(teleporter->rect, (sfVector2f){50, 50});
     origin =
         (sfVector2f){sfTexture_getSize(dict_get(tiles, TELEPORTER)).x / 2,
@@ -47,18 +44,19 @@ static teleporter_t *create_teleporter(char *coords, dict_t *tiles)
     pos = (sfVector2f){atof(tokens[0]), atof(tokens[1])};
     sfSprite_setTexture(teleporter->sprite,
         dict_get(tiles, TELEPORTER), sfTrue);
+    free_str_array(tokens);
     return build_teleporter_rect(teleporter, pos, tiles);
 }
 
-static sfVector2f get_destination_coords(char *coords)
+sfVector2f get_destination_coords(char *coords)
 {
     sfVector2f pos = {0};
     char **tokens = my_str_to_all_array(coords, ":");
 
     if (my_strlen_array(tokens) != 2)
-            return (sfVector2f){0, 0};
+        return (sfVector2f){0, 0};
     pos = (sfVector2f)
-        {atof(tokens[0]) * TILE_SIZE.x, atof(tokens[1]) * TILE_SIZE.y};
+        {atof(tokens[0]) * TILE_SIZE, atof(tokens[1]) * TILE_SIZE};
     free_str_array(tokens);
     return pos;
 }
@@ -77,6 +75,7 @@ static int parse_level_teleporters(char **lines,
         teleporter->destination_level = strdup(tokens[1]);
         teleporter->destination_coord = get_destination_coords(tokens[2]);
         append_ptr((void ***)teleporters, teleporter, NULL);
+        free_str_array(tokens);
     }
     free_str_array(lines);
     return EXIT_SUCCESS;
@@ -90,18 +89,16 @@ teleporter_t **load_level_teleporters(char *level, dict_t *tiles)
     char **lines = NULL;
     teleporter_t **teleporters = NULL;
 
-    if (!path) {
-        freef("%a%a", path, buffer);
+    if (!path)
         return NULL;
-    }
     buffer = open_file(path);
-    if (!buffer) {
-        freef("%a%a", path, buffer);
+    if (!buffer)
         return NULL;
-    }
     lines = my_str_to_all_array(buffer, "\n");
     if (!lines)
         return NULL;
-    return (parse_level_teleporters(lines, &teleporters,
-        tiles) == EXIT_FAILURE ? NULL : teleporters);
+    if (parse_level_teleporters(lines, &teleporters, tiles) == EXIT_FAILURE)
+        return NULL;
+    freef("%a%a", path, buffer);
+    return teleporters;
 }
