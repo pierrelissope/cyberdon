@@ -14,7 +14,6 @@
 #include "init_entity.h"
 #include "init_texture.h"
 
-static const char *LEVELS_MAP_PATHS = "./levels/";
 
 sfIntRect get_tile_rect(int name)
 {
@@ -99,10 +98,11 @@ static int parse_level_entities(char **lines,
         pos_array = my_str_to_all_array(tokens[2], ",");
         pos = (sfVector2f){atof(pos_array[0]), atof(pos_array[1])};
         type = get_entity_type(tokens[1]);
-        entity = init_entity(pos, type, strdup(tokens[0]), sheets_dict);
+        entity = init_entity(pos, type, tokens[0], sheets_dict);
         if (!entity->is_valid)
             return EXIT_FAILURE;
         append_ptr((void ***)entities, entity, NULL);
+        freef("%t%t", (void **)tokens, (void **)pos_array);
     }
     free_str_array(lines);
     return EXIT_SUCCESS;
@@ -115,18 +115,16 @@ physical_entity_t **load_level_entities(char *level, dict_t *sheets_dict)
     char **lines = NULL;
     physical_entity_t **entities = NULL;
 
-    if (!path) {
-        freef("%a%a", path, buffer);
+    if (!path)
         return NULL;
-    }
     buffer = open_file(path);
-    if (!buffer) {
-        freef("%a%a", path, buffer);
+    if (!buffer)
         return NULL;
-    }
     lines = my_str_to_all_array(buffer, "\n");
     if (!lines)
         return NULL;
-    return (parse_level_entities(lines, &entities,
-        sheets_dict) == EXIT_FAILURE ? NULL : entities);
+    if (parse_level_entities(lines, &entities, sheets_dict) == EXIT_FAILURE)
+        return NULL;
+    freef("%a%a", path, buffer);
+    return entities;
 }

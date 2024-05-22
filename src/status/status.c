@@ -16,3 +16,8 @@ status_t init_status(void)
     status.is_valid = true;
     return status;
 }
+
+void destroy_status(status_t *status)
+{
+    sfClock_destroy(status->teleportation_clock);
+}

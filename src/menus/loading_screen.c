@@ -67,3 +67,10 @@ void play_loading_screen(sfRenderWindow *window, loading_page_t *loading_page)
         sfRenderWindow_display(window);
     }
 }
+
+void destroy_loading_page(loading_page_t *loading_page)
+{
+    sfSprite_destroy(loading_page->element_sprite);
+    sfClock_destroy(loading_page->animation_clock);
+    sfClock_destroy(loading_page->clock);
+}
