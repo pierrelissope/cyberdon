@@ -44,6 +44,9 @@ static int load_assets_dicts(game_t *game)
 
 static void init_game_components(game_t *game)
 {
+    game->font = sfFont_createFromFile("assets/font/default.ttf");
+    if (game->font == NULL)
+        return;
     game->status = init_status();
     if (!game->status.is_valid)
         return;
@@ -71,10 +74,37 @@ game_t init_game(void)
     return game;
 }
 
+static void destroy_sheets_dict(dict_t *sheets_dict)
+{
+    dict_t *node = sheets_dict;
+    dict_t *temp = NULL;
+
+    while (node != NULL) {
+        temp = node;
+        node = node->next;
+        dict_destroy(temp->value, (void(*)(void *))sfTexture_destroy);
+        free(temp);
+    }
+}
+
 void destroy_game(game_t *game)
 {
-    if (game->player)
-        destroy_entity(game->player);
+    destroy_status(&game->status);
+    sfRenderWindow_destroy(game->window);
+    sfClock_destroy(game->clock);
+    sfView_destroy(game->player_view);
+    for (size_t i = 0; game->inventories != NULL &&
+        game->inventories[i] != NULL; ++i)
+        destroy_inventory(game->inventories[i]);
+    free(game->inventories);
+    dict_destroy(game->tiles_dict, (void(*)(void *))sfTexture_destroy);
+    destroy_sheets_dict(game->sheets_dict);
+    dict_destroy(game->items_dict, (void(*)(void *))sfTexture_destroy);
+    destroy_entity(game->player);
+    destroy_loading_page(&game->loading_page);
+    destroy_world(&game->world);
+    sfFont_destroy(game->font);
+    free_str_array(game->visited_levels);
 }
 
 void draw_game(game_t *game)

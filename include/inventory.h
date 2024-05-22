@@ -79,24 +79,30 @@ static const inventory_items_link_t ITEMS_LINK_ARRAY[] =
     },
 };
 
-stats_t create_stats(char const *name, dict_t *sheets_dict);
+stats_t create_stats(char const *name, dict_t *sheets_dict, sfFont *font);
 void draw_stats_menu(sfRenderWindow *window, stats_t *stats);
-inventory_t *create_inventory(sfVector2f position, char const *name);
-void destroy_inventory(inventory_t *inventory);
+inventory_t *create_inventory(sfVector2f position,
+    char const *name, sfFont *font);
 void play_inventory(sfRenderWindow *window,
     inventory_t *inventory, inventory_t *inventory2);
 void insert_item(inventory_t *inventory,
     item_type_t item, dict_t *items_dict);
 void drag_into_slot(slot_t *slot, item_t *item);
-chest_t **load_level_chests(char *level, dict_t *tiles,
-    inventory_t ***inventories, dict_t *items_dict);
+chest_t **load_level_chests(char *level,
+    inventory_t ***inventories, game_t *game);
 void check_openned_chest(game_t *game);
 void show_single_inventory(sfRenderWindow *window, physical_entity_t *player);
 void update_stats(stats_t *stats, inventory_t *inventory);
 void show_item_description(sfRenderWindow *window, sfVector2f mouse_pos,
-    inventory_t *inventory);
+    inventory_t *inventory, sfFont *font);
 void dragg_item(inventory_t *inventory, sfVector2f mouse_pos,
     bool *dragging, item_t *dragged_item);
 void update_inventory(inventory_t *inventory, sfVector2f mouse_pos);
 void draw_inventory(sfRenderWindow *window, inventory_t *inventory);
 void draw_stats_menu(sfRenderWindow *window, stats_t *stats);
+
+// Destroy
+
+void destroy_inventory(inventory_t *inventory);
+void destroy_item(item_t *item);
+void destroy_stats(stats_t *stats);

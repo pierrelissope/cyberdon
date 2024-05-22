@@ -84,7 +84,6 @@ typedef struct stats_s {
     int stamina_regeneration_bonus;
 
     sfRectangleShape *sprite_rect;
-    sfRectangleShape *values_rect;
 
     sfText *level_text;
     sfText *xp_text;
@@ -109,6 +108,7 @@ typedef struct Physical_Entity_s {
     bool is_valid;
     int type;
     char name[100];
+    sfFont *font;
     inventory_t *inventory;
     stats_t stats;
     dict_t *sprite_sheets;
@@ -187,7 +187,6 @@ typedef struct game_s {
     loading_page_t loading_page;
     status_t status;
     sfRenderWindow *window;
-    dialog_box_t dialog_box;
     sfClock *clock;
     sfVector2f view_pos;
     sfView *player_view;
@@ -197,6 +196,7 @@ typedef struct game_s {
     dict_t *items_dict;
     physical_entity_t *player;
     world_t world;
+    sfFont *font;
     char **visited_levels;
 } game_t;
 

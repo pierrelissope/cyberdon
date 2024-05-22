@@ -44,6 +44,7 @@ static teleporter_t *create_teleporter(char *coords, dict_t *tiles)
     pos = (sfVector2f){atof(tokens[0]), atof(tokens[1])};
     sfSprite_setTexture(teleporter->sprite,
         dict_get(tiles, TELEPORTER), sfTrue);
+    free_str_array(tokens);
     return build_teleporter_rect(teleporter, pos, tiles);
 }
 
@@ -74,6 +75,7 @@ static int parse_level_teleporters(char **lines,
         teleporter->destination_level = strdup(tokens[1]);
         teleporter->destination_coord = get_destination_coords(tokens[2]);
         append_ptr((void ***)teleporters, teleporter, NULL);
+        free_str_array(tokens);
     }
     free_str_array(lines);
     return EXIT_SUCCESS;
@@ -87,18 +89,16 @@ teleporter_t **load_level_teleporters(char *level, dict_t *tiles)
     char **lines = NULL;
     teleporter_t **teleporters = NULL;
 
-    if (!path) {
-        freef("%a%a", path, buffer);
+    if (!path)
         return NULL;
-    }
     buffer = open_file(path);
-    if (!buffer) {
-        freef("%a%a", path, buffer);
+    if (!buffer)
         return NULL;
-    }
     lines = my_str_to_all_array(buffer, "\n");
     if (!lines)
         return NULL;
-    return (parse_level_teleporters(lines, &teleporters,
-        tiles) == EXIT_FAILURE ? NULL : teleporters);
+    if (parse_level_teleporters(lines, &teleporters, tiles) == EXIT_FAILURE)
+        return NULL;
+    freef("%a%a", path, buffer);
+    return teleporters;
 }

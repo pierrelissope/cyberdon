@@ -12,14 +12,14 @@
 #include "inventory.h"
 #include "myutils.h"
 
-const int ANIMATION_COOLDOWN = 100;
+static const int ANIMATION_COOLDOWN = 100;
 
-const int ENTITY_RECT_SIZE = 15;
+static const int ENTITY_RECT_SIZE = 15;
 
-const sfVector2f FRAME_SIZE = {1024 / 8, 128};
-const int FRAME_NUMBER = 8;
+static const sfVector2f FRAME_SIZE = {1024 / 8, 128};
+static const int FRAME_NUMBER = 8;
 
-const float BASE_VELOCITY = 4.3;
+static const float BASE_VELOCITY = 4.3;
 
 static void setup_entity(physical_entity_t *entity, sfVector2f pos)
 {
@@ -43,6 +43,7 @@ physical_entity_t *init_entity(sfVector2f pos, int type, char *name,
     physical_entity_t *entity = calloc(1, sizeof(physical_entity_t));
 
     strcpy(entity->name, name);
+    entity->font = sfFont_createFromFile("./assets/font/default.ttf");
     entity->type = type;
     entity->sprite_sheets = dup_sprites(dict_get(sheets_dict, type));
     entity->current_sprite_sheet = dict_get(entity->sprite_sheets, IDLE);
@@ -50,11 +51,12 @@ physical_entity_t *init_entity(sfVector2f pos, int type, char *name,
     entity->last_animation_update = sfClock_getElapsedTime(entity->clock);
     entity->rect = sfRectangleShape_create();
     entity->velocity = BASE_VELOCITY;
-    entity->inventory = create_inventory((sfVector2f){50, 300},
-        "player_inventory");
-    entity->stats = create_stats(name, sheets_dict);
-    if (!entity->rect || !entity->clock || !entity->sprite_sheets)
+    if (!entity->rect || !entity->clock ||
+        !entity->sprite_sheets || !entity->font)
         return entity;
+    entity->inventory = create_inventory((sfVector2f){50, 300},
+        "player_inventory", entity->font);
+    entity->stats = create_stats(name, sheets_dict, entity->font);
     setup_entity(entity, pos);
     return entity;
 }

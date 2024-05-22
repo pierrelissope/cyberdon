@@ -46,10 +46,10 @@ static item_type_t get_item_enum(char const *item)
 }
 
 static inventory_t *build_inventory_content(char const *chest_name,
-    dict_t *items_dict)
+    dict_t *items_dict, sfFont *font)
 {
     inventory_t *inventory = create_inventory((sfVector2f){1300, 300},
-        chest_name);
+        chest_name, font);
     char *content = open_file("levels/chest_content.conf");
     char **lines = my_str_to_all_array(content, "\n");
     char **tokens = NULL;
@@ -71,7 +71,7 @@ static inventory_t *build_inventory_content(char const *chest_name,
 }
 
 static inventory_t *get_chest_inventory(const char *chest_name,
-    inventory_t ***inventories, dict_t *items_dict)
+    inventory_t ***inventories, game_t *game)
 {
     inventory_t *inventory = NULL;
 
@@ -80,7 +80,8 @@ static inventory_t *get_chest_inventory(const char *chest_name,
         if (strcmp((*inventories)[i]->name, chest_name) == 0)
             return (*inventories)[i];
     }
-    inventory = build_inventory_content(chest_name, items_dict);
+    inventory = build_inventory_content(chest_name,
+        game->items_dict, game->font);
     append_ptr((void ***)inventories, inventory, NULL);
     return inventory;
 }
@@ -97,7 +98,7 @@ sfVector2f get_pos_by_token(char *coords)
 }
 
 static chest_t **parse_level_chests(char **lines, inventory_t ***inventories,
-    dict_t *tiles, dict_t *items_dict)
+    game_t *game)
 {
     chest_t **chests = NULL;
     chest_t *chest = NULL;
@@ -107,17 +108,19 @@ static chest_t **parse_level_chests(char **lines, inventory_t ***inventories,
         tokens = my_str_to_all_array(lines[i], ";");
         if (my_strlen_array(tokens) != 2)
             return NULL;
-        chest = create_chest(tokens[0], get_pos_by_token(tokens[1]), tiles);
+        chest = create_chest(tokens[0], get_pos_by_token(tokens[1]),
+            game->tiles_dict);
         chest->inventory = get_chest_inventory(chest->name,
-            inventories, items_dict);
+            inventories, game);
         append_ptr((void ***)&chests, chest, NULL);
+        free_str_array(tokens);
     }
     free_str_array(lines);
     return chests;
 }
 
-chest_t **load_level_chests(char *level, dict_t *tiles,
-    inventory_t ***inventories, dict_t *items_dict)
+chest_t **load_level_chests(char *level, inventory_t ***inventories,
+    game_t *game)
 {
     char *path = concat_mem((char *)LEVELS_MAP_PATHS, level,
         "/chests.conf");
@@ -126,7 +129,10 @@ chest_t **load_level_chests(char *level, dict_t *tiles,
     chest_t **chests = NULL;
 
     buffer = open_file(path);
+    if (buffer == NULL)
+        return NULL;
     lines = my_str_to_all_array(buffer, "\n");
-    chests = parse_level_chests(lines, inventories, tiles, items_dict);
+    chests = parse_level_chests(lines, inventories, game);
+    freef("%a%a", path, buffer);
     return chests;
 }

@@ -14,11 +14,11 @@
 #include "struct.h"
 #include "inventory.h"
 
-static sfText *create_text(sfVector2f pos, char *str)
+static sfText *create_text(sfVector2f pos, char *str, sfFont *font)
 {
     sfText *text = sfText_create();
 
-    sfText_setFont(text, FONT);
+    sfText_setFont(text, font);
     sfText_setCharacterSize(text, 36);
     sfText_setString(text, str);
     sfText_setFillColor(text, sfWhite);
@@ -26,11 +26,11 @@ static sfText *create_text(sfVector2f pos, char *str)
     return text;
 }
 
-static sfText *create_b_text(sfVector2f pos, char *str)
+static sfText *create_b_text(sfVector2f pos, char *str, sfFont *font)
 {
     sfText *text = sfText_create();
 
-    sfText_setFont(text, FONT);
+    sfText_setFont(text, font);
     sfText_setCharacterSize(text, 36);
     sfText_setString(text, str);
     sfText_setFillColor(text, sfGreen);
@@ -59,38 +59,43 @@ static void init_stats_components(stats_t *stats, dict_t *sheets_dict)
     sfRectangleShape_setFillColor(stats->sprite_rect, DARK_GREY);
 }
 
-void init_next_stats_text(stats_t *stats)
+void init_next_stats_text(stats_t *stats, sfFont *font)
 {
-    stats->strength_bonus_text =
-        create_b_text((sfVector2f){1560, 640}, "+ 0");
-    stats->stamina_bonus_text =
-        create_b_text((sfVector2f){1560, 700}, "+ 0");
-    stats->stamina_regeneration_bonus_text =
-        create_b_text((sfVector2f){1650, 760}, "+ 0");
-}
-
-static void init_stats_text(stats_t *stats)
-{
-    stats->xp_text = create_text((sfVector2f){1400, 280}, "Xp 0 / 10");
-    stats->level_text = create_text((sfVector2f){1400, 340}, "Level 1");
-    stats->hp_text = create_text((sfVector2f){1400, 400}, "HP 100");
-    stats->defense_text = create_text((sfVector2f){1400, 460}, "Defense 1");
-    stats->attack_text = create_text((sfVector2f){1400, 520}, "Attack 1");
-    stats->speed_text = create_text((sfVector2f){1400, 580}, "Speed 1");
-    stats->strength_text = create_text((sfVector2f){1400, 640}, "Strength 1");
-    stats->stamina_text = create_text((sfVector2f){1400, 700}, "Stamina 1");
-    stats->stamina_regeneration_text =
-        create_text((sfVector2f){1400, 760}, "Stamina Regen 1");
-    stats->hp_bonus_text = create_b_text((sfVector2f){1500, 400}, "+ 0");
     stats->defense_bonus_text =
-        create_b_text((sfVector2f){1560, 460}, "+ 0");
+        create_b_text((sfVector2f){1560, 460}, "+ 0", font);
     stats->attack_bonus_text =
-        create_b_text((sfVector2f){1540, 520}, "+ 0");
-    stats->speed_bonus_text = create_b_text((sfVector2f){1530, 580}, "+ 0");
-    init_next_stats_text(stats);
+        create_b_text((sfVector2f){1540, 520}, "+ 0", font);
+    stats->speed_bonus_text = create_b_text((sfVector2f){1530, 580}, "+ 0",
+        font);
+    stats->strength_bonus_text =
+        create_b_text((sfVector2f){1560, 640}, "+ 0", font);
+    stats->stamina_bonus_text =
+        create_b_text((sfVector2f){1560, 700}, "+ 0", font);
+    stats->stamina_regeneration_bonus_text =
+        create_b_text((sfVector2f){1650, 760}, "+ 0", font);
 }
 
-stats_t create_stats(char const *name, dict_t *sheets_dict)
+static void init_stats_text(stats_t *stats, sfFont *font)
+{
+    stats->xp_text = create_text((sfVector2f){1400, 280}, "Xp 0 / 10", font);
+    stats->level_text = create_text((sfVector2f){1400, 340}, "Level 1", font);
+    stats->hp_text = create_text((sfVector2f){1400, 400}, "HP 100", font);
+    stats->defense_text = create_text((sfVector2f){1400, 460}, "Defense 1",
+        font);
+    stats->attack_text = create_text((sfVector2f){1400, 520}, "Attack 1",
+        font);
+    stats->speed_text = create_text((sfVector2f){1400, 580}, "Speed 1", font);
+    stats->strength_text = create_text((sfVector2f){1400, 640}, "Strength 1",
+        font);
+    stats->stamina_text = create_text((sfVector2f){1400, 700}, "Stamina 1",
+        font);
+    stats->stamina_regeneration_text =
+        create_text((sfVector2f){1400, 760}, "Stamina Regen 1", font);
+    stats->hp_bonus_text = create_b_text((sfVector2f){1500, 400}, "+ 0", font);
+    init_next_stats_text(stats, font);
+}
+
+stats_t create_stats(char const *name, dict_t *sheets_dict, sfFont *font)
 {
     stats_t stats = {0};
 
@@ -106,9 +111,8 @@ stats_t create_stats(char const *name, dict_t *sheets_dict)
     stats.xp_to_levelup = stats.current_level * 1.5;
     stats.box = sfRectangleShape_create();
     stats.sprite_rect = sfRectangleShape_create();
-    stats.values_rect = sfRectangleShape_create();
     init_stats_components(&stats, sheets_dict);
-    init_stats_text(&stats);
+    init_stats_text(&stats, font);
     return stats;
 }
 

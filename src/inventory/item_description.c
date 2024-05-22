@@ -14,11 +14,17 @@
 #include "struct.h"
 #include "inventory.h"
 
-static sfText *create_text(sfVector2f pos, char *str)
+struct item_desc_s {
+    sfVector2f mouse_pos;
+    inventory_t *inventory;
+    sfFont *font;
+};
+
+static sfText *create_text(sfVector2f pos, char *str, sfFont *font)
 {
     sfText *text = sfText_create();
 
-    sfText_setFont(text, FONT);
+    sfText_setFont(text, font);
     sfText_setCharacterSize(text, 36);
     sfText_setString(text, str);
     sfText_setFillColor(text, sfWhite);
@@ -37,11 +43,11 @@ static char *get_item_description(item_type_t item_type)
 }
 
 static void show_description(sfRenderWindow *window,
-    sfVector2f mouse_pos, item_t *item)
+    sfVector2f mouse_pos, item_t *item, sfFont *font)
 {
     sfRectangleShape *rectangle = sfRectangleShape_create();
     sfText *text = create_text((sfVector2f){mouse_pos.x + 20,
-        mouse_pos.y + 20}, get_item_description(item->type));
+        mouse_pos.y + 20}, get_item_description(item->type), font);
 
     sfRectangleShape_setPosition(rectangle, mouse_pos);
     sfRectangleShape_setFillColor(rectangle, GREY);
@@ -59,15 +65,18 @@ static void show_description(sfRenderWindow *window,
 }
 
 static bool is_showing_description(sfRenderWindow *window,
-    sfVector2f mouse_pos, inventory_t *inventory, size_t y)
+    struct item_desc_s *desc, size_t y)
 {
     sfFloatRect bounds = {0};
 
     for (size_t x = 0; x < INVENTORY_SIZE_X; ++x) {
-        bounds = sfRectangleShape_getGlobalBounds(inventory->slots[y][x].box);
-        if (inventory->slots[y][x].item->type != EMPTY_ITEM &&
-            sfFloatRect_contains(&bounds, mouse_pos.x, mouse_pos.y)) {
-            show_description(window, mouse_pos, inventory->slots[y][x].item);
+        bounds = sfRectangleShape_getGlobalBounds(
+            desc->inventory->slots[y][x].box);
+        if (desc->inventory->slots[y][x].item->type != EMPTY_ITEM &&
+            sfFloatRect_contains(&bounds, desc->mouse_pos.x,
+                desc->mouse_pos.y)) {
+            show_description(window, desc->mouse_pos,
+                desc->inventory->slots[y][x].item, desc->font);
             return true;
         }
     }
@@ -75,9 +84,15 @@ static bool is_showing_description(sfRenderWindow *window,
 }
 
 void show_item_description(sfRenderWindow *window, sfVector2f mouse_pos,
-    inventory_t *inventory)
+    inventory_t *inventory, sfFont *font)
 {
+    struct item_desc_s desc = {
+        .mouse_pos = mouse_pos,
+        .inventory = inventory,
+        .font = font
+    };
+
     for (size_t y = 0; y < INVENTORY_SIZE_Y; ++y)
-        if (is_showing_description(window, mouse_pos, inventory, y))
+        if (is_showing_description(window, &desc, y))
             return;
 }

@@ -57,11 +57,11 @@ static slot_t **create_inventory_slots(sfVector2f position)
     return slots;
 }
 
-static sfText *create_text(sfVector2f pos, const char *str)
+static sfText *create_text(sfVector2f pos, const char *str, sfFont *font)
 {
     sfText *text = sfText_create();
 
-    sfText_setFont(text, FONT);
+    sfText_setFont(text, font);
     sfText_setCharacterSize(text, 36);
     sfText_setString(text, str);
     sfText_setFillColor(text, sfWhite);
@@ -69,27 +69,16 @@ static sfText *create_text(sfVector2f pos, const char *str)
     return text;
 }
 
-inventory_t *create_inventory(sfVector2f position, char const *name)
+inventory_t *create_inventory(sfVector2f position, char const *name,
+    sfFont *font)
 {
     inventory_t *inventory = calloc(1, sizeof(inventory_t));
 
     inventory->name = strdup(name);
     inventory->text =
-        create_text((sfVector2f){position.x + 172, position.y + 30}, name);
+        create_text((sfVector2f){position.x + 172,
+            position.y + 30}, name, font);
     inventory->box = create_inventory_box(position);
     inventory->slots = create_inventory_slots(position);
     return inventory;
-}
-
-void destroy_inventory(inventory_t *inventory)
-{
-    for (int y = 0; y < INVENTORY_SIZE_Y; ++y) {
-        for (int x = 0; x < INVENTORY_SIZE_X; ++x) {
-            sfRectangleShape_destroy(inventory->slots[x][y].box);
-        }
-        free(inventory->slots[y]);
-    }
-    free(inventory->slots);
-    sfRectangleShape_destroy(inventory->box);
-    free(inventory);
 }

@@ -35,6 +35,13 @@ static void stack_chests(linked_objects_t ***array, world_t *world)
     }
 }
 
+static void free_stacking_array(linked_objects_t **stack)
+{
+    for (size_t i = 0; stack != NULL && stack[i] != NULL; ++i)
+        free(stack[i]);
+    free(stack);
+}
+
 void draw_level(sfRenderWindow *window, world_t *world,
     physical_entity_t *player)
 {
@@ -53,6 +60,6 @@ void draw_level(sfRenderWindow *window, world_t *world,
     quicksort(stack, 0, my_arraylen((void **)stack) - 1);
     for (int i = 0; stack && stack[i]; i++)
         stack[i]->fct(stack[i]->object, window);
-    free(stack);
-    free(floor_stack);
+    free_stacking_array(stack);
+    free_stacking_array(floor_stack);
 }

@@ -23,8 +23,8 @@ static void init_level(world_t *world, char *level,
         destination_level, game->tiles_dict);
     world->entities = load_level_entities(
         destination_level, game->sheets_dict);
-    world->chests = load_level_chests(destination_level, game->tiles_dict,
-        &game->inventories, game->items_dict);
+    world->chests = load_level_chests(destination_level,
+        &game->inventories, game);
 }
 
 int load_level(game_t *game, char *level, dict_t *tiles)
@@ -43,5 +43,6 @@ int load_level(game_t *game, char *level, dict_t *tiles)
         if (parse_walls_line(walls, &game->world, y, tiles) == EXIT_FAILURE)
             return EXIT_FAILURE;
     free_str_array(floor);
+    free_str_array(walls);
     return EXIT_SUCCESS;
 }

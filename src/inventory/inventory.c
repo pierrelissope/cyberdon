@@ -21,7 +21,16 @@ struct inventory_screen_s {
     sfTexture* texture;
     sfSprite *bg_sprite;
     bool dragging;
+    sfFont *font;
 };
+
+static void free_inventory_screen(struct inventory_screen_s *content)
+{
+    destroy_item(content->dragged_item);
+    sfTexture_destroy(content->texture);
+    sfSprite_destroy(content->bg_sprite);
+    sfFont_destroy(content->font);
+}
 
 static void process_single_inventory(struct inventory_screen_s *content,
     physical_entity_t *player)
@@ -38,7 +47,7 @@ static void process_single_inventory(struct inventory_screen_s *content,
     draw_inventory(content->window, player->inventory);
     draw_stats_menu(content->window, &player->stats);
     show_item_description(content->window,
-        content->mouse_pos, player->inventory);
+        content->mouse_pos, player->inventory, content->font);
     if (content->dragged_item != NULL &&
         content->dragged_item->type != EMPTY_ITEM)
         sfRenderWindow_drawSprite(content->window,
@@ -55,7 +64,8 @@ void show_single_inventory(sfRenderWindow *window,
         .mouse_pos = {0}, .window = window,
         .dragged_item = calloc(1, sizeof(item_t)),
         .texture = sfTexture_create(windowSize.x, windowSize.y),
-        .bg_sprite = sfSprite_create(), .dragging = false};
+        .bg_sprite = sfSprite_create(), .dragging = false,
+        .font = sfFont_createFromFile("./assets/font/default.ttf")};
 
     sfTexture_updateFromRenderWindow(content.texture, window, 0, 0);
     sfSprite_setTexture(content.bg_sprite, content.texture, sfTrue);
@@ -65,6 +75,7 @@ void show_single_inventory(sfRenderWindow *window,
             break;
         process_single_inventory(&content, player);
     }
+    free_inventory_screen(&content);
 }
 
 static void process_multiple_inventory(sfRenderWindow *window,
@@ -80,8 +91,8 @@ static void process_multiple_inventory(sfRenderWindow *window,
     sfRenderWindow_drawSprite(window, content->bg_sprite, NULL);
     draw_inventory(window, inv1);
     draw_inventory(window, inv2);
-    show_item_description(window, content->mouse_pos, inv1);
-    show_item_description(window, content->mouse_pos, inv2);
+    show_item_description(window, content->mouse_pos, inv1, content->font);
+    show_item_description(window, content->mouse_pos, inv2, content->font);
     if (content->dragged_item != NULL &&
         content->dragged_item->type != EMPTY_ITEM)
         sfRenderWindow_drawSprite(window, content->dragged_item->sprite, NULL);
@@ -97,7 +108,8 @@ void play_inventory(sfRenderWindow *window,
         .mouse_pos = {0}, .window = window,
         .dragged_item = calloc(1, sizeof(item_t)),
         .texture = sfTexture_create(windowSize.x, windowSize.y),
-        .bg_sprite = sfSprite_create(), .dragging = false};
+        .bg_sprite = sfSprite_create(), .dragging = false,
+        .font = sfFont_createFromFile("./assets/font/default.ttf")};
 
     sfTexture_updateFromRenderWindow(content.texture, window, 0, 0);
     sfSprite_setTexture(content.bg_sprite, content.texture, sfTrue);
@@ -109,4 +121,5 @@ void play_inventory(sfRenderWindow *window,
             break;
         process_multiple_inventory(window, &content, inventory, inventory2);
     }
+    free_inventory_screen(&content);
 }
