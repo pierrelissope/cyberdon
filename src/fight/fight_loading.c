@@ -5,6 +5,7 @@
 ** fight loading
 */
 
+#include "ai_values.h"
 #include "dict.h"
 #include "fight_entity.h"
 #include "fight_macros.h"
@@ -125,6 +126,7 @@ static void sync_stats(fight_t *fight)
 {
     fill_entity_stats(fight->npc);
     fill_entity_stats(fight->player);
+    fight->level = IMPOSSIBLE;
 }
 
 fight_t *load_fight(game_t *game, physical_entity_t *player,

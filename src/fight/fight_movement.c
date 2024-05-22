@@ -102,7 +102,7 @@ static void check_colisions(fight_t *fight)
         on_hit(fight->npc, fight->player, fight);
     }
     fight->player->dmgbox = (sfFloatRect) {0, 0, 0, 0};
-    fight->player->dmgbox = (sfFloatRect) {0, 0, 0, 0};
+    fight->npc->dmgbox = (sfFloatRect) {0, 0, 0, 0};
 }
 
 static void update_fighters_hits(fighter_entity_t *entity)
