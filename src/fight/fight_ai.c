@@ -15,6 +15,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <time.h>
+#include <stdio.h>
 
 static bool biggest_gap(float sprite_pos)
 {
@@ -82,20 +83,18 @@ fighter_state_t ai_movement_pick(fight_t *fight)
     bool gap_direction = 0;
     float current_stamina =
         (float) fight->npc->stats.stamina / fight->npc->base_stats.stamina;
-    fighter_state_t action = IDLE;
 
     gap_direction = biggest_gap(fight->npc->sprite_pos.x);
     srand(time(0));
     if (rand() % 100 > AI_LEVELS[fight->level].movement_success_rate)
-        return action;
-    action = permanent_checks(fight);
+        return IDLE;
     if (current_stamina < AI_LEVELS[fight->level].low_stamina) {
         low_stamina_movement(fight, gap_direction);
     }
     if (current_stamina >= AI_LEVELS[fight->level].high_stamina) {
         high_stamina_movement(fight, gap_direction);
     }
-    return action;
+    return permanent_checks(fight);
 }
 
 static fighter_state_t low_stamina_action(fight_t *fight)
@@ -111,6 +110,11 @@ static fighter_state_t high_stamina_action(fight_t *fight)
 
     if (d <= AI_LEVELS[fight->level].distance_to_hit) {
         decrease_stamina(fight->npc, 5);
+        if (fight->player->crouching)
+            fight->npc->looking_down = true;
+        if (fight->player->sprite_pos.y <=
+            (fight->npc->sprite_pos.y - fight->npc->hitbox.height) + 40)
+            fight->npc->looking_up = true;
         return ATTACK;
     }
     return IDLE;
