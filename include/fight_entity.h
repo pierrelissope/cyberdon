@@ -22,7 +22,7 @@
 
 typedef struct stats_f_s {
     int speed;
-    int health;
+    int hp;
     int attack;
     int defense;
     int stamina;
@@ -30,7 +30,7 @@ typedef struct stats_f_s {
 } stats_f_t;
 
 typedef struct stats_c_s {
-    int health;
+    int hp;
     int stamina;
 } stats_c_t;
 
@@ -61,8 +61,8 @@ typedef struct Fighter_Entity_s {
 } fighter_entity_t;
 
 typedef struct ui_s {
-    sfRectangleShape *player_health;
-    sfRectangleShape *npc_health;
+    sfRectangleShape *player_hp;
+    sfRectangleShape *npc_hp;
     sfRectangleShape *player_stamina;
     sfRectangleShape *npc_stamina;
     sfRectangleShape *npc_portrait;

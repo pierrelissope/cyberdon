@@ -27,7 +27,7 @@ void draw_stats_menu(sfRenderWindow *window, stats_t *stats)
     sfRenderWindow_drawText(window, stats->speed_text, NULL);
     sfRenderWindow_drawText(window, stats->strength_text, NULL);
     sfRenderWindow_drawText(window, stats->stamina_text, NULL);
-    sfRenderWindow_drawText(window, stats->stamina_regeneration_text, NULL);
+    sfRenderWindow_drawText(window, stats->stamina_regen_text, NULL);
     sfRenderWindow_drawText(window, stats->hp_bonus_text, NULL);
     sfRenderWindow_drawText(window, stats->defense_bonus_text, NULL);
     sfRenderWindow_drawText(window, stats->attack_bonus_text, NULL);
@@ -35,7 +35,7 @@ void draw_stats_menu(sfRenderWindow *window, stats_t *stats)
     sfRenderWindow_drawText(window, stats->speed_bonus_text, NULL);
     sfRenderWindow_drawText(window, stats->stamina_bonus_text, NULL);
     sfRenderWindow_drawText(window,
-        stats->stamina_regeneration_bonus_text, NULL);
+        stats->stamina_regen_bonus_text, NULL);
 }
 
 static void draw_item(sfRenderWindow *window, item_t *item)

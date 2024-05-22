@@ -21,9 +21,9 @@ static int run_frame(fight_t *fight, game_t *game, sfEvent *event)
     update_fight(fight);
     if (handle_fight_event(game, fight, event) == sfEvtClosed)
         return -1;
-    if (fight->npc->stats.health <= 0)
+    if (fight->npc->stats.hp <= 0)
         return 1;
-    if (fight->player->stats.health <= 0)
+    if (fight->player->stats.hp <= 0)
         return 2;
     draw_fight(fight, game->window);
     return 0;
