@@ -34,6 +34,58 @@ static const init_world_t FLOOR_BLOCK_INIT[] =
         .texture_name = WOOD_FLOOR
     },
     {
+        .c = 'z',
+        .texture_name = SIDE_WALK_CHUNK
+    },
+    {
+        .c = 'y',
+        .texture_name = SIDE_WALK_CHUNK2
+    },
+    {
+        .c = 'w',
+        .texture_name = SIDE_WALK_CHUNK3
+    },
+    {
+        .c = 'v',
+        .texture_name = SIDE_WALK_CHUNK4
+    },
+    {
+        .c = 'u',
+        .texture_name = SIDE_WALK_TILE
+    },
+    {
+        .c = 't',
+        .texture_name = SIDE_WALK_TILE1
+    },
+    {
+        .c = 'p',
+        .texture_name = ROAD_CHUNK
+    },
+    {
+        .c = 'o',
+        .texture_name = ROAD_CHUNK1
+    },
+    {
+        .c = 'n',
+        .texture_name = ROAD_CHUNK2
+    },
+    {
+        .c = 'm',
+        .texture_name = ROAD_CHUNK3
+    },
+    {
+        .c = 'l',
+        .texture_name = ROAD_CHUNK4
+    },
+    {
+        .c = 'k',
+        .texture_name = ROAD_CHUNK5
+    },
+    {
+        .c = 'j',
+        .texture_name = ROAD_CHUNK6
+    },
+    {
         .c = -1,
         .texture_name = 0
     },
