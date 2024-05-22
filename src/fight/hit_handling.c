@@ -26,9 +26,9 @@ void hit(fighter_entity_t *entity)
 static void update_color(float hp, sfRectangleShape *rec)
 {
     if (hp <= 0.65)
-        sfRectangleShape_setFillColor(rec, MID_hp);
+        sfRectangleShape_setFillColor(rec, MID_HP);
     if (hp <= 0.30)
-        sfRectangleShape_setFillColor(rec, LOW_hp);
+        sfRectangleShape_setFillColor(rec, LOW_HP);
 }
 
 static void uptdate_hp_rec_size(fight_t *fight)
@@ -47,7 +47,7 @@ static void uptdate_hp_rec_size(fight_t *fight)
             hp_SIZE.y,
         });
     sfRectangleShape_setPosition(fight->ui.npc_hp, (sfVector2f)
-        {NPC_hp_POS.x + (hp_SIZE.x - npc_size), NPC_hp_POS.y});
+        {NPC_HP_POS.x + (hp_SIZE.x - npc_size), NPC_HP_POS.y});
     update_color((float) fight->npc->stats.hp /
         fight->npc->base_stats.hp, fight->ui.npc_hp);
     update_color((float) fight->player->stats.hp /
@@ -60,6 +60,10 @@ void on_hit(fighter_entity_t *hited, fighter_entity_t *hiter, fight_t *fight)
         return;
     hited->annimation_lock = true;
     sfClock_restart(hited->i_counter);
-    hited->stats.hp -= 1 * hiter->base_stats.attack;
+    if ((1 + hiter->base_stats.attack + hiter->base_stats.strenght)
+        - hited->base_stats.defense > 0)
+        hited->stats.hp -=
+            (1 + hiter->base_stats.attack + hiter->base_stats.strenght)
+            - hited->base_stats.defense;
     uptdate_hp_rec_size(fight);
 }

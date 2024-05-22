@@ -85,4 +85,10 @@ static const float CROUCH_HEIGHT_OFFSET = 1.25;
 
 static const int STAMINA_REGEN = 250;
 
+static const int BASE_SPEED = 10;
+
+static const int BASE_STAMINA_DECAY = 4;
+
+static const int BASE_JUMP_POWER = 14;
+
 #endif

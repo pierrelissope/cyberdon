@@ -53,6 +53,15 @@ void test(game_t *game)
 
     npc_tmp.type = 1;
     npc_tmp.fighter_skin = BIG_DUDE;
+    npc_tmp.stats.attack = 3;
+    npc_tmp.stats.defense = 1;
+    npc_tmp.stats.stamina = 15;
+    npc_tmp.stats.stamina_regen = 1;
+    npc_tmp.stats.hp = 100;
+    npc_tmp.stats.speed = 2;
+    npc_tmp.stats.strength = 1;
     game->player->fighter_skin = BLACK_GUY;
+    game->player->stats.speed = 10;
+    game->player->stats.stamina = 20;
     printf("%d\n", run_fight(game, game->player, &npc_tmp, DEFAULT));
 }
