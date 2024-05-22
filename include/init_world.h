@@ -86,13 +86,77 @@ static const init_world_t FLOOR_BLOCK_INIT[] =
         .texture_name = ROAD_CHUNK6
     },
     {
+        .c = '*',
+        .texture_name = MANHOLE
+    },
+    {
         .c = -1,
         .texture_name = 0
-    },
+    }
 };
 
 static const init_world_t WALLS_BLOCK_INIT[] =
 {
+    {
+        .c = 'x',
+        .texture_name = POUBELLE1F1
+    },
+    {
+        .c = '~',
+        .texture_name = POUBELLE1F2
+    },
+    {
+        .c = '}',
+        .texture_name = POUBELLE1F3
+    }
+    ,{
+        .c = '{',
+        .texture_name = POUBELLE1F4
+    },
+    {
+        .c = 'z',
+        .texture_name = CARTON
+    },
+    {
+        .c = 'w',
+        .texture_name = CARTON2
+    },
+    {
+        .c = '#',
+        .texture_name = TABLE1
+    },
+    {
+        .c = '$',
+        .texture_name = TABLE2
+    },
+    {
+        .c = '%',
+        .texture_name = TABLE3
+    },
+    {
+        .c = '&',
+        .texture_name = TABLE4
+    },
+    {
+        .c = '(',
+        .texture_name = TABLE9
+    },
+    {
+        .c = ')',
+        .texture_name = TABLE12
+    },
+    {
+        .c = '+',
+        .texture_name = TABLE13
+    },
+    {
+        .c = '-',
+        .texture_name = TABLE56
+    },
+    {
+        .c = '/',
+        .texture_name = TABLE57
+    },
     {
         .c = 'c',
         .texture_name = COLLISION_BLOCK
