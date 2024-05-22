@@ -276,6 +276,12 @@ static const init_texture_t TILES_TEXTURE_INIT[] = {
         .frame_nb = 1,
     },
     {
+        .texture_path = "./assets/blocks/chest.png",
+        .texture_name = CHEST,
+        .rect = {0, 0, 256, 94},
+        .frame_nb = 1,
+    },
+    {
         .texture_path = "./assets/spritesheets/props/table/TABLE56.png",
         .texture_name = TABLE56,
         .rect = {0, 0, 128, 127},
