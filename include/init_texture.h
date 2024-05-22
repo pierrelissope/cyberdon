@@ -31,6 +31,10 @@ enum Tiles {
     TABLE57,
     MANHOLE,
     LOADING_PAGE_SHEET,
+    BATIMENT2X2,
+    BATIMENT2X1,
+    LITTLE_BATIMENT2X1,
+    SKINNY_BATIMENT2X1,
     CHEST,
     GRASS_BLOCK,
     STONE_BLOCK,
@@ -284,6 +288,30 @@ static const init_texture_t TILES_TEXTURE_INIT[] = {
         .frame_nb = 1,
     },
     {
+        .texture_path = "./assets/blocks/batiment2x2.png",
+        .texture_name = BATIMENT2X2,
+        .rect = {0, 0, 256, 500},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/little_batiment2x1.png",
+        .texture_name = LITTLE_BATIMENT2X1,
+        .rect = {0, 0, 256, 294},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/skinny_batiment2x1.png",
+        .texture_name = SKINNY_BATIMENT2X1,
+        .rect = {0, 0, 256, 227},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/batiment2x1.png",
+        .texture_name = BATIMENT2X1,
+        .rect = {0, 0, 256, 416},
+        .frame_nb = 1
+    },
+    {
         .texture_path = "./assets/blocks/collision_block.png",
         .texture_name = COLLISION_BLOCK,
         .rect = {0, 0, 128, 128},
@@ -412,85 +440,85 @@ static const init_texture_t TILES_TEXTURE_INIT[] = {
     {
         .texture_path = "./assets/blocks/floors/Road_Chunk.png",
         .texture_name = ROAD_CHUNK,
-        .rect = {0, 0, 128, 128},
+        .rect = {0, 0, 128, 105},
         .frame_nb = 1
     },
     {
         .texture_path = "./assets/blocks/floors/Road_Chunk1.png",
         .texture_name = ROAD_CHUNK1,
-        .rect = {0, 0, 128, 128},
+        .rect = {0, 0, 128, 105},
         .frame_nb = 1
     },
     {
         .texture_path = "./assets/blocks/floors/Road_Chunk2.png",
         .texture_name = ROAD_CHUNK2,
-        .rect = {0, 0, 128, 128},
+        .rect = {0, 0, 128, 105},
         .frame_nb = 1
     },
     {
         .texture_path = "./assets/blocks/floors/Road_Chunk3.png",
         .texture_name = ROAD_CHUNK3,
-        .rect = {0, 0, 128, 128},
+        .rect = {0, 0, 128, 105},
         .frame_nb = 1
     },
     {
         .texture_path = "./assets/blocks/floors/Road_Chunk4.png",
         .texture_name = ROAD_CHUNK4,
-        .rect = {0, 0, 128, 128},
+        .rect = {0, 0, 128, 105},
         .frame_nb = 1
     },
     {
         .texture_path = "./assets/blocks/floors/Road_Chunk5.png",
         .texture_name = ROAD_CHUNK5,
-        .rect = {0, 0, 128, 128},
+        .rect = {0, 0, 128, 105},
         .frame_nb = 1
     },
     {
         .texture_path = "./assets/blocks/floors/Road_Chunk6.png",
         .texture_name = ROAD_CHUNK6,
-        .rect = {0, 0, 128, 128},
+        .rect = {0, 0, 128, 105},
         .frame_nb = 1
     },
     {
         .texture_path = "./assets/blocks/floors/Sidewalk_Chunk.png",
         .texture_name = SIDE_WALK_CHUNK,
-        .rect = {0, 0, 128, 128},
+        .rect = {0, 0, 128, 105},
         .frame_nb = 1
     },
     {
         .texture_path = "./assets/blocks/floors/Sidewalk_Chunk1.png",
         .texture_name = SIDE_WALK_CHUNK1,
-        .rect = {0, 0, 128, 128},
+        .rect = {0, 0, 128, 105},
         .frame_nb = 1
     },
     {
         .texture_path = "./assets/blocks/floors/Sidewalk_Chunk2.png",
         .texture_name = SIDE_WALK_CHUNK2,
-        .rect = {0, 0, 128, 128},
+        .rect = {0, 0, 128, 105},
         .frame_nb = 1
     },
     {
         .texture_path = "./assets/blocks/floors/Sidewalk_Chunk3.png",
         .texture_name = SIDE_WALK_CHUNK3,
-        .rect = {0, 0, 128, 128},
+        .rect = {0, 0, 128, 105},
         .frame_nb = 1
     },
     {
         .texture_path = "./assets/blocks/floors/Sidewalk_Chunk4.png",
         .texture_name = SIDE_WALK_CHUNK4,
-        .rect = {0, 0, 128, 128},
+        .rect = {0, 0, 128, 105},
         .frame_nb = 1
     },
     {
         .texture_path = "./assets/blocks/floors/Sidewalk_Tile.png",
         .texture_name = SIDE_WALK_TILE,
-        .rect = {0, 0, 128, 128},
+        .rect = {0, 0, 128, 105},
         .frame_nb = 1
     },
     {
         .texture_path = "./assets/blocks/floors/Sidewalk_Tile1.png",
         .texture_name = SIDE_WALK_TILE1,
-        .rect = {0, 0, 128, 128},
+        .rect = {0, 0, 128, 105},
         .frame_nb = 1
     },
     {

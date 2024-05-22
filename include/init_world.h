@@ -162,6 +162,22 @@ static const init_world_t WALLS_BLOCK_INIT[] =
         .texture_name = COLLISION_BLOCK
     },
     {
+        .c = 'n',
+        .texture_name = SKINNY_BATIMENT2X1
+    },
+    {
+        .c = 'b',
+        .texture_name = BATIMENT2X2,
+    },
+    {
+        .c = 'e',
+        .texture_name = BATIMENT2X1,
+    },
+    {
+        .c = 'q',
+        .texture_name = LITTLE_BATIMENT2X1,
+    },
+    {
         .c = 't',
         .texture_name = WHITE_WALL
     },
@@ -206,7 +222,7 @@ static const init_world_t WALLS_BLOCK_INIT[] =
         .texture_name = STREET_LAMP
     },
     {
-        .c = 'b',
+        .c = 'v',
         .texture_name = BEDROOM_WALL
     },
     {
