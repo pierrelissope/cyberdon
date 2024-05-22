@@ -58,6 +58,8 @@ enum Tiles {
     POOR_TABLE,
     ARROW_WALL,
     ROAD_CHUNK,
+    ROAD_CHUNKR,
+    ROAD_CHUNKE,
     ROAD_CHUNK1,
     ROAD_CHUNK2,
     ROAD_CHUNK3,
@@ -447,6 +449,18 @@ static const init_texture_t TILES_TEXTURE_INIT[] = {
         .texture_path = "./assets/blocks/floors/Road_Chunk.png",
         .texture_name = ROAD_CHUNK,
         .rect = {0, 0, 128, 105},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/floors/Road_Chunk.png",
+        .texture_name = ROAD_CHUNKR,
+        .rect = {256, 0, 128, 105},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/floors/Road_Chunk6.png",
+        .texture_name = ROAD_CHUNKE,
+        .rect = {256, 0, 128, 105},
         .frame_nb = 1
     },
     {
