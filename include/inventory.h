@@ -14,6 +14,7 @@
 #define SLOTS_MARGIN_TOP 100
 #define OUTLINE_THIKNESS 1
 #define ITEM_SIZE 80
+#define ORB_MULTIPLIER 1
 
 #define LIGHT_GREY sfColor_fromRGB(50, 50, 50)
 #define GREY sfColor_fromRGB(39, 40, 44)
@@ -46,7 +47,7 @@ static const inventory_items_link_t ITEMS_LINK_ARRAY[] =
     },
     {
         .str_type = "strength_orb",
-        .enum_type =  STRENGTH_ORB,
+        .enum_type = STRENGTH_ORB,
         .description = "A mysterious red orb which\nimproves strength",
         .effect = strength_orb_effect
     },
@@ -60,14 +61,14 @@ static const inventory_items_link_t ITEMS_LINK_ARRAY[] =
         .str_type = "stamina_regen_orb",
         .enum_type = STAMINA_REGEN_ORB,
         .description =
-            "A mysterious blue orange which\nimproves stamina regeneration",
+        "A mysterious blue orange which\nimproves stamina regeneration",
         .effect = stamina_regen_orb_effect
     },
     {
         .str_type = "vitality_orb",
         .enum_type = VITALITY_ORB,
         .description =
-            "A mysterious blue orange which\nimproves vitality",
+        "A mysterious blue orange which\nimproves vitality",
         .effect = vitality_orb_effect
     },
     {
