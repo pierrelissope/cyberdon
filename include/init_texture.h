@@ -311,7 +311,7 @@ static const init_texture_t TILES_TEXTURE_INIT[] = {
     {
         .texture_path = "./assets/blocks/city.png",
         .texture_name = CITY,
-        .rect = {0, 0, 128, 231},
+        .rect = {0, 0, 128, 454},
         .frame_nb = 1
     },
     {
