@@ -14,22 +14,20 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <time.h>
-#include <math.h>
 
-int biggest_gap(int sprite_pos)
+static bool biggest_gap(float sprite_pos)
 {
-    int space_right = 1920 - sprite_pos;
-    int space_left = sprite_pos;
+    float space_right = 1920 - sprite_pos;
+    float space_left = sprite_pos;
 
     if (space_right > space_left)
         return 1;
-    else if (space_right < space_left)
+    if (space_right < space_left)
         return 0;
-    else
-        return -1;
+    return 0;
 }
 
-void move_towards(float *position, int target, float move_speed)
+static void move_towards(float *position, int target, float move_speed)
 {
     if (*position < target)
         *position -= move_speed;
@@ -37,22 +35,34 @@ void move_towards(float *position, int target, float move_speed)
         *position += move_speed;
 }
 
-void ai_movement_pick(fight_t *fight)
+static void low_stamina_movement(fight_t *fight, bool gap_direction)
 {
     float d = fight->npc->sprite_pos.x - fight->player->sprite_pos.x;
-    int gap_direction = 0;
+
+    if (d < 100 && gap_direction == true)
+        fight->npc->velocity.x += 10;
+    if (d < 100 && gap_direction == false)
+        fight->npc->velocity.x -= 10;
+}
+
+static void high_stamina_movement(fight_t *fight, bool gap_direction)
+{
+    move_towards(&fight->npc->velocity.x,
+                 fight->player->sprite_pos.x, 10);
+}
+
+void ai_movement_pick(fight_t *fight)
+{
+    bool gap_direction = 0;
     float current_stamina =
         (float) fight->npc->stats.stamina / fight->npc->base_stats.stamina;
 
+    gap_direction = biggest_gap(fight->npc->sprite_pos.x);
     if (current_stamina < 0.6) {
-        gap_direction = biggest_gap(fight->player->sprite_pos.x);
-        if (d < 100 && gap_direction == 1)
-            fight->npc->velocity.x += 10;
-        if (d < 100 && gap_direction == 0)
-            fight->npc->velocity.x -= 10;
-    } else {
-        move_towards(&fight->npc->velocity.x,
-            fight->player->sprite_pos.x, 10);
+        low_stamina_movement(fight, gap_direction);
+    }
+    if (current_stamina >= 0.6) {
+        high_stamina_movement(fight, gap_direction);
     }
 }
 
