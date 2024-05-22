@@ -20,14 +20,14 @@
 #include "fight_transfer.h"
 #include "struct.h"
 
-typedef struct stats_s {
+typedef struct stats_f_s {
     int speed;
     int health;
     int attack;
     int defense;
     int stamina;
     int stamina_regen;
-} stats_t;
+} stats_f_t;
 
 typedef struct stats_c_s {
     int health;
@@ -57,7 +57,7 @@ typedef struct Fighter_Entity_s {
     sfFloatRect hitbox;
     sfFloatRect dmgbox;
     stats_c_t stats;
-    stats_t base_stats;
+    stats_f_t base_stats;
 } fighter_entity_t;
 
 typedef struct ui_s {
