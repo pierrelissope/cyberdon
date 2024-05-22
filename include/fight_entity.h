@@ -15,6 +15,7 @@
 #include <SFML/Window.h>
 #include <stdbool.h>
 
+#include "ai_values.h"
 #include "fight_macros.h"
 #include "fight_transfer.h"
 #include "struct.h"
@@ -82,6 +83,7 @@ typedef struct fight_s {
     sfRectangleShape *foreground;
     sfClock *fps_clock;
     sfClock *stamina_clock;
+    ai_levels_t level;
 } fight_t;
 
 fighter_entity_t *init_fighter_entity(physical_entity_t *entity_stats,

@@ -53,6 +53,6 @@ void test(game_t *game)
 
     npc_tmp.type = 1;
     npc_tmp.fighter_skin = BIG_DUDE;
-    game->player->fighter_skin = EAGLE;
+    game->player->fighter_skin = BLACK_GUY;
     printf("%d\n", run_fight(game, game->player, &npc_tmp, DEFAULT));
 }

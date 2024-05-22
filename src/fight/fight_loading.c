@@ -5,6 +5,7 @@
 ** fight loading
 */
 
+#include "ai_values.h"
 #include "dict.h"
 #include "fight_entity.h"
 #include "fight_macros.h"
@@ -141,6 +142,7 @@ fight_t *load_fight(game_t *game, physical_entity_t *player,
     fight->view = init_fight_view();
     fight->fps_clock = sfClock_create();
     fight->stamina_clock = sfClock_create();
+    fight->level = IMPOSSIBLE;
     if (fight->view == NULL)
         return NULL;
     sfRenderWindow_setView(game->window, fight->view);
