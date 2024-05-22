@@ -126,6 +126,7 @@ static void sync_stats(fight_t *fight)
 {
     fill_entity_stats(fight->npc);
     fill_entity_stats(fight->player);
+    fight->level = IMPOSSIBLE;
 }
 
 fight_t *load_fight(game_t *game, physical_entity_t *player,
@@ -142,7 +143,6 @@ fight_t *load_fight(game_t *game, physical_entity_t *player,
     fight->view = init_fight_view();
     fight->fps_clock = sfClock_create();
     fight->stamina_clock = sfClock_create();
-    fight->level = IMPOSSIBLE;
     if (fight->view == NULL)
         return NULL;
     sfRenderWindow_setView(game->window, fight->view);

@@ -62,6 +62,7 @@ static void high_stamina_movement(fight_t *fight, bool gap_direction)
     if (fight->npc->looking_right)
         fight->npc->velocity.x = 10;
 }
+
 static fighter_state_t permanent_checks(fight_t *fight)
 {
     float d = get_distance(fight);
