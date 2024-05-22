@@ -117,8 +117,8 @@ static void fill_entity_stats(fighter_entity_t *entity)
     entity->base_stats.stamina = 10;
     entity->base_stats.stamina_regen = 1;
     entity->base_stats.defense = 1;
-    entity->base_stats.health = 100;
-    entity->stats.health = 100;
+    entity->base_stats.hp = 100;
+    entity->stats.hp = 100;
     entity->stats.stamina = 10;
 }
 

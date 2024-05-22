@@ -101,10 +101,10 @@ static void draw_debug(fight_t *fight, sfRenderWindow *win)
 
 static void draw_ui(fight_t *fight, sfRenderWindow *win)
 {
-    sfRenderWindow_drawRectangleShape(win, fight->ui.npc_health, NULL);
+    sfRenderWindow_drawRectangleShape(win, fight->ui.npc_hp, NULL);
     sfRenderWindow_drawRectangleShape(win, fight->ui.npc_stamina, NULL);
     sfRenderWindow_drawRectangleShape(win, fight->ui.player_stamina, NULL);
-    sfRenderWindow_drawRectangleShape(win, fight->ui.player_health, NULL);
+    sfRenderWindow_drawRectangleShape(win, fight->ui.player_hp, NULL);
 }
 
 void draw_fight(fight_t *fight, sfRenderWindow *win)

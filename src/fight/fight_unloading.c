@@ -40,8 +40,8 @@ static void destroy_fighter_entity(fighter_entity_t *entity)
 
 void destroy_ui(fight_t *fight)
 {
-    sfRectangleShape_destroy(fight->ui.npc_health);
-    sfRectangleShape_destroy(fight->ui.player_health);
+    sfRectangleShape_destroy(fight->ui.npc_hp);
+    sfRectangleShape_destroy(fight->ui.player_hp);
     sfRectangleShape_destroy(fight->ui.npc_stamina);
     sfRectangleShape_destroy(fight->ui.player_stamina);
 }

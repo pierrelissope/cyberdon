@@ -16,5 +16,5 @@
 
 void stamina_regen_orb_effect(stats_t *stats)
 {
-    stats->stamina_regeneration_bonus += ORB_MULTIPLIER;
+    stats->stamina_regen_bonus += ORB_MULTIPLIER;
 }

@@ -69,11 +69,13 @@ typedef struct stats_s {
 
     int current_level;
     int current_xp;
+    int hp;
     int attack;
     int speed;
+    int defense;
     int stamina;
     int strength;
-    int stamina_regeneration;
+    int stamina_regen;
     int xp_to_levelup;
 
     int hp_bonus;
@@ -82,7 +84,7 @@ typedef struct stats_s {
     int speed_bonus;
     int stamina_bonus;
     int strength_bonus;
-    int stamina_regeneration_bonus;
+    int stamina_regen_bonus;
 
     sfRectangleShape *sprite_rect;
 
@@ -94,7 +96,7 @@ typedef struct stats_s {
     sfText *speed_text;
     sfText *strength_text;
     sfText *stamina_text;
-    sfText *stamina_regeneration_text;
+    sfText *stamina_regen_text;
 
     sfText *hp_bonus_text;
     sfText *defense_bonus_text;
@@ -102,7 +104,7 @@ typedef struct stats_s {
     sfText *speed_bonus_text;
     sfText *strength_bonus_text;
     sfText *stamina_bonus_text;
-    sfText *stamina_regeneration_bonus_text;
+    sfText *stamina_regen_bonus_text;
 } stats_t;
 
 typedef struct Physical_Entity_s {

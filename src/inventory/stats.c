@@ -71,7 +71,7 @@ void init_next_stats_text(stats_t *stats, sfFont *font)
         create_b_text((sfVector2f){1560, 640}, "+ 0", font);
     stats->stamina_bonus_text =
         create_b_text((sfVector2f){1560, 700}, "+ 0", font);
-    stats->stamina_regeneration_bonus_text =
+    stats->stamina_regen_bonus_text =
         create_b_text((sfVector2f){1650, 760}, "+ 0", font);
 }
 
@@ -89,7 +89,7 @@ static void init_stats_text(stats_t *stats, sfFont *font)
         font);
     stats->stamina_text = create_text((sfVector2f){1400, 700}, "Stamina 1",
         font);
-    stats->stamina_regeneration_text =
+    stats->stamina_regen_text =
         create_text((sfVector2f){1400, 760}, "Stamina Regen 1", font);
     stats->hp_bonus_text = create_b_text((sfVector2f){1500, 400}, "+ 0", font);
     init_next_stats_text(stats, font);
@@ -101,12 +101,14 @@ stats_t create_stats(char const *name, dict_t *sheets_dict, sfFont *font)
 
     strcpy(stats.name, name);
     stats.sprite = sfSprite_create();
+    stats.hp = 100;
     stats.attack = 1;
     stats.speed = 1;
+    stats.defense = 1;
     stats.strength = 1;
     stats.current_level = 1;
     stats.stamina = 10;
-    stats.stamina_regeneration = 1;
+    stats.stamina_regen = 1;
     stats.current_xp = 0;
     stats.xp_to_levelup = stats.current_level * 1.5;
     stats.box = sfRectangleShape_create();
@@ -144,7 +146,7 @@ void update_stats(stats_t *stats, inventory_t *inventory)
     stats->speed_bonus = 0;
     stats->strength_bonus = 0;
     stats->stamina_bonus = 0;
-    stats->stamina_regeneration_bonus = 0;
+    stats->stamina_regen_bonus = 0;
     for (size_t y = 0; y < INVENTORY_SIZE_Y; ++y)
         for (size_t x = 0; x < INVENTORY_SIZE_X; ++x)
             apply_item_effect(stats, inventory->slots[y][x].item);
@@ -154,6 +156,6 @@ void update_stats(stats_t *stats, inventory_t *inventory)
     set_bonus_string(stats->speed_bonus_text, stats->speed_bonus);
     set_bonus_string(stats->strength_bonus_text, stats->strength_bonus);
     set_bonus_string(stats->stamina_bonus_text, stats->stamina_bonus);
-    set_bonus_string(stats->stamina_regeneration_bonus_text,
-        stats->stamina_regeneration_bonus);
+    set_bonus_string(stats->stamina_regen_bonus_text,
+        stats->stamina_regen_bonus);
 }

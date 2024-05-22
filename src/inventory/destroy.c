@@ -54,12 +54,12 @@ void destroy_stats(stats_t *stats)
     sfText_destroy(stats->speed_text);
     sfText_destroy(stats->strength_text);
     sfText_destroy(stats->stamina_text);
-    sfText_destroy(stats->stamina_regeneration_text);
+    sfText_destroy(stats->stamina_regen_text);
     sfText_destroy(stats->hp_bonus_text);
     sfText_destroy(stats->defense_bonus_text);
     sfText_destroy(stats->attack_bonus_text);
     sfText_destroy(stats->speed_bonus_text);
     sfText_destroy(stats->strength_bonus_text);
     sfText_destroy(stats->stamina_bonus_text);
-    sfText_destroy(stats->stamina_regeneration_bonus_text);
+    sfText_destroy(stats->stamina_regen_bonus_text);
 }
