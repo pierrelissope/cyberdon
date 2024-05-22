@@ -74,6 +74,10 @@ static const init_world_t WALLS_BLOCK_INIT[] =
         .texture_name = POUBELLE1F1
     },
     {
+        .c = 'C',
+        .texture_name = CITY
+    },
+    {
         .c = '~',
         .texture_name = POUBELLE1F2
     },
