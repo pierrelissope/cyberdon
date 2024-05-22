@@ -24,6 +24,7 @@ game_info_t *init_game_info(void)
     game_info->screen_res.x = 1920;
     game_info->screen_res.y = 1080;
     memcpy(game_info->sizes, sizes, sizeof(sizes));
+    game_info->specifier = 0;
     return game_info;
 }
 

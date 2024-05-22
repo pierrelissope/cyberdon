@@ -22,7 +22,7 @@ bool my_hover(sfRenderWindow *window, sfText *text)
 }
 
 static void handle_events(sfRenderWindow *window, int *selected_item,
-    menu_item_t *menu_items, game_info_t *game_info)
+    menu_item_t *menu_items, game_t *game)
 {
     sfEvent event;
 
@@ -33,20 +33,27 @@ static void handle_events(sfRenderWindow *window, int *selected_item,
             *selected_item = (*selected_item + 1) % ITM_COUNT;
         if (event.type == sfEvtKeyPressed && event.key.code == sfKeyUp)
             *selected_item = (*selected_item + ITM_COUNT - 1) % ITM_COUNT;
+        if (event.type == sfEvtKeyPressed && event.key.code == sfKeyEscape &&
+            game->game_info->specifier == 1)
+            game->game_state = IN_GAME;
         if (event.type == sfEvtKeyPressed && event.key.code == sfKeyReturn)
-            menu_items[*selected_item].action(window, game_info);
+            menu_items[*selected_item].action(window, game->game_info, game);
         if (event.type == sfEvtMouseButtonPressed &&
             event.mouseButton.button == sfMouseLeft)
-            menu_items[*selected_item].action(window, game_info);
+            menu_items[*selected_item].action(window, game->game_info, game);
     }
 }
 
-static void jouer(sfRenderWindow *window, game_info_t *game_info)
+static void jouer(sfRenderWindow *window,
+    game_info_t *game_info, game_t *game)
 {
-    return;
+    game->game_info->specifier = 1;
+    game->game_state = IN_GAME;
+    printf("updated\n");
 }
 
-static void quitter(sfRenderWindow *window)
+static void quitter(sfRenderWindow *window,
+    game_info_t *game_info, game_t *game)
 {
     sfRenderWindow_close(window);
 }
@@ -114,16 +121,16 @@ static menu_item_t *my_init_tab(int specifier)
     }
 }
 
-void menu(game_t *game, int specifier)
+void menu(game_t *game)
 {
-    menu_item_t *menu_items = my_init_tab(specifier);
+    menu_item_t *menu_items = my_init_tab(game->game_info->specifier);
     int selected_item = 0;
     sfRectangleShape *rect = create_rectangle();
     sfClock *clock = sfClock_create();
 
-    while (sfRenderWindow_isOpen(game->window)) {
-        handle_events(game->window, &selected_item,
-            menu_items, game->game_info);
+    while (sfRenderWindow_isOpen(game->window) &&
+        game->game_state == IN_MENU) {
+        handle_events(game->window, &selected_item, menu_items, game);
         blink(clock, rect);
         draw_menu(game->window, rect, &selected_item, menu_items);
     }

@@ -109,6 +109,7 @@ typedef struct game_info {
     sfVector2u sizes[3];
     sfFont *font;
     sfRenderWindow *window;
+    int specifier;
 } game_info_t;
 
 typedef struct game_s {

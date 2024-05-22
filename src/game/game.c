@@ -13,6 +13,7 @@
 #include "world.h"
 #include "status.h"
 #include "mymenu.h"
+#include "mh_menu.h"
 
 const sfVector2f PLAYER_START_POS = {150, 180};
 
@@ -78,6 +79,7 @@ game_t init_game(void)
         return game;
     init_game_components(&game);
     game.game_info = init_game_info();
+    game.game_state = IN_MENU;
     if (!game.game_info)
         return game;
     return game;
@@ -101,21 +103,22 @@ void run_game(game_t *game)
 {
     sfEvent event;
 
-    game->window = sfRenderWindow_create(
-        (sfVideoMode){game->game_info->screen_res.x,
-            game->game_info->screen_res.y, 32},
-        "MyRPG", sfClose | sfResize, NULL);
+    game->window = WIN_CREATE;
     sfRenderWindow_setFramerateLimit(game->window, 60);
-    menu(game, 0);
     while (sfRenderWindow_isOpen(game->window)) {
         if (handle_event(game, &event) == sfEvtClosed)
             return;
-        if (game->game_state == IN_GAME)
+        if (game->game_state == IN_MENU) {
+            menu(game);
+            continue;
+        }
+        if (game->game_state == IN_GAME) {
             move_entity(game->player, &event, &(game->world));
-        teleport_player(game, game->world.teleporters, &game->status);
-        animate_world(&(game->world));
-        update_entity(game->player);
-        center_view(game->player_view, game->player->rect, game);
-        draw_game(game);
+            teleport_player(game, game->world.teleporters, &game->status);
+            animate_world(&(game->world));
+            update_entity(game->player);
+            center_view(game->player_view, game->player->rect, game);
+            draw_game(game);
+        }
     }
 }
