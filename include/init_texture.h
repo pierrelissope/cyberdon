@@ -73,6 +73,7 @@ enum Tiles {
     SIDE_WALK_CHUNK4,
     SIDE_WALK_TILE,
     SIDE_WALK_TILE1,
+    GRADIANT_WALL
 };
 
 enum Spritesheets {
@@ -540,6 +541,12 @@ static const init_texture_t TILES_TEXTURE_INIT[] = {
         .texture_name = SIDE_WALK_TILE1,
         .rect = {0, 0, 128, 105},
         .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/gradiant_wall.png",
+        .texture_name = GRADIANT_WALL,
+        .rect = {0, 0, 128, 454},
+        .frame_nb = 4
     },
     {
         .texture_path = NULL,

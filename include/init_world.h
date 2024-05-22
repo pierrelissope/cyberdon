@@ -114,6 +114,10 @@ static const init_world_t WALLS_BLOCK_INIT[] =
         .texture_name = TABLE9
     },
     {
+        .c = 'g',
+        .texture_name = GRADIANT_WALL
+    },
+    {
         .c = ')',
         .texture_name = TABLE12
     },
