@@ -86,7 +86,7 @@ fighter_state_t ai_movement_pick(fight_t *fight)
 
     gap_direction = biggest_gap(fight->npc->sprite_pos.x);
     srand(time(0));
-    if (rand() % 100 >= AI_LEVELS[fight->level].movement_success_rate)
+    if (rand() % 100 > AI_LEVELS[fight->level].movement_success_rate)
         return action;
     action = permanent_checks(fight);
     if (current_stamina < AI_LEVELS[fight->level].low_stamina) {
@@ -122,7 +122,7 @@ fighter_state_t ai_action_pick(fight_t *fight)
         (float) fight->npc->stats.stamina / fight->npc->base_stats.stamina;
 
     srand(time(0));
-    if (rand() % 100 >= AI_LEVELS[fight->level].attack_success_rate)
+    if (rand() % 100 > AI_LEVELS[fight->level].attack_success_rate)
         return IDLE;
     if (current_stamina < AI_LEVELS[fight->level].low_stamina) {
         return low_stamina_action(fight);

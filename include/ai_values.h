@@ -26,8 +26,8 @@ typedef enum ai_levels_e {
 
 static const ai_strenghts_t AI_LEVELS[] = {
     [EASY] = {
-        70,
-        70,
+        20,
+        20,
         150,
         0.6,
         0.6
@@ -40,30 +40,30 @@ static const ai_strenghts_t AI_LEVELS[] = {
         0.6
     },
     [TOUGH] = {
-        40,
-        40,
+        60,
+        60,
         150,
         0.6,
         0.6
     },
     [HARD] = {
-        30,
-        30,
+        70,
+        70,
         150,
         0.6,
         0.6
     },
     [VERY_HARD] = {
-        20,
-        20,
+        80,
+        80,
         150,
         0.6,
         0.6
     },
     [IMPOSSIBLE] = {
-        10,
-        10,
-        150,
+        100,
+        100,
+        100,
         0.6,
         0.6
     },
