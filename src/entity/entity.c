@@ -17,7 +17,7 @@ static const int ANIMATION_COOLDOWN = 100;
 static const int ENTITY_RECT_SIZE = 15;
 
 static const sfVector2f FRAME_SIZE = {1024 / 8, 128};
-static const int FRAME_NUMBER = 8;
+static const int FRAME_NUMBER = 9;
 
 static const float BASE_VELOCITY = 4.3;
 
