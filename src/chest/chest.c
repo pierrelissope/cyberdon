@@ -38,7 +38,6 @@ static item_type_t get_item_enum(char const *item)
 {
     for (size_t i = 0; ITEMS_LINK_ARRAY[i].str_type != NULL; ++i) {
         if (strcmp(item, ITEMS_LINK_ARRAY[i].str_type) == 0) {
-            printf("J'insert %s\n", ITEMS_LINK_ARRAY[i].str_type);
             return ITEMS_LINK_ARRAY[i].enum_type;
         }
     }

@@ -26,7 +26,7 @@ static sfText *create_text(sfVector2f pos, char *str)
     return text;
 }
 
-static sfText *create_bonus_text(sfVector2f pos, char *str)
+static sfText *create_b_text(sfVector2f pos, char *str)
 {
     sfText *text = sfText_create();
 
@@ -59,6 +59,16 @@ static void init_stats_components(stats_t *stats, dict_t *sheets_dict)
     sfRectangleShape_setFillColor(stats->sprite_rect, DARK_GREY);
 }
 
+void init_next_stats_text(stats_t *stats)
+{
+    stats->strength_bonus_text =
+        create_b_text((sfVector2f){1560, 640}, "+ 0");
+    stats->stamina_bonus_text =
+        create_b_text((sfVector2f){1560, 700}, "+ 0");
+    stats->stamina_regeneration_bonus_text =
+        create_b_text((sfVector2f){1650, 760}, "+ 0");
+}
+
 static void init_stats_text(stats_t *stats)
 {
     stats->xp_text = create_text((sfVector2f){1400, 280}, "Xp 0 / 10");
@@ -71,18 +81,13 @@ static void init_stats_text(stats_t *stats)
     stats->stamina_text = create_text((sfVector2f){1400, 700}, "Stamina 1");
     stats->stamina_regeneration_text =
         create_text((sfVector2f){1400, 760}, "Stamina Regen 1");
-    stats->hp_bonus_text = create_bonus_text((sfVector2f){1500, 400}, "+ 0");
+    stats->hp_bonus_text = create_b_text((sfVector2f){1500, 400}, "+ 0");
     stats->defense_bonus_text =
-        create_bonus_text((sfVector2f){1560, 460}, "+ 0");
+        create_b_text((sfVector2f){1560, 460}, "+ 0");
     stats->attack_bonus_text =
-        create_bonus_text((sfVector2f){1540, 520}, "+ 0");
-    stats->speed_bonus_text = create_bonus_text((sfVector2f){1530, 580}, "+ 0");
-    stats->strength_bonus_text =
-        create_bonus_text((sfVector2f){1560, 640}, "+ 0");
-    stats->stamina_bonus_text =
-        create_bonus_text((sfVector2f){1560, 700}, "+ 0");
-    stats->stamina_regeneration_bonus_text =
-        create_bonus_text((sfVector2f){1650, 760}, "+ 0");
+        create_b_text((sfVector2f){1540, 520}, "+ 0");
+    stats->speed_bonus_text = create_b_text((sfVector2f){1530, 580}, "+ 0");
+    init_next_stats_text(stats);
 }
 
 stats_t create_stats(char const *name, dict_t *sheets_dict)
@@ -117,7 +122,7 @@ static void set_bonus_string(sfText *text, int bonus)
     sfText_setString(text, content);
 }
 
-static void apply_item_effect(stats_t *stats, item_t *item)
+void apply_item_effect(stats_t *stats, item_t *item)
 {
     if (item->type == EMPTY_ITEM)
         return;

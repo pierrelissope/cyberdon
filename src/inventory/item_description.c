@@ -36,7 +36,8 @@ static char *get_item_description(item_type_t item_type)
     return "?????";
 }
 
-static void show_description(sfRenderWindow *window, sfVector2f mouse_pos, item_t *item)
+static void show_description(sfRenderWindow *window,
+    sfVector2f mouse_pos, item_t *item)
 {
     sfRectangleShape *rectangle = sfRectangleShape_create();
     sfText *text = create_text((sfVector2f){mouse_pos.x + 20,
@@ -57,8 +58,8 @@ static void show_description(sfRenderWindow *window, sfVector2f mouse_pos, item_
     sfRectangleShape_destroy(rectangle);
 }
 
-static bool is_showing_description(sfRenderWindow *window, sfVector2f mouse_pos,
-    inventory_t *inventory, size_t y)
+static bool is_showing_description(sfRenderWindow *window,
+    sfVector2f mouse_pos, inventory_t *inventory, size_t y)
 {
     sfFloatRect bounds = {0};
 

@@ -35,19 +35,27 @@ void draw_stats_menu(sfRenderWindow *window, stats_t *stats)
     sfRenderWindow_drawText(window, stats->speed_bonus_text, NULL);
     sfRenderWindow_drawText(window, stats->stamina_bonus_text, NULL);
     sfRenderWindow_drawText(window,
-        stats->stamina_regeneration_bonus_text, NULL);    
+        stats->stamina_regeneration_bonus_text, NULL);
+}
+
+static void draw_item(sfRenderWindow *window, item_t *item)
+{
+    if (item->type != EMPTY_ITEM)
+        sfRenderWindow_drawSprite(window, item->sprite, NULL);
+}
+
+static void draw_slot(sfRenderWindow *window, slot_t slot)
+{
+    sfRenderWindow_drawRectangleShape(
+        window, slot.box, NULL);
+    draw_item(window, slot.item);
 }
 
 void draw_inventory(sfRenderWindow *window, inventory_t *inventory)
 {
     sfRenderWindow_drawRectangleShape(window, inventory->box, NULL);
-    for (int y = 0; y < INVENTORY_SIZE_Y; ++y) {
-        for (int x = 0; x < INVENTORY_SIZE_X; ++x) {
-            sfRenderWindow_drawRectangleShape(
-                window, inventory->slots[y][x].box, NULL);
-            if (inventory->slots[y][x].item->type != EMPTY_ITEM)
-                sfRenderWindow_drawSprite(window, inventory->slots[y][x].item->sprite, NULL);
-        }
-    }
+    for (int y = 0; y < INVENTORY_SIZE_Y; ++y)
+        for (int x = 0; x < INVENTORY_SIZE_X; ++x)
+            draw_slot(window, inventory->slots[y][x]);
     sfRenderWindow_drawText(window, inventory->text, NULL);
 }

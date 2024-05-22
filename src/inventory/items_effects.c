@@ -14,8 +14,6 @@
 #include "struct.h"
 #include "inventory.h"
 
-#define ORB_MULTIPLIER 1
-
 void stamina_regen_orb_effect(stats_t *stats)
 {
     stats->stamina_regeneration_bonus += ORB_MULTIPLIER;

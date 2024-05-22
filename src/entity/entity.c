@@ -50,7 +50,8 @@ physical_entity_t *init_entity(sfVector2f pos, int type, char *name,
     entity->last_animation_update = sfClock_getElapsedTime(entity->clock);
     entity->rect = sfRectangleShape_create();
     entity->velocity = BASE_VELOCITY;
-    entity->inventory = create_inventory((sfVector2f){50, 300}, "player_inventory");
+    entity->inventory = create_inventory((sfVector2f){50, 300},
+        "player_inventory");
     entity->stats = create_stats(name, sheets_dict);
     if (!entity->rect || !entity->clock || !entity->sprite_sheets)
         return entity;

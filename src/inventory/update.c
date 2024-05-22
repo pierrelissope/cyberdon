@@ -22,11 +22,10 @@ static void update_slot(slot_t *slot, sfVector2f mouse_pos)
         sfRectangleShape_setFillColor(slot->box, LIGHT_GREY);
     else
         sfRectangleShape_setFillColor(slot->box, DARK_GREY);
-} 
+}
 
 void update_inventory(inventory_t *inventory, sfVector2f mouse_pos)
 {
-
     for (int y = 0; y < INVENTORY_SIZE_Y; ++y) {
         for (int x = 0; x < INVENTORY_SIZE_X; ++x) {
             update_slot(&inventory->slots[y][x], mouse_pos);

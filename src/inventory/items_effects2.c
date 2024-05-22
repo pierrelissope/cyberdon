@@ -14,8 +14,6 @@
 #include "struct.h"
 #include "inventory.h"
 
-#define ORB_MULTIPLIER 1
-
 void vitality_orb_effect(stats_t *stats)
 {
     stats->hp_bonus += ORB_MULTIPLIER * 2;

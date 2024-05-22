@@ -24,28 +24,33 @@ static sfRectangleShape *create_inventory_box(sfVector2f position)
     return box;
 }
 
+static void setup_slot(slot_t **slots, size_t x, size_t y,
+    sfVector2f position)
+{
+    float x_offset = position.x + SLOT_MARGIN;
+    float y_offset = position.y + SLOT_MARGIN;
+
+    sfRectangleShape_setOutlineColor(slots[y][x].box,
+        LIGHT_WHITE);
+    sfRectangleShape_setOutlineThickness(slots[y][x].box,
+        OUTLINE_THIKNESS);
+    sfRectangleShape_setSize(slots[y][x].box,
+        (sfVector2f){SLOT_SIZE, SLOT_SIZE});
+    sfRectangleShape_setFillColor(slots[y][x].box, DARK_GREY);
+    sfRectangleShape_setPosition(slots[y][x].box,
+    (sfVector2f){x_offset + x * (SLOT_SIZE + SLOT_MARGIN),
+        y_offset + y * (SLOT_SIZE + SLOT_MARGIN) + SLOTS_MARGIN_TOP});
+}
+
 static slot_t **create_inventory_slots(sfVector2f position)
 {
     slot_t **slots = calloc(INVENTORY_SIZE_Y, sizeof(slot_t *));
-    sfVector2f slot_position = {0};
-    float x_offset = position.x + SLOT_MARGIN;
-    float y_offset = position.y + SLOT_MARGIN;
 
     for (size_t y = 0; y < INVENTORY_SIZE_Y; ++y) {
         slots[y] = calloc(INVENTORY_SIZE_X, sizeof(slot_t));
         for (size_t x = 0; x < INVENTORY_SIZE_X; ++x) {
             slots[y][x].box = sfRectangleShape_create();
-            sfRectangleShape_setOutlineColor(slots[y][x].box,
-                LIGHT_WHITE);
-            sfRectangleShape_setOutlineThickness(slots[y][x].box,
-                OUTLINE_THIKNESS);
-            sfRectangleShape_setSize(slots[y][x].box,
-                (sfVector2f){SLOT_SIZE, SLOT_SIZE});
-            sfRectangleShape_setFillColor(slots[y][x].box, DARK_GREY);
-            slot_position = (sfVector2f){
-                x_offset + x * (SLOT_SIZE + SLOT_MARGIN),
-                y_offset + y * (SLOT_SIZE + SLOT_MARGIN) + SLOTS_MARGIN_TOP};
-            sfRectangleShape_setPosition(slots[y][x].box, slot_position);
+            setup_slot(slots, x, y, position);
             slots[y][x].item = calloc(1, sizeof(item_t));
         }
     }
