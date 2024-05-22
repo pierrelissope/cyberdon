@@ -27,28 +27,26 @@ static bool biggest_gap(float sprite_pos)
     return 0;
 }
 
-static void move_towards(float *position, int target, float move_speed)
-{
-    if (*position < target)
-        *position -= move_speed;
-    else if (*position > target)
-        *position += move_speed;
-}
-
 static void low_stamina_movement(fight_t *fight, bool gap_direction)
 {
     float d = fight->npc->sprite_pos.x - fight->player->sprite_pos.x;
 
     if (d < 100 && gap_direction == true)
-        fight->npc->velocity.x += 10;
+        fight->npc->velocity.x = 10;
     if (d < 100 && gap_direction == false)
-        fight->npc->velocity.x -= 10;
+        fight->npc->velocity.x = -10;
 }
 
 static void high_stamina_movement(fight_t *fight, bool gap_direction)
 {
-    move_towards(&fight->npc->velocity.x,
-                 fight->player->sprite_pos.x, 10);
+    float d = fight->npc->sprite_pos.x - fight->player->sprite_pos.x;
+
+    if (d < 100)
+        return;
+    if (fight->npc->looking_left)
+        fight->npc->velocity.x = -10;
+    if (fight->npc->looking_right)
+        fight->npc->velocity.x = 10;
 }
 
 void ai_movement_pick(fight_t *fight)
@@ -86,10 +84,10 @@ static fighter_state_t high_stamina_action(fight_t *fight)
 
 fighter_state_t ai_action_pick(fight_t *fight)
 {
-    srand(time(0));
     float current_stamina =
         (float) fight->npc->stats.stamina / fight->npc->base_stats.stamina;
 
+    srand(time(0));
     if (rand() % 100 >= 50)
         return IDLE;
     if (current_stamina < 0.7) {
