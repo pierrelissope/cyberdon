@@ -13,6 +13,7 @@
 #define MAX_SPRITE_SHEETS 100
 
 enum Tiles {
+    CITY,
     POUBELLE1F1,
     POUBELLE1F2,
     POUBELLE1F3,
@@ -293,7 +294,7 @@ static const init_texture_t TILES_TEXTURE_INIT[] = {
     {
         .texture_path = "./assets/spritesheets/props/table/TABLE57.png",
         .texture_name = TABLE57,
-        .rect = {0, 0, 128, 127},
+        .rect = {0, 0, 128, 128},
         .frame_nb = 1,
     },
     {
@@ -306,6 +307,12 @@ static const init_texture_t TILES_TEXTURE_INIT[] = {
         .texture_path = "./assets/blocks/little_batiment2x1.png",
         .texture_name = LITTLE_BATIMENT2X1,
         .rect = {0, 0, 256, 294},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/city.png",
+        .texture_name = CITY,
+        .rect = {0, 0, 128, 454},
         .frame_nb = 1
     },
     {
