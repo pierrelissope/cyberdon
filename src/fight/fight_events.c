@@ -71,7 +71,7 @@ static void handle_ai_actions(fight_t *fight)
     fight->npc->looking_up = false;
     fight->npc->crouching = false;
     fight->npc->velocity.x = 0;
-    ai_movement_pick(fight);
+    action = ai_movement_pick(fight);
     action = ai_action_pick(fight);
     action = pick_attack(fight->npc, action);
     action = pick_walking_annimation(fight->npc, action);

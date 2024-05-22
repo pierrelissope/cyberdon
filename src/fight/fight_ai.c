@@ -61,23 +61,39 @@ static void high_stamina_movement(fight_t *fight, bool gap_direction)
     if (fight->npc->looking_right)
         fight->npc->velocity.x = 10;
 }
+static fighter_state_t permanent_checks(fight_t *fight)
+{
+    float d = get_distance(fight);
+    fighter_state_t action = IDLE;
 
-void ai_movement_pick(fight_t *fight)
+    if (d < 100)
+        return action;
+    if (fight->player->state == ATTACK) {
+        fight->npc->crouching = true;
+        action = CROUCH;
+    }
+    return action;
+}
+
+fighter_state_t ai_movement_pick(fight_t *fight)
 {
     bool gap_direction = 0;
     float current_stamina =
         (float) fight->npc->stats.stamina / fight->npc->base_stats.stamina;
+    fighter_state_t action = IDLE;
 
     gap_direction = biggest_gap(fight->npc->sprite_pos.x);
     srand(time(0));
     if (rand() % 100 >= 50)
-        return;
+        return action;
+    action = permanent_checks(fight);
     if (current_stamina < 0.6) {
         low_stamina_movement(fight, gap_direction);
     }
     if (current_stamina >= 0.6) {
         high_stamina_movement(fight, gap_direction);
     }
+    return action;
 }
 
 static fighter_state_t low_stamina_action(fight_t *fight)
