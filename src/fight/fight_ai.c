@@ -32,16 +32,17 @@ int biggest_gap(int sprite_pos)
 void move_towards(float *position, int target, float move_speed)
 {
     if (*position < target)
-        *position += move_speed;
-    else if (*position > target)
         *position -= move_speed;
+    else if (*position > target)
+        *position += move_speed;
 }
 
 void ai_movement_pick(fight_t *fight)
 {
     float d = fight->npc->sprite_pos.x - fight->player->sprite_pos.x;
     int gap_direction = 0;
-    float current_stamina = fight->npc->stats.stamina / fight->npc->base_stats.stamina;
+    float current_stamina =
+        (float) fight->npc->stats.stamina / fight->npc->base_stats.stamina;
 
     if (current_stamina < 0.6) {
         gap_direction = biggest_gap(fight->player->sprite_pos.x);
@@ -55,26 +56,37 @@ void ai_movement_pick(fight_t *fight)
     }
 }
 
+static fighter_state_t low_stamina_action(fight_t *fight)
+{
+    float d = fight->npc->sprite_pos.x - fight->player->sprite_pos.x;
+
+    return IDLE;
+}
+
+static fighter_state_t high_stamina_action(fight_t *fight)
+{
+    float d = fight->npc->sprite_pos.x - fight->player->sprite_pos.x;
+
+    if (d <= 150) {
+        decrease_stamina(fight->npc, 5);
+        return ATTACK;
+    }
+    return IDLE;
+}
+
 fighter_state_t ai_action_pick(fight_t *fight)
 {
-    int action_probability = rand() % 100;
-    float d = fight->npc->sprite_pos.x - fight->player->sprite_pos.x;
-    float current_stamina = fight->npc->stats.stamina / fight->npc->base_stats.stamina;
+    srand(time(0));
+    float current_stamina =
+        (float) fight->npc->stats.stamina / fight->npc->base_stats.stamina;
 
-    if (current_stamina < 0.6) {
-        if (action_probability > 50 && d <= 100) {
-            return IDLE;
-        }
+    if (rand() % 100 >= 50)
+        return IDLE;
+    if (current_stamina < 0.7) {
+        return low_stamina_action(fight);
     }
-    if (current_stamina >= 0.6) {
-        if (action_probability > 50 && d <= 100) {
-            decrease_stamina(fight->npc, 5);
-            return ATTACK;
-        }
-        if (action_probability < 50 && fight->npc->velocity.y == 0) {
-            decrease_stamina(fight->npc, 5);
-            return ATTACK;
-        }
+    if (current_stamina >= 0.7) {
+        return high_stamina_action(fight);
     }
     return IDLE;
 }
