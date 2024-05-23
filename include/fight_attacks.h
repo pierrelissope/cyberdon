@@ -33,4 +33,11 @@ static const sfFloatRect ATTACKS[][10] = {
         [ATTACK_DOWN] = {80, -10, 50, 50},
         [ATTACK_UP] = {75, -230, 50, 50}
     },
+    [BLUE_GIRL] = {
+        [ATTACK_JUMP] = {80, -30, 50, 50},
+        [ATTACK] = {90, -130, 50, 50},
+        [ATTACK_CROUCH] = {100, -40, 50, 50},
+        [ATTACK_DOWN] = {80, -60, 50, 50},
+        [ATTACK_UP] = {75, -230, 50, 50}
+    },
 };

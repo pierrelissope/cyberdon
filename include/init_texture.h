@@ -69,11 +69,13 @@ enum Tiles {
     ROAD_CHUNK6,
     SIDE_WALK_CHUNK,
     SIDE_WALK_CHUNK1,
+    SIDE_WALK_CHUNK1B,
     SIDE_WALK_CHUNK2,
     SIDE_WALK_CHUNK3,
     SIDE_WALK_CHUNK4,
     SIDE_WALK_TILE,
     SIDE_WALK_TILE1,
+    GRADIANT_WALL
 };
 
 enum Spritesheets {
@@ -519,6 +521,12 @@ static const init_texture_t TILES_TEXTURE_INIT[] = {
         .frame_nb = 1
     },
     {
+        .texture_path = "./assets/blocks/floors/Sidewalk_Chunk1.png",
+        .texture_name = SIDE_WALK_CHUNK1B,
+        .rect = {256, 0, 128, 105},
+        .frame_nb = 1
+    },
+    {
         .texture_path = "./assets/blocks/floors/Sidewalk_Chunk2.png",
         .texture_name = SIDE_WALK_CHUNK2,
         .rect = {0, 0, 128, 105},
@@ -547,6 +555,12 @@ static const init_texture_t TILES_TEXTURE_INIT[] = {
         .texture_name = SIDE_WALK_TILE1,
         .rect = {0, 0, 128, 105},
         .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/gradiant_wall.png",
+        .texture_name = GRADIANT_WALL,
+        .rect = {0, 0, 128, 454},
+        .frame_nb = 4
     },
     {
         .texture_path = NULL,

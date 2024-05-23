@@ -60,7 +60,7 @@ void test(game_t *game)
     npc_tmp.stats.hp = 100;
     npc_tmp.stats.speed = 2;
     npc_tmp.stats.strength = 1;
-    game->player->fighter_skin = BLACK_GUY;
+    game->player->fighter_skin = BLUE_GIRL;
     game->player->stats.speed = 10;
     game->player->stats.stamina = 20;
     printf("%d\n", run_fight(game, game->player, &npc_tmp, DEFAULT));

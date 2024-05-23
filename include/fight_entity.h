@@ -59,6 +59,8 @@ typedef struct Fighter_Entity_s {
     sfFloatRect dmgbox;
     stats_c_t stats;
     stats_f_t base_stats;
+    sfClock *fail_cooldown;
+    sfClock *success_cooldown;
 } fighter_entity_t;
 
 typedef struct ui_s {

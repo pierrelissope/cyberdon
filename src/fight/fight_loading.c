@@ -111,7 +111,8 @@ static bool load_fighters(fight_t *fight)
     return false;
 }
 
-static void fill_entity_stats(fighter_entity_t *entity, physical_entity_t *stats)
+static void fill_entity_stats(fighter_entity_t *entity,
+    physical_entity_t *stats)
 {
     entity->base_stats.attack =
         stats->stats.attack + stats->stats.attack_bonus;
@@ -135,7 +136,7 @@ static void sync_stats(fight_t *fight)
 {
     fill_entity_stats(fight->npc, fight->npc_stats);
     fill_entity_stats(fight->player, fight->player_stats);
-    fight->level = IMPOSSIBLE;
+    fight->level = EASY;
     srand(time(0));
 }
 

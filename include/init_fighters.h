@@ -127,6 +127,10 @@ static const fighter_init_t FIGHTER_INIT[] = {
         "assets/fighters/eagle/",
         300,
     },
+    [BLUE_GIRL] = {
+        "assets/fighters/blue_girl/",
+        300,
+    },
 };
 
 #endif

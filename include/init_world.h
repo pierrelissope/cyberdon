@@ -62,6 +62,14 @@ static const init_world_t FLOOR_BLOCK_INIT[] =
         .texture_name = ROAD_CHUNKE
     },
     {
+        .c = 'd',
+        .texture_name = SIDE_WALK_CHUNK1
+    },
+    {
+        .c = 'c',
+        .texture_name = SIDE_WALK_CHUNK1B
+    },
+    {
         .c = -1,
         .texture_name = 0
     }
@@ -82,11 +90,11 @@ static const init_world_t WALLS_BLOCK_INIT[] =
         .texture_name = POUBELLE1F2
     },
     {
-        .c = '}',
+        .c = '1',
         .texture_name = POUBELLE1F3
-    }
-    ,{
-        .c = '{',
+    },
+    {
+        .c = '2',
         .texture_name = POUBELLE1F4
     },
     {
@@ -114,11 +122,15 @@ static const init_world_t WALLS_BLOCK_INIT[] =
         .texture_name = TABLE4
     },
     {
-        .c = '(',
+        .c = 't',
         .texture_name = TABLE9
     },
     {
-        .c = ')',
+        .c = 'g',
+        .texture_name = GRADIANT_WALL
+    },
+    {
+        .c = 'y',
         .texture_name = TABLE12
     },
     {
