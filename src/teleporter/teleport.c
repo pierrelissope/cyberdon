@@ -37,7 +37,7 @@ void teleporter_detected(game_t *game, teleporter_t *teleporter,
     load_level(game, teleporter->destination_level,
         game->tiles_dict);
     play_loading_screen(game->window, &game->loading_page);
-    sfClock_restart(status->teleportation_clock);
+    sfClock_restart(status->status_clock);
     game->player->current_sprite_sheet =
         dict_get(game->player->sprite_sheets, IDLE);
     sfClock_restart(game->clock);
@@ -50,7 +50,7 @@ void teleport_player(game_t *game, teleporter_t **teleporters,
     sfFloatRect player_bounds =
         sfRectangleShape_getGlobalBounds(game->player->rect);
     float now = sfTime_asSeconds(
-        sfClock_getElapsedTime(status->teleportation_clock));
+        sfClock_getElapsedTime(status->status_clock));
 
     if (now < TELEPORTATION_COOLDOWN)
         return;

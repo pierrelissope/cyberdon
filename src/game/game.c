@@ -12,6 +12,7 @@
 #include "dict.h"
 #include "world.h"
 #include "status.h"
+#include "dialog.h"
 #include "inventory.h"
 #include "mymenu.h"
 
@@ -129,6 +130,7 @@ void run_game(game_t *game)
             move_entity(game->player, &event, &(game->world));
         if (sfKeyboard_isKeyPressed(sfKeyE))
             show_single_inventory(game->window, game->player);
+        handle_npc_interactions(game->player, game, &event);
         check_openned_chest(game);
         teleport_player(game, game->world.teleporters, &game->status);
         animate_world(&(game->world));
