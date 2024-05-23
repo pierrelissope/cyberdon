@@ -37,9 +37,11 @@ static int handle_pre_fight_event(game_t *, fight_t *fight,
     fight->player->crouching = false;
     fight->player->velocity.x = 0;
     if (sfKeyboard_isKeyPressed(sfKeyRight))
-        fight->player->velocity.x = 10;
+        fight->player->velocity.x =
+            (BASE_SPEED + fight->player->base_stats.speed);
     if (sfKeyboard_isKeyPressed(sfKeyLeft))
-        fight->player->velocity.x = -10;
+        fight->player->velocity.x =
+            -1 * (BASE_SPEED + fight->player->base_stats.speed);
     if (sfKeyboard_isKeyPressed(sfKeyUp))
         fight->player->looking_up = true;
     if (sfKeyboard_isKeyPressed(sfKeyDown))
@@ -97,12 +99,14 @@ static int key_events(fight_t *fight)
         fight->debug_mode = !fight->debug_mode;
     }
     if (sfKeyboard_isKeyPressed(sfKeyX)) {
-        if (decrease_stamina(fight->player, 5))
+        if (decrease_stamina(fight->player,
+            BASE_STAMINA_DECAY + fight->player->base_stats.strenght))
             action = ATTACK;
     }
     if (sfKeyboard_isKeyPressed(sfKeySpace) &&
         fight->player->velocity.y == 0) {
-        if (decrease_stamina(fight->player, 5))
+        if (decrease_stamina(fight->player,
+            BASE_STAMINA_DECAY + fight->player->base_stats.strenght))
             action = JUMP;
     }
     return action;

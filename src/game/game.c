@@ -122,7 +122,7 @@ void draw_game(game_t *game)
 
 int my_game(game_t *game, sfEvent event)
 {
-    move_entity(game->player, &event, &(game->world));
+    move_entity(game->player, &event, &(game->world), game);
     teleport_player(game, game->world.teleporters, &game->status);
     animate_world(&(game->world));
     update_entity(game->player);

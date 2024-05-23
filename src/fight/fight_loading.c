@@ -25,6 +25,7 @@
 #include <SFML/System/Vector2.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <time.h>
 
 static bool init_rects(fight_t *fight)
 {
@@ -110,23 +111,32 @@ static bool load_fighters(fight_t *fight)
     return false;
 }
 
-static void fill_entity_stats(fighter_entity_t *entity)
+static void fill_entity_stats(fighter_entity_t *entity, physical_entity_t *stats)
 {
-    entity->base_stats.attack = 1;
-    entity->base_stats.speed = 1;
-    entity->base_stats.stamina = 10;
-    entity->base_stats.stamina_regen = 1;
-    entity->base_stats.defense = 1;
-    entity->base_stats.hp = 100;
-    entity->stats.hp = 100;
-    entity->stats.stamina = 10;
+    entity->base_stats.attack =
+        stats->stats.attack + stats->stats.attack_bonus;
+    entity->base_stats.speed =
+        stats->stats.speed + stats->stats.speed_bonus;
+    entity->base_stats.stamina =
+        stats->stats.stamina + stats->stats.stamina_bonus;
+    entity->base_stats.stamina_regen =
+        stats->stats.stamina_regen + stats->stats.stamina_regen_bonus;
+    entity->base_stats.defense =
+        stats->stats.defense + stats->stats.defense_bonus;
+    entity->base_stats.hp =
+        stats->stats.hp + stats->stats.hp_bonus;
+    entity->stats.hp =
+        stats->stats.hp + stats->stats.hp_bonus;
+    entity->stats.stamina =
+        stats->stats.stamina + stats->stats.stamina_bonus;
 }
 
 static void sync_stats(fight_t *fight)
 {
-    fill_entity_stats(fight->npc);
-    fill_entity_stats(fight->player);
+    fill_entity_stats(fight->npc, fight->npc_stats);
+    fill_entity_stats(fight->player, fight->player_stats);
     fight->level = IMPOSSIBLE;
+    srand(time(0));
 }
 
 fight_t *load_fight(game_t *game, physical_entity_t *player,

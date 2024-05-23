@@ -29,9 +29,9 @@ static void handle_events(sfRenderWindow *window, int *selected_item,
     while (sfRenderWindow_pollEvent(window, &event)) {
         if (event.type == sfEvtClosed)
             sfRenderWindow_close(window);
-        if (event.type == sfEvtKeyPressed && event.key.code == sfKeyDown)
+        if (event.type == sfEvtKeyPressed && event.key.code == game->game_info->key[MOVE_DOWN])
             *selected_item = (*selected_item + 1) % ITM_COUNT;
-        if (event.type == sfEvtKeyPressed && event.key.code == sfKeyUp)
+        if (event.type == sfEvtKeyPressed && event.key.code == game->game_info->key[MOVE_UP])
             *selected_item = (*selected_item + ITM_COUNT - 1) % ITM_COUNT;
         if (event.type == sfEvtKeyPressed && event.key.code == sfKeyEscape &&
             game->game_info->specifier == 1)
@@ -49,7 +49,6 @@ static void jouer(sfRenderWindow *window,
 {
     game->game_info->specifier = 1;
     game->game_state = IN_GAME;
-    printf("updated\n");
 }
 
 static void quitter(sfRenderWindow *window,

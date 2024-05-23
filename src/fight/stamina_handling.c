@@ -6,6 +6,7 @@
 */
 
 #include "fight_entity.h"
+#include "fight_macros.h"
 #include "init_ui.h"
 #include <stdbool.h>
 
@@ -42,6 +43,8 @@ void uptdate_stamina_rec_size(fight_t *fight)
 
 bool decrease_stamina(fighter_entity_t *entity, int ammount)
 {
+    if (entity->state == HIT)
+        return false;
     if (entity->stats.stamina - ammount *
         ((float) entity->base_stats.attack / 2) <= 0) {
         return false;
@@ -56,11 +59,11 @@ bool stamina_regen(fighter_entity_t *entity)
 {
     if (entity->stats.stamina >= entity->base_stats.stamina)
         return false;
-    if (entity->stats.stamina + (1 * entity->base_stats.stamina_regen)
+    if (entity->stats.stamina + 1 + entity->base_stats.stamina_regen
         >= entity->base_stats.stamina) {
         entity->stats.stamina = entity->base_stats.stamina;
     } else {
-        entity->stats.stamina += 1 * entity->base_stats.stamina_regen;
+        entity->stats.stamina += 1 + entity->base_stats.stamina_regen;
     }
     return false;
 }

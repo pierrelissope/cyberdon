@@ -5,7 +5,6 @@
 ** movement actions func
 */
 
-#include "fight.h"
 #include "fight_attacks.h"
 #include "fight_entity.h"
 #include <SFML/Graphics/Rect.h>
@@ -63,5 +62,6 @@ void attack_crouch(fighter_entity_t *entity)
 void attack_jump(fighter_entity_t *entity)
 {
     pre_attack(entity);
+    entity->velocity.y = 0;
     entity->dmgbox = apply_offset(entity);
 }

@@ -27,6 +27,7 @@ typedef struct stats_f_s {
     int defense;
     int stamina;
     int stamina_regen;
+    int strenght;
 } stats_f_t;
 
 typedef struct stats_c_s {

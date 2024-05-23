@@ -34,16 +34,124 @@ static const init_world_t FLOOR_BLOCK_INIT[] =
         .texture_name = WOOD_FLOOR
     },
     {
+        .c = 'p',
+        .texture_name = ROAD_CHUNK
+    },
+    {
+        .c = 's',
+        .texture_name = SIDE_WALK_CHUNK
+    },
+    {
+        .c = 'u',
+        .texture_name = SIDE_WALK_TILE1
+    },
+    {
+        .c = 'i',
+        .texture_name = ROAD_CHUNK6
+    },
+    {
+        .c = '*',
+        .texture_name = MANHOLE
+    },
+    {
+        .c = 'r',
+        .texture_name = ROAD_CHUNKR
+    },
+    {
+        .c = 'e',
+        .texture_name = ROAD_CHUNKE
+    },
+    {
         .c = -1,
         .texture_name = 0
-    },
+    }
 };
 
 static const init_world_t WALLS_BLOCK_INIT[] =
 {
     {
+        .c = 'x',
+        .texture_name = POUBELLE1F1
+    },
+    {
+        .c = 'C',
+        .texture_name = CITY
+    },
+    {
+        .c = '~',
+        .texture_name = POUBELLE1F2
+    },
+    {
+        .c = '}',
+        .texture_name = POUBELLE1F3
+    }
+    ,{
+        .c = '{',
+        .texture_name = POUBELLE1F4
+    },
+    {
+        .c = 'z',
+        .texture_name = CARTON
+    },
+    {
+        .c = 'w',
+        .texture_name = CARTON2
+    },
+    {
+        .c = '#',
+        .texture_name = TABLE1
+    },
+    {
+        .c = '$',
+        .texture_name = TABLE2
+    },
+    {
+        .c = '%',
+        .texture_name = TABLE3
+    },
+    {
+        .c = '&',
+        .texture_name = TABLE4
+    },
+    {
+        .c = '(',
+        .texture_name = TABLE9
+    },
+    {
+        .c = ')',
+        .texture_name = TABLE12
+    },
+    {
+        .c = '+',
+        .texture_name = TABLE13
+    },
+    {
+        .c = '-',
+        .texture_name = TABLE56
+    },
+    {
+        .c = '/',
+        .texture_name = TABLE57
+    },
+    {
         .c = 'c',
         .texture_name = COLLISION_BLOCK
+    },
+    {
+        .c = 'n',
+        .texture_name = SKINNY_BATIMENT2X1
+    },
+    {
+        .c = 'b',
+        .texture_name = BATIMENT2X2,
+    },
+    {
+        .c = 'e',
+        .texture_name = BATIMENT2X1,
+    },
+    {
+        .c = 'q',
+        .texture_name = LITTLE_BATIMENT2X1,
     },
     {
         .c = 't',
@@ -90,7 +198,7 @@ static const init_world_t WALLS_BLOCK_INIT[] =
         .texture_name = STREET_LAMP
     },
     {
-        .c = 'b',
+        .c = 'v',
         .texture_name = BEDROOM_WALL
     },
     {

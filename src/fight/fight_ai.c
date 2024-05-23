@@ -9,6 +9,7 @@
 #include "fight_entity.h"
 #include "fight_macros.h"
 #include "fight.h"
+#include "init_fighters.h"
 #include <SFML/Config.h>
 #include <SFML/Window/Event.h>
 #include <SFML/Window/Keyboard.h>
@@ -46,9 +47,11 @@ static void low_stamina_movement(fight_t *fight, bool gap_direction)
     if (d < AI_LEVELS[fight->level].distance_to_hit)
         return;
     if (gap_direction == true)
-        fight->npc->velocity.x = 10;
+        fight->npc->velocity.x =
+            BASE_SPEED * fight->npc->base_stats.speed;
     if (gap_direction == false)
-        fight->npc->velocity.x = -10;
+        fight->npc->velocity.x =
+            -1 * BASE_SPEED * fight->npc->base_stats.speed;
 }
 
 static void high_stamina_movement(fight_t *fight, bool gap_direction)
@@ -58,9 +61,11 @@ static void high_stamina_movement(fight_t *fight, bool gap_direction)
     if (d < AI_LEVELS[fight->level].distance_to_hit)
         return;
     if (fight->npc->looking_left)
-        fight->npc->velocity.x = -10;
+        fight->npc->velocity.x =
+            -1 * (BASE_SPEED + fight->npc->base_stats.speed);
     if (fight->npc->looking_right)
-        fight->npc->velocity.x = 10;
+        fight->npc->velocity.x =
+            (BASE_SPEED + fight->npc->base_stats.speed);
 }
 
 static fighter_state_t permanent_checks(fight_t *fight)
@@ -71,8 +76,14 @@ static fighter_state_t permanent_checks(fight_t *fight)
     if (d < AI_LEVELS[fight->level].distance_to_hit)
         return action;
     if (fight->player->state == ATTACK) {
-        fight->npc->crouching = true;
-        action = CROUCH;
+        if (rand() % 2) {
+            fight->npc->crouching = true;
+            action = CROUCH;
+        } else {
+            decrease_stamina(fight->npc,
+            BASE_STAMINA_DECAY + fight->npc->base_stats.strenght);
+            action = JUMP;
+        }
     }
     return action;
 }
@@ -82,20 +93,17 @@ fighter_state_t ai_movement_pick(fight_t *fight)
     bool gap_direction = 0;
     float current_stamina =
         (float) fight->npc->stats.stamina / fight->npc->base_stats.stamina;
-    fighter_state_t action = IDLE;
 
     gap_direction = biggest_gap(fight->npc->sprite_pos.x);
-    srand(time(0));
     if (rand() % 100 > AI_LEVELS[fight->level].movement_success_rate)
-        return action;
-    action = permanent_checks(fight);
+        return IDLE;
     if (current_stamina < AI_LEVELS[fight->level].low_stamina) {
         low_stamina_movement(fight, gap_direction);
     }
     if (current_stamina >= AI_LEVELS[fight->level].high_stamina) {
         high_stamina_movement(fight, gap_direction);
     }
-    return action;
+    return permanent_checks(fight);
 }
 
 static fighter_state_t low_stamina_action(fight_t *fight)
@@ -110,7 +118,13 @@ static fighter_state_t high_stamina_action(fight_t *fight)
     float d = get_distance(fight);
 
     if (d <= AI_LEVELS[fight->level].distance_to_hit) {
-        decrease_stamina(fight->npc, 5);
+        decrease_stamina(fight->npc,
+        BASE_STAMINA_DECAY + fight->npc->base_stats.strenght);
+        if (fight->player->crouching)
+            fight->npc->looking_down = true;
+        if (fight->player->sprite_pos.y <=
+            (fight->npc->sprite_pos.y - fight->npc->hitbox.height) + 40)
+            fight->npc->looking_up = true;
         return ATTACK;
     }
     return IDLE;
@@ -121,7 +135,6 @@ fighter_state_t ai_action_pick(fight_t *fight)
     float current_stamina =
         (float) fight->npc->stats.stamina / fight->npc->base_stats.stamina;
 
-    srand(time(0));
     if (rand() % 100 > AI_LEVELS[fight->level].attack_success_rate)
         return IDLE;
     if (current_stamina < AI_LEVELS[fight->level].low_stamina) {

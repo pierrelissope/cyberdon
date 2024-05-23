@@ -15,6 +15,14 @@
 
 #define MAX_TYPE_SIZE 30
 
+typedef enum key_action_e {
+    MOVE_UP,
+    MOVE_DOWN,
+    MOVE_LEFT,
+    MOVE_RIGHT,
+    NUM
+} key_action_t;
+
 typedef enum game_state_e {
     IN_GAME,
     IN_DIALOG,
@@ -192,6 +200,7 @@ typedef struct game_info {
     sfFont *font;
     sfRenderWindow *window;
     int specifier;
+    sfKeyCode key[NUM];
 } game_info_t;
 
 typedef struct game_s {
