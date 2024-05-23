@@ -11,6 +11,7 @@
 #include "fight.h"
 #include "fight_actions.h"
 #include <SFML/Config.h>
+#include <SFML/Graphics/RenderWindow.h>
 #include <SFML/Window/Event.h>
 #include <SFML/Window/Keyboard.h>
 #include <stdbool.h>
@@ -74,7 +75,8 @@ static void handle_ai_actions(fight_t *fight)
     fight->npc->crouching = false;
     fight->npc->velocity.x = 0;
     action = ai_movement_pick(fight);
-    action = ai_action_pick(fight);
+    if (action != JUMP)
+        action = ai_action_pick(fight);
     action = pick_attack(fight->npc, action);
     action = pick_walking_annimation(fight->npc, action);
     change_state(fight->npc, action);
@@ -118,8 +120,10 @@ int handle_fight_event(game_t *game, fight_t *fight, sfEvent *event)
 
     handle_pre_fight_event(game, fight, &action);
     while (sfRenderWindow_pollEvent(game->window, event)) {
-        if (event->type == sfEvtClosed)
+        if (event->type == sfEvtClosed) {
+            sfRenderWindow_close(game->window);
             return sfEvtClosed;
+        }
         if (event->type == sfEvtKeyPressed) {
             action = key_events(fight);
         }

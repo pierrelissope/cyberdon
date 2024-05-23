@@ -111,7 +111,8 @@ static bool load_fighters(fight_t *fight)
     return false;
 }
 
-static void fill_entity_stats(fighter_entity_t *entity, physical_entity_t *stats)
+static void fill_entity_stats(fighter_entity_t *entity,
+    physical_entity_t *stats)
 {
     entity->base_stats.attack =
         stats->stats.attack + stats->stats.attack_bonus;

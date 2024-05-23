@@ -61,23 +61,23 @@ physical_entity_t *init_entity(sfVector2f pos, int type, char *name,
     return entity;
 }
 
-static sfVector2f get_movement(void)
+static sfVector2f get_movement(game_t *game)
 {
     sfVector2f movement = {0, 0};
 
-    if (sfKeyboard_isKeyPressed(sfKeyLeft)) {
+    if (sfKeyboard_isKeyPressed(game->game_info->key[MOVE_LEFT])) {
         movement.x += -1;
         movement.y += 1;
     }
-    if (sfKeyboard_isKeyPressed(sfKeyRight)) {
+    if (sfKeyboard_isKeyPressed(game->game_info->key[MOVE_RIGHT])) {
         movement.x += 1;
         movement.y += -1;
     }
-    if (sfKeyboard_isKeyPressed(sfKeyUp)) {
+    if (sfKeyboard_isKeyPressed(game->game_info->key[MOVE_UP])) {
         movement.y += -1;
         movement.x += -1;
     }
-    if (sfKeyboard_isKeyPressed(sfKeyDown)) {
+    if (sfKeyboard_isKeyPressed(game->game_info->key[MOVE_DOWN])) {
         movement.y += 1;
         movement.x += 1;
     }
@@ -132,10 +132,10 @@ static void change_entity_sprite(physical_entity_t *entity, sfVector2f mvt)
     change_linear_sprite(entity, mvt);
 }
 
-void move_entity(physical_entity_t *entity, sfEvent *event, world_t *world)
+void move_entity(physical_entity_t *entity, sfEvent *event, world_t *world, game_t *game)
 {
     sfFloatRect new_rect = {0};
-    sfVector2f mouvement = get_movement();
+    sfVector2f mouvement = get_movement(game);
 
     change_entity_sprite(entity, mouvement);
     new_rect = sfRectangleShape_getGlobalBounds(entity->rect);
