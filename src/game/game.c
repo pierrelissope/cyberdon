@@ -74,7 +74,7 @@ game_t init_game(void)
         return game;
     init_game_components(&game);
     game.game_info = init_game_info();
-    game.game_state = IN_MENU;
+    game.game_state = IN_GAME;
     if (!game.game_info)
         return game;
     return game;
@@ -121,15 +121,17 @@ void draw_game(game_t *game)
     sfRenderWindow_display(game->window);
 }
 
-void process_ingame(game_t *game, sfEvent event)
+void process_ingame(game_t *game, sfEvent *event)
 {
     if (sfKeyboard_isKeyPressed(sfKeyE) &&
         game->game_state == IN_GAME)
-        show_single_inventory(game->window, game->player);
-    move_entity(game->player, &event, &(game->world), game);
-    handle_npc_interactions(game->player, game, &event);
-    check_openned_chest(game);
-    teleport_player(game, game->world.teleporters, &game->status);
+        show_single_inventory(game->window, game->player, game);
+    if (game->game_state == IN_GAME) {
+        move_entity(game->player, event, &(game->world), game);
+        handle_npc_interactions(game->player, game, event);
+        check_openned_chest(game);
+        teleport_player(game, game->world.teleporters, &game->status);
+    }
     animate_world(&(game->world));
     update_entity(game->player);
     center_view(game->player_view, game->player->rect, game);
@@ -151,7 +153,7 @@ void run_game(game_t *game)
             menu(game);
             continue;
         }
-        if (game->game_state == IN_GAME)
-            process_ingame(game, event);
+        if (game->game_state == IN_GAME || game->game_state == IN_CINEMATIC)
+            process_ingame(game, &event);
     }
 }

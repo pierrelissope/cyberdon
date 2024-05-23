@@ -136,6 +136,9 @@ static void sync_stats(fight_t *fight)
 {
     fill_entity_stats(fight->npc, fight->npc_stats);
     fill_entity_stats(fight->player, fight->player_stats);
+
+    fight->player->base_stats.attack += 10;
+    fight->player->base_stats.stamina += 30;
     fight->level = EASY;
     srand(time(0));
 }

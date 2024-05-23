@@ -56,7 +56,7 @@ static void process_single_inventory(struct inventory_screen_s *content,
 }
 
 void show_single_inventory(sfRenderWindow *window,
-    physical_entity_t *player)
+    physical_entity_t *player, game_t *game)
 {
     sfVector2u windowSize = sfRenderWindow_getSize(window);
     sfEvent event;
@@ -71,7 +71,7 @@ void show_single_inventory(sfRenderWindow *window,
     sfSprite_setTexture(content.bg_sprite, content.texture, sfTrue);
     sfRenderWindow_setView(window, sfRenderWindow_getDefaultView(window));
     while (sfRenderWindow_isOpen(window)) {
-        if (handle_inventory_event(window, &event) == sfEvtClosed)
+        if (handle_inventory_event(window, &event, game) == sfEvtClosed)
             break;
         process_single_inventory(&content, player);
     }
@@ -100,7 +100,7 @@ static void process_multiple_inventory(sfRenderWindow *window,
 }
 
 void play_inventory(sfRenderWindow *window,
-    inventory_t *inventory, inventory_t *inventory2)
+    inventory_t *inventory, inventory_t *inventory2, game_t *game)
 {
     sfVector2u windowSize = sfRenderWindow_getSize(window);
     sfEvent event;
@@ -117,7 +117,7 @@ void play_inventory(sfRenderWindow *window,
     while (sfRenderWindow_isOpen(window)) {
         content.mouse_pos = (sfVector2f)sfRenderWindow_mapPixelToCoords
             (window, sfMouse_getPositionRenderWindow(window), NULL);
-        if (handle_inventory_event(window, &event) == sfEvtClosed)
+        if (handle_inventory_event(window, &event, game) == sfEvtClosed)
             break;
         process_multiple_inventory(window, &content, inventory, inventory2);
     }

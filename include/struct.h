@@ -125,6 +125,8 @@ typedef struct Physical_Entity_s {
     bool is_valid;
     int type;
     char name[100];
+    char *difficulty;
+    char *arena;
     npc_action_t current_action;
     char ***actions;
     sfFont *font;
@@ -199,6 +201,7 @@ typedef struct loading_page_s {
 typedef struct status_s {
     bool is_valid;
     sfClock *status_clock;
+    sfClock *escape_clock;
 } status_t;
 
 typedef struct game_info {

@@ -14,7 +14,6 @@
 #include "init_entity.h"
 #include "init_texture.h"
 
-
 sfIntRect get_tile_rect(int name)
 {
     for (int i = 0; TILES_TEXTURE_INIT[i].texture_path; i++) {
@@ -84,6 +83,12 @@ static int get_entity_type(char *type_str)
     return -1;
 }
 
+static void set_entity_components(physical_entity_t *entity, char **tokens)
+{
+    entity->difficulty = strdup(tokens[3]);
+    entity->arena = strdup(tokens[4]);
+}
+
 static int parse_level_entities(char **lines,
     physical_entity_t ***entities, dict_t *sheets_dict)
 {
@@ -93,7 +98,7 @@ static int parse_level_entities(char **lines,
     char **tokens = NULL;
     int type = 0;
 
-    for (int i = 0; lines[i]; i++) {
+    for (int i = 1; lines[i]; i++) {
         tokens = my_str_to_all_array(lines[i], ";");
         pos_array = my_str_to_all_array(tokens[2], ",");
         pos = (sfVector2f){atof(pos_array[0]), atof(pos_array[1])};
@@ -101,6 +106,7 @@ static int parse_level_entities(char **lines,
         entity = init_entity(pos, type, tokens[0], sheets_dict);
         if (!entity->is_valid)
             return EXIT_FAILURE;
+        set_entity_components(entity, tokens);
         append_ptr((void ***)entities, entity, NULL);
         freef("%t%t", (void **)tokens, (void **)pos_array);
     }

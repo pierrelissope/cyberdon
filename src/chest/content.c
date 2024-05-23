@@ -19,7 +19,7 @@ static void open_chest(game_t *game, size_t i)
 {
     if (sfKeyboard_isKeyPressed(sfKeyEnter))
         play_inventory(game->window, game->player->inventory,
-        game->world.chests[i]->inventory);
+        game->world.chests[i]->inventory, game);
 }
 
 void check_openned_chest(game_t *game)

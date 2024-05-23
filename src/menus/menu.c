@@ -34,8 +34,11 @@ static void handle_events(sfRenderWindow *window, int *selected_item,
         if (event.type == sfEvtKeyPressed && event.key.code == game->game_info->key[MOVE_UP])
             *selected_item = (*selected_item + ITM_COUNT - 1) % ITM_COUNT;
         if (event.type == sfEvtKeyPressed && event.key.code == sfKeyEscape &&
-            game->game_info->specifier == 1)
+            game->game_info->specifier == 1 &&
+            sfTime_asSeconds(sfClock_getElapsedTime(game->status.escape_clock)) > 0.2) {
+            sfClock_restart(game->status.escape_clock);
             game->game_state = IN_GAME;
+        }
         if (event.type == sfEvtKeyPressed && event.key.code == sfKeyReturn)
             menu_items[*selected_item].action(window, game->game_info, game);
         if (event.type == sfEvtMouseButtonPressed &&
