@@ -69,6 +69,7 @@ enum Tiles {
     ROAD_CHUNK6,
     SIDE_WALK_CHUNK,
     SIDE_WALK_CHUNK1,
+    SIDE_WALK_CHUNK1B,
     SIDE_WALK_CHUNK2,
     SIDE_WALK_CHUNK3,
     SIDE_WALK_CHUNK4,
@@ -517,6 +518,12 @@ static const init_texture_t TILES_TEXTURE_INIT[] = {
         .texture_path = "./assets/blocks/floors/Sidewalk_Chunk1.png",
         .texture_name = SIDE_WALK_CHUNK1,
         .rect = {0, 0, 128, 105},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/floors/Sidewalk_Chunk1.png",
+        .texture_name = SIDE_WALK_CHUNK1B,
+        .rect = {256, 0, 128, 105},
         .frame_nb = 1
     },
     {

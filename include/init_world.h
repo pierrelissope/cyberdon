@@ -62,6 +62,14 @@ static const init_world_t FLOOR_BLOCK_INIT[] =
         .texture_name = ROAD_CHUNKE
     },
     {
+        .c = 'd',
+        .texture_name = SIDE_WALK_CHUNK1
+    },
+    {
+        .c = 'c',
+        .texture_name = SIDE_WALK_CHUNK1B
+    },
+    {
         .c = -1,
         .texture_name = 0
     }
