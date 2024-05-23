@@ -107,10 +107,18 @@ typedef struct stats_s {
     sfText *stamina_regen_bonus_text;
 } stats_t;
 
+typedef enum npc_action_e {
+    FIRST = 0,
+    FIGHT,
+    LAST,
+} npc_action_t;
+
 typedef struct Physical_Entity_s {
     bool is_valid;
     int type;
     char name[100];
+    npc_action_t current_action;
+    char ***actions;
     sfFont *font;
     inventory_t *inventory;
     stats_t stats;
@@ -182,7 +190,7 @@ typedef struct loading_page_s {
 
 typedef struct status_s {
     bool is_valid;
-    sfClock *teleportation_clock;
+    sfClock *status_clock;
 } status_t;
 
 typedef struct game_s {
