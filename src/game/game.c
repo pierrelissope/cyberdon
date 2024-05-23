@@ -14,6 +14,7 @@
 #include "status.h"
 #include "inventory.h"
 #include "mymenu.h"
+#include "mh_menu.h"
 
 static dict_t *load_textures_dict(const init_texture_t ENTIY_TEXTURE_INIT[])
 {
@@ -71,6 +72,10 @@ game_t init_game(void)
     if (!game.player_view)
         return game;
     init_game_components(&game);
+    game.game_info = init_game_info();
+    game.game_state = IN_MENU;
+    if (!game.game_info)
+        return game;
     return game;
 }
 
@@ -115,25 +120,35 @@ void draw_game(game_t *game)
     sfRenderWindow_display(game->window);
 }
 
+void my_game(game_t *game, sfEvent event)
+{
+    move_entity(game->player, &event, &(game->world), game);
+    teleport_player(game, game->world.teleporters, &game->status);
+    animate_world(&(game->world));
+    update_entity(game->player);
+    center_view(game->player_view, game->player->rect, game);
+    draw_game(game);
+}
+
 void run_game(game_t *game)
 {
     sfEvent event;
 
-    game->window = sfRenderWindow_create(
-        (sfVideoMode){1920, 1080, 32}, "MyRPG", sfClose | sfResize, NULL);
+    game->window = WIN_CREATE;
     sfRenderWindow_setFramerateLimit(game->window, 60);
     while (sfRenderWindow_isOpen(game->window)) {
         if (handle_event(game, &event) == sfEvtClosed)
             return;
+        if (game->game_state == IN_MENU) {
+            sfRenderWindow_setView(game->window,
+                sfRenderWindow_getDefaultView(game->window));
+            menu(game);
+            continue;
+        }
         if (game->game_state == IN_GAME)
-            move_entity(game->player, &event, &(game->world));
-        if (sfKeyboard_isKeyPressed(sfKeyE))
+            my_game(game, event);
+        if (sfKeyboard_isKeyPressed(sfKeyE) &&
+            game->game_state == IN_GAME)
             show_single_inventory(game->window, game->player);
-        check_openned_chest(game);
-        teleport_player(game, game->world.teleporters, &game->status);
-        animate_world(&(game->world));
-        update_entity(game->player);
-        center_view(game->player_view, game->player->rect, game);
-        draw_game(game);
     }
 }

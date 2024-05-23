@@ -22,6 +22,9 @@ SRC =		./src/entity/entity.c \
 			./src/utils/vector.c \
 			./src/utils/sprite_sorting.c \
 			./src/world/world.c \
+			./src/menus/menu.c \
+			./src/menus/draw_menu.c \
+			./src/menus/param.c \
 			./src/fight/fight_ai.c	\
 			./src/fight/fight_display.c	\
 			./src/fight/fight_entities.c	\

@@ -15,6 +15,14 @@
 
 #define MAX_TYPE_SIZE 30
 
+typedef enum key_action_e {
+    MOVE_UP,
+    MOVE_DOWN,
+    MOVE_LEFT,
+    MOVE_RIGHT,
+    NUM
+} key_action_t;
+
 typedef enum game_state_e {
     IN_GAME,
     IN_DIALOG,
@@ -185,6 +193,16 @@ typedef struct status_s {
     sfClock *teleportation_clock;
 } status_t;
 
+typedef struct game_info {
+    char *save_file;
+    sfVector2u screen_res;
+    sfVector2u sizes[3];
+    sfFont *font;
+    sfRenderWindow *window;
+    int specifier;
+    sfKeyCode key[NUM];
+} game_info_t;
+
 typedef struct game_s {
     bool is_valid;
     game_state_t game_state;
@@ -202,6 +220,7 @@ typedef struct game_s {
     world_t world;
     sfFont *font;
     char **visited_levels;
+    game_info_t *game_info;
 } game_t;
 
 typedef struct annimation_s {
