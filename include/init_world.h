@@ -70,6 +70,10 @@ static const init_world_t FLOOR_BLOCK_INIT[] =
         .texture_name = SIDE_WALK_CHUNK1B
     },
     {
+        .c = 'H',
+        .texture_name = HERB
+    },
+    {
         .c = -1,
         .texture_name = 0
     }
@@ -198,6 +202,10 @@ static const init_world_t WALLS_BLOCK_INIT[] =
         .texture_name = BUILDING_1
     },
     {
+        .c = '9',
+        .texture_name = BUILDING_2
+    },
+    {
         .c = '3',
         .texture_name = STONE_WALL
     },
@@ -216,6 +224,18 @@ static const init_world_t WALLS_BLOCK_INIT[] =
     {
         .c = 'd',
         .texture_name = BEDROOM_POSTER_WALL
+    },
+    {
+        .c = 'P',
+        .texture_name = CAR
+    },
+    {
+        .c = 'A',
+        .texture_name = TREE
+    },
+    {
+        .c = 'T',
+        .texture_name = LONGBUILDING
     },
     {
         .c = -1,

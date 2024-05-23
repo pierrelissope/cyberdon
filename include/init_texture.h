@@ -23,6 +23,7 @@ enum Tiles {
     TABLE1,
     TABLE2,
     TABLE3,
+    HERB,
     TABLE4,
     TABLE6,
     TABLE9,
@@ -42,10 +43,14 @@ enum Tiles {
     STONE_WALL,
     WOOD_WALL,
     BUILDING_1,
+    BUILDING_2,
+    LONGBUILDING,
     COLLISION_BLOCK,
     STREET_LAMP,
     BEDROOM_WALL,
     BEDROOM_POSTER_WALL,
+    CAR,
+    TREE,
     WOOD_FLOOR,
     WOOD_FLOOR2,
     WHITE_WALL,
@@ -353,6 +358,12 @@ static const init_texture_t TILES_TEXTURE_INIT[] = {
         .frame_nb = 1
     },
     {
+        .texture_path = "./assets/blocks/herbe.png",
+        .texture_name = HERB,
+        .rect = {0, 0, 128, 105},
+        .frame_nb = 1
+    },
+    {
         .texture_path = "./assets/blocks/black_floor.png",
         .texture_name = BLACK_FLOOR,
         .rect = {0, 0, 128, 105},
@@ -407,6 +418,24 @@ static const init_texture_t TILES_TEXTURE_INIT[] = {
         .frame_nb = 1
     },
     {
+        .texture_path = "./assets/blocks/voiture.png",
+        .texture_name = CAR,
+        .rect = {0, 0, 165, 110},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/arbol.png",
+        .texture_name = TREE,
+        .rect = {0, 0, 128, 163},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/long_building.png",
+        .texture_name = LONGBUILDING,
+        .rect = {0, 0, 512, 509},
+        .frame_nb = 1
+    },
+    {
         .texture_path = "./assets/blocks/poor_table.png",
         .texture_name = POOR_TABLE,
         .rect = {0, 0, 256, 270},
@@ -445,6 +474,12 @@ static const init_texture_t TILES_TEXTURE_INIT[] = {
     {
         .texture_path = "./assets/blocks/building_1.png",
         .texture_name = BUILDING_1,
+        .rect = {0, 0, 256, 527},
+        .frame_nb = 7
+    },
+    {
+        .texture_path = "./assets/blocks/building_2.png",
+        .texture_name = BUILDING_2,
         .rect = {0, 0, 256, 527},
         .frame_nb = 7
     },
