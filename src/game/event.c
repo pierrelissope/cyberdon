@@ -16,7 +16,7 @@ int handle_event(game_t *game, sfEvent *event)
             return sfEvtClosed;
         if (sfKeyboard_isKeyPressed(sfKeyF))
             test(game);
-        if (sfKeyboard_isKeyPressed(sfKeyEscape)) {
+        if (sfKeyboard_isKeyPressed(sfKeyEscape))
             game->game_state = IN_MENU;
     }
     return sfEvtCount;

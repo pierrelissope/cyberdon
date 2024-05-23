@@ -61,7 +61,9 @@ void attack_crouch(fighter_entity_t *entity)
 
 void attack_jump(fighter_entity_t *entity)
 {
+    float tmp = entity->velocity.x;
     pre_attack(entity);
     entity->velocity.y = 0;
+    entity->velocity.x = tmp;
     entity->dmgbox = apply_offset(entity);
 }
