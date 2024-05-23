@@ -8,10 +8,10 @@
 #include "dict.h"
 #include "string.h"
 #include "entity.h"
-#include "init_texture.h"
 #include "inventory.h"
 #include "dialog.h"
 #include "myutils.h"
+#include "fight.h"
 
 static void free_triple_array(char ***array)
 {
@@ -54,12 +54,15 @@ void process_npc_interaction(physical_entity_t *npc,
     if (!npc->actions)
         return;
     sfRenderWindow_setView(game->window, sfRenderWindow_getDefaultView(game->window));
-    if (npc->current_action == FIGHT){
-        printf("LAUNCH fight\n");
-        //LANCER LE COMBAT
-        if (my_arraylen((void **)npc->actions) > LAST) {
-            //DONNER RECOMPENSE COMBAT AU JOUEUR
-            npc->current_action = LAST;
+    if (npc->current_action == FIGHT) {
+        if (run_fight(game, game->player, npc, 0) == 1) {
+            if (my_arraylen((void **)npc->actions) > LAST)
+                npc->current_action = LAST;
+            sfRenderWindow_setView(game->window, game->player_view);
+            return free_triple_array(npc->actions);
+        } else {
+            sfRenderWindow_setView(game->window, game->player_view);
+            return free_triple_array(npc->actions);
         }
     }
     for (size_t i = 0; npc->actions && npc->actions[npc->current_action][i] != NULL; ++i)

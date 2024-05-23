@@ -169,7 +169,6 @@ void draw_entity(void *entity, sfRenderWindow *window)
 {
     physical_entity_t *nentity = entity;
 
-    sfRenderWindow_drawRectangleShape(window, nentity->rect, NULL);
     sfSprite_setOrigin(nentity->current_sprite_sheet,
         (sfVector2f){FRAME_SIZE.x / 2, FRAME_SIZE.y * 1.7});
     sfSprite_setPosition(nentity->current_sprite_sheet,

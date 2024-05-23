@@ -84,14 +84,15 @@ void draw_stats_menu(sfRenderWindow *window, stats_t *stats);
 inventory_t *create_inventory(sfVector2f position,
     char const *name, sfFont *font);
 void play_inventory(sfRenderWindow *window,
-    inventory_t *inventory, inventory_t *inventory2);
+    inventory_t *inventory, inventory_t *inventory2, game_t *game);
 void insert_item(inventory_t *inventory,
     item_type_t item, dict_t *items_dict);
 void drag_into_slot(slot_t *slot, item_t *item);
 chest_t **load_level_chests(char *level,
     inventory_t ***inventories, game_t *game);
 void check_openned_chest(game_t *game);
-void show_single_inventory(sfRenderWindow *window, physical_entity_t *player);
+void show_single_inventory(sfRenderWindow *window, physical_entity_t *player,
+    game_t *game);
 void update_stats(stats_t *stats, inventory_t *inventory);
 void show_item_description(sfRenderWindow *window, sfVector2f mouse_pos,
     inventory_t *inventory, sfFont *font);

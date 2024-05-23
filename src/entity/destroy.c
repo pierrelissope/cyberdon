@@ -23,6 +23,8 @@ void destroy_entity(physical_entity_t *entity)
     destroy_inventory(entity->inventory);
     sfRectangleShape_destroy(entity->rect);
     sfClock_destroy(entity->clock);
+    free(entity->difficulty);
+    free(entity->arena);
     destroy_stats(&entity->stats);
     dict_destroy(entity->sprite_sheets, destroy_spritesheet);
     sfFont_destroy(entity->font);

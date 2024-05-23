@@ -33,7 +33,7 @@ int run_fight(game_t *game, physical_entity_t *player,
     physical_entity_t *npc, arenas_t arena)
 {
     sfEvent event;
-    fight_t *fight = load_fight(game, player, npc, arena);
+    fight_t *fight = load_fight(game, player, npc);
     int carry = 0;
 
     if (fight == NULL)
