@@ -21,7 +21,8 @@ typedef enum ai_levels_e {
     TOUGH,
     HARD,
     VERY_HARD,
-    IMPOSSIBLE
+    IMPOSSIBLE,
+    END_LEVEL,
 } ai_levels_t;
 
 static const ai_strenghts_t AI_LEVELS[] = {

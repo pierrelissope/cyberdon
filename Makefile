@@ -39,6 +39,7 @@ SRC =		./src/entity/entity.c \
 			./src/fight/hit_handling.c	\
 			./src/fight/stamina_handling.c	\
 			./src/fight/state_handling.c	\
+			./src/fight/npc_info.c	\
 			./src/world/load_level.c \
 			./src/world/parsing.c \
 			./src/world/animate.c \
@@ -108,7 +109,7 @@ CPPFLAGS = -iquote ./include
 CRITFLAGS = -lcriterion
 GCOVRFLAGS = --coverage
 
-NAME =	myrpg
+NAME =	my_rpg
 
 TEST_NAME	=	unit_tests
 

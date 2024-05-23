@@ -132,26 +132,27 @@ static void fill_entity_stats(fighter_entity_t *entity,
         stats->stats.stamina + stats->stats.stamina_bonus;
 }
 
-static void sync_stats(fight_t *fight)
+static void sync_stats(fight_t *fight, physical_entity_t *npc)
 {
     fill_entity_stats(fight->npc, fight->npc_stats);
     fill_entity_stats(fight->player, fight->player_stats);
 
     fight->player->base_stats.attack += 10;
-    fight->player->base_stats.stamina += 30;
-    fight->level = EASY;
+    fight->player->base_stats.stamina += 300;
+    fight->player->base_stats.stamina_regen += 50;
+    fight->level = get_npc_level(npc);
     srand(time(0));
 }
 
 fight_t *load_fight(game_t *game, physical_entity_t *player,
-    physical_entity_t *npc, arenas_t arena)
+    physical_entity_t *npc)
 {
     fight_t *fight = calloc(1, sizeof(fight_t));
 
     if (fight == NULL)
         return NULL;
     fight->debug_mode = false;
-    fight->arena = arena;
+    fight->arena = get_npc_arena(npc);
     fight->npc_stats = npc;
     fight->player_stats = player;
     fight->view = init_fight_view();
@@ -164,6 +165,6 @@ fight_t *load_fight(game_t *game, physical_entity_t *player,
     if (load_text(fight) || load_arena(fight) ||
         load_fighters(fight) || load_ui(fight))
         return NULL;
-    sync_stats(fight);
+    sync_stats(fight, npc);
     return fight;
 }

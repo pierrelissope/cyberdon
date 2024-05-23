@@ -13,7 +13,7 @@
 void destroy_fight(fight_t *fight);
 int handle_fight_event(game_t *game, fight_t *fight, sfEvent *event);
 fight_t *load_fight(game_t *game, physical_entity_t *player,
-    physical_entity_t *npc, arenas_t arena);
+    physical_entity_t *npc);
 void draw_fight(fight_t *fight, sfRenderWindow *win);
 void update_fight(fight_t *fight);
 void annimate_fighter(fighter_entity_t *entity);
@@ -28,3 +28,5 @@ bool load_ui(fight_t *fight);
 void uptdate_stamina_rec_size(fight_t *fight);
 void stamina_regen(fighter_entity_t *entity);
 bool decrease_stamina(fighter_entity_t *entity, int ammount);
+arenas_t get_npc_arena(physical_entity_t *npc);
+ai_levels_t get_npc_level(physical_entity_t *npc);
