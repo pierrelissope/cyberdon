@@ -11,14 +11,14 @@
 #include "game.h"
 #include <stdbool.h>
 
-static anti_major_f4(sfRenderWindow *window, int ci_si[],
+static void anti_major_f4(sfRenderWindow *window, int ci_si[],
     game_info_t *game_info, char size_text[])
 {
-    sfText *param_text = create_text("Parametres",
+    sfText *param_text = create_text_mh("Parametres",
         (sfVector2f){850, 500}, game_info->font, ci_si[0] == 0);
-    sfText *resize_text = create_text(size_text,
+    sfText *resize_text = create_text_mh(size_text,
         (sfVector2f){850, 560}, game_info->font, ci_si[0] == 1);
-    sfText *keybind_text = create_text("Keybindings",
+    sfText *keybind_text = create_text_mh("Keybindings",
         (sfVector2f){850, 620}, game_info->font, ci_si[0] == 2);
 
     sfRenderWindow_clear(window, sfBlack);
@@ -39,6 +39,7 @@ int action_to_exec(int ci_si[])
         return 2;
     if (ci_si[0] == 2)
         return 3;
+    return 84;
 }
 
 static int my_if(sfEvent event, game_info_t *game_info, int ci_si[])
@@ -63,30 +64,12 @@ static int my_if(sfEvent event, game_info_t *game_info, int ci_si[])
     return 0;
 }
 
-static int my_call_if(sfEvent event, int ci_si[],
-    game_info_t *game_info, sfRenderWindow *window)
-{
-    sfVector2u new_size;
-    int result = my_if(event, game_info, ci_si);
-
-    if (result == 1)
-        return 1;
-    if (result == 2) {
-        new_size = game_info->sizes[ci_si[1]];
-        game_info->screen_res.x = new_size.x;
-        game_info->screen_res.y = new_size.y;
-        sfRenderWindow_setSize(window, new_size);
-    }
-    if (result == 3)
-        my_keybinding(window, game_info);
-    return 0;
-}
 
 static void my_keybinding_two(sfRenderWindow *window,
     game_info_t *game_info, char *action_name)
 {
     char msg[100];
-    sfText *msg_csfml = create_text("Press a new key for ",
+    sfText *msg_csfml = create_text_mh("Press a new key for ",
         (sfVector2f){850, 500}, game_info->font, false);
 
     snprintf(msg, 100, "Press a new key for %s", action_name);
@@ -118,9 +101,28 @@ void my_keybinding(sfRenderWindow *window,
     }
 }
 
+static int my_call_if(sfEvent event, int ci_si[],
+    game_info_t *game_info, sfRenderWindow *window)
+{
+    sfVector2u new_size;
+    int result = my_if(event, game_info, ci_si);
+
+    if (result == 1)
+        return 1;
+    if (result == 2) {
+        new_size = game_info->sizes[ci_si[1]];
+        game_info->screen_res.x = new_size.x;
+        game_info->screen_res.y = new_size.y;
+        sfRenderWindow_setSize(window, new_size);
+    }
+    if (result == 3)
+        my_keybinding(window, game_info);
+    return 0;
+}
+
 void parametres(sfRenderWindow *window, game_info_t *game_info)
 {
-    sfText *param_text = create_text("Parametres",
+    sfText *param_text = create_text_mh("Parametres",
         (sfVector2f){850, 500}, game_info->font, false);
     sfClock *clock = sfClock_create();
     int ci_si[2] = {1, 0};

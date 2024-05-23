@@ -44,7 +44,7 @@ static void handle_events(sfRenderWindow *window, int *selected_item,
     }
 }
 
-static void jouer(sfRenderWindow *window,
+static void jouer(sfRenderWindow *,
     game_info_t *game_info, game_t *game)
 {
     game->game_info->specifier = 1;
@@ -52,12 +52,12 @@ static void jouer(sfRenderWindow *window,
 }
 
 static void quitter(sfRenderWindow *window,
-    game_info_t *game_info, game_t *game)
+    game_info_t *, game_t *)
 {
     sfRenderWindow_close(window);
 }
 
-sfText *create_text(char *string, sfVector2f position,
+sfText *create_text_mh(char *string, sfVector2f position,
     sfFont *font, bool is_selected)
 {
     sfText *text = sfText_create();
@@ -96,6 +96,11 @@ sfRectangleShape *create_rectangle(void)
     return rect;
 }
 
+static void parametres_redirect(sfRenderWindow *window, game_info_t *game_info, game_t *) {
+    parametres(window, game_info);
+}
+
+
 static menu_item_t *my_init_tab(int specifier)
 {
     menu_item_t *menu = malloc(sizeof(menu_item_t) * 3);
@@ -104,7 +109,7 @@ static menu_item_t *my_init_tab(int specifier)
         menu[0].selected_item = my_strdup("Play");
         menu[0].action = jouer;
         menu[1].selected_item = my_strdup("Settings");
-        menu[1].action = parametres;
+        menu[1].action = parametres_redirect;
         menu[2].selected_item = my_strdup("Leave");
         menu[2].action = quitter;
         return menu;
@@ -113,11 +118,12 @@ static menu_item_t *my_init_tab(int specifier)
         menu[0].selected_item = my_strdup("Resume");
         menu[0].action = jouer;
         menu[1].selected_item = my_strdup("Settings");
-        menu[1].action = parametres;
+        menu[1].action = parametres_redirect;
         menu[2].selected_item = my_strdup("Leave");
         menu[2].action = quitter;
         return menu;
     }
+    return NULL;
 }
 
 void menu(game_t *game)

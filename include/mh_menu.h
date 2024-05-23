@@ -35,4 +35,8 @@ void parametres(sfRenderWindow *window, game_info_t *game_info);
 void blink(sfClock *clock, sfRectangleShape *rect);
 void draw_menu(sfRenderWindow *window,
     sfRectangleShape *rect, int *selected_item, menu_item_t *ptr_fct);
+sfText *create_text_mh(char *string, sfVector2f position,
+    sfFont *font, bool is_selected);
+bool my_hover(sfRenderWindow *window, sfText *text);
+
 #endif /* !MENU_H_ */

@@ -26,7 +26,7 @@ static void create_menu_texts(sfText **texts,
     sfVector2f positions[] = {{915, 500}, {915, 560}, {915, 620}};
 
     for (int i = 0; i < 3; ++i) {
-        texts[i] = create_text(ptr_fct[i].selected_item, positions[i],
+        texts[i] = create_text_mh(ptr_fct[i].selected_item, positions[i],
             font, selected_item == i);
     }
 }

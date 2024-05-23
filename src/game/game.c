@@ -120,7 +120,7 @@ void draw_game(game_t *game)
     sfRenderWindow_display(game->window);
 }
 
-int my_game(game_t *game, sfEvent event)
+void my_game(game_t *game, sfEvent event)
 {
     move_entity(game->player, &event, &(game->world), game);
     teleport_player(game, game->world.teleporters, &game->status);

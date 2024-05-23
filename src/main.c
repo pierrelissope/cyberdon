@@ -10,6 +10,7 @@
 #include <SFML/System/Vector2.h>
 #include "basics.h"
 #include <time.h>
+#include <string.h>
 #include "mh_menu.h"
 
 game_info_t *init_game_info(void)
