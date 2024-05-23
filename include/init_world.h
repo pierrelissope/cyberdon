@@ -90,11 +90,11 @@ static const init_world_t WALLS_BLOCK_INIT[] =
         .texture_name = POUBELLE1F2
     },
     {
-        .c = '}',
+        .c = '1',
         .texture_name = POUBELLE1F3
     },
     {
-        .c = '{',
+        .c = '2',
         .texture_name = POUBELLE1F4
     },
     {
@@ -122,7 +122,7 @@ static const init_world_t WALLS_BLOCK_INIT[] =
         .texture_name = TABLE4
     },
     {
-        .c = '(',
+        .c = 't',
         .texture_name = TABLE9
     },
     {
@@ -130,7 +130,7 @@ static const init_world_t WALLS_BLOCK_INIT[] =
         .texture_name = GRADIANT_WALL
     },
     {
-        .c = ')',
+        .c = 'y',
         .texture_name = TABLE12
     },
     {

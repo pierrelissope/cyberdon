@@ -11,6 +11,9 @@
 #include "fight.h"
 #include "init_fighters.h"
 #include <SFML/Config.h>
+#include <SFML/System/Clock.h>
+#include <SFML/System/Time.h>
+#include <SFML/System/Types.h>
 #include <SFML/Window/Event.h>
 #include <SFML/Window/Keyboard.h>
 #include <stdbool.h>
@@ -88,6 +91,25 @@ static fighter_state_t permanent_checks(fight_t *fight)
     return action;
 }
 
+bool can_move(fight_t *fight)
+{
+    bool fail = rand() % 100 > AI_LEVELS[fight->level].movement_success_rate;
+    bool last_success =
+        sfTime_asMilliseconds(
+        sfClock_getElapsedTime(fight->npc->success_cooldown)) < 150;
+
+    if (sfTime_asMilliseconds(
+        sfClock_getElapsedTime(fight->npc->fail_cooldown)) < 300)
+        return true;
+    if (!fail && last_success == false)
+        sfClock_restart(fight->npc->success_cooldown);
+    if (fail && last_success == false) {
+        sfClock_restart(fight->npc->fail_cooldown);
+        return true;
+    }
+    return false;
+}
+
 fighter_state_t ai_movement_pick(fight_t *fight)
 {
     bool gap_direction = 0;
@@ -95,14 +117,12 @@ fighter_state_t ai_movement_pick(fight_t *fight)
         (float) fight->npc->stats.stamina / fight->npc->base_stats.stamina;
 
     gap_direction = biggest_gap(fight->npc->sprite_pos.x);
-    if (rand() % 100 > AI_LEVELS[fight->level].movement_success_rate)
+    if (can_move(fight))
         return IDLE;
-    if (current_stamina < AI_LEVELS[fight->level].low_stamina) {
+    if (current_stamina < AI_LEVELS[fight->level].low_stamina)
         low_stamina_movement(fight, gap_direction);
-    }
-    if (current_stamina >= AI_LEVELS[fight->level].high_stamina) {
+    else if (current_stamina >= AI_LEVELS[fight->level].high_stamina)
         high_stamina_movement(fight, gap_direction);
-    }
     return permanent_checks(fight);
 }
 

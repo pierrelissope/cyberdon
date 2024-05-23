@@ -76,6 +76,8 @@ fighter_entity_t *init_fighter_entity(physical_entity_t *entity_stats,
     entity->player = fighter;
     entity->clock = sfClock_create();
     entity->i_counter = sfClock_create();
+    entity->fail_cooldown = sfClock_create();
+    entity->success_cooldown = sfClock_create();
     if (fighter == true) {
         entity->looking_right = true;
         entity->name = fight->player_stats->fighter_skin;
