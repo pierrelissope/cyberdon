@@ -92,8 +92,8 @@ static const init_world_t WALLS_BLOCK_INIT[] =
     {
         .c = '}',
         .texture_name = POUBELLE1F3
-    }
-    ,{
+    },
+    {
         .c = '{',
         .texture_name = POUBELLE1F4
     },

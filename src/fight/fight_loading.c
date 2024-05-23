@@ -135,7 +135,7 @@ static void sync_stats(fight_t *fight)
 {
     fill_entity_stats(fight->npc, fight->npc_stats);
     fill_entity_stats(fight->player, fight->player_stats);
-    fight->level = IMPOSSIBLE;
+    fight->level = EASY;
     srand(time(0));
 }
 

@@ -37,6 +37,8 @@ static void apply_movement(fighter_entity_t *entity)
     bounds.top += bounds.height / 2.5;
     entity->hitbox = bounds;
     entity->hitbox.left += 30;
+    entity->hitbox.height -= 30;
+    entity->hitbox.width -= 40;
 }
 
 static void apply_gravity(fighter_entity_t *entity)
