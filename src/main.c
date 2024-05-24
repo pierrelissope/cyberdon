@@ -33,7 +33,7 @@ game_info_t *init_game_info(void)
     return game_info;
 }
 
-int main(int ac, char **av)
+int main(void)
 {
     game_t game = init_game();
 

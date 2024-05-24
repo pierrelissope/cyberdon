@@ -86,6 +86,7 @@ int get_new_key(sfRenderWindow *window)
     while (sfRenderWindow_waitEvent(window, &event))
         if (event.type == sfEvtKeyPressed)
             return event.key.code;
+    return 0;
 }
 
 void my_keybinding(sfRenderWindow *window,
