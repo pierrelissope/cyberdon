@@ -80,7 +80,8 @@ enum Tiles {
     SIDE_WALK_CHUNK4,
     SIDE_WALK_TILE,
     SIDE_WALK_TILE1,
-    GRADIANT_WALL
+    GRADIANT_WALL,
+    TRANSITION,
 };
 
 enum Spritesheets {
@@ -194,6 +195,12 @@ static const init_texture_t TILES_TEXTURE_INIT[] = {
         .texture_name = LOADING_PAGE_SHEET,
         .rect = {0, 0, 1134 / 5, 168},
         .frame_nb = 5,
+    },
+    {
+        .texture_path = "./assets/spritesheets/loading_page/transition.png",
+        .texture_name = TRANSITION,
+        .rect = {0, 0, 1920, 1080},
+        .frame_nb = 8
     },
     {
         .texture_path = "./assets/spritesheets/props/poubelle/POUBELLE.png",
