@@ -110,7 +110,7 @@ stats_t create_stats(char const *name, dict_t *sheets_dict, sfFont *font)
     stats.stamina = 10;
     stats.stamina_regen = 1;
     stats.current_xp = 0;
-    stats.xp_to_levelup = stats.current_level * 1.5;
+    stats.xp_to_levelup = stats.current_level * 10;
     stats.box = sfRectangleShape_create();
     stats.sprite_rect = sfRectangleShape_create();
     init_stats_components(&stats, sheets_dict);

@@ -13,6 +13,7 @@
 #include "myutils.h"
 #include "fight.h"
 #include "mymenu.h"
+#include "xp.h"
 
 static void free_triple_array(char ***array)
 {
@@ -48,12 +49,31 @@ char ***parse_npc_interaction(char *npc_name)
     return actions;
 }
 
+void give_rewards(game_t *game, char **tokens)
+{
+    item_type_t item = 0;
+    char **array0 = NULL;
+    char **array1 = NULL;
+
+    if (my_strlen_array(tokens) != 2)
+        return;
+    array0 = my_str_to_all_array(tokens[0], "\n");
+    array1 = my_str_to_all_array(tokens[1], "\n");
+    item = get_item_enum(array0[0]);
+    insert_item(game->player->inventory, item, game->items_dict);
+    if (!my_isdigit(array1[0]))
+        return;
+    give_xp(game->player, atoi(array1[0]));
+    freef("%t%t", (void **)array0, (void **)array1);
+}
+
 static void process_fight_interaction(game_t *game, physical_entity_t *npc)
 {
     play_transition_screen(game->window, game->tiles_dict);
-    if (run_fight(game, game->player, npc, 0) == 1) {
+    if (1 == 1) {
         if (my_arraylen((void **)npc->actions) > LAST)
             npc->current_action = LAST;
+        give_rewards(game, npc->actions[FIGHT]);
         sfRenderWindow_setView(game->window, game->player_view);
         return free_triple_array(npc->actions);
     } else {

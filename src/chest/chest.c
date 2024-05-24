@@ -34,7 +34,7 @@ chest_t *create_chest(const char *chest_name,
     return chest;
 }
 
-static item_type_t get_item_enum(char const *item)
+item_type_t get_item_enum(char const *item)
 {
     for (size_t i = 0; ITEMS_LINK_ARRAY[i].str_type != NULL; ++i) {
         if (strcmp(item, ITEMS_LINK_ARRAY[i].str_type) == 0) {

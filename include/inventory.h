@@ -102,6 +102,8 @@ void update_inventory(inventory_t *inventory, sfVector2f mouse_pos);
 void draw_inventory(sfRenderWindow *window, inventory_t *inventory);
 void draw_stats_menu(sfRenderWindow *window, stats_t *stats);
 
+item_type_t get_item_enum(char const *item);
+
 // Destroy
 
 void destroy_inventory(inventory_t *inventory);
