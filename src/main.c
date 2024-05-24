@@ -35,10 +35,19 @@ game_info_t *init_game_info(void)
     return game_info;
 }
 
-int main(void)
+int main(int ac, char **av, char **env)
 {
-    game_t game = init_game();
+    game_t game;
 
+    if (!env[0]) {
+        my_fputstr("Environement variables not valid\n", 2);
+        return 84;
+    }
+    if (ac != 1 || av[1] != NULL) {
+        my_fputstr("Invalid Using, Check Usage\n", 2);
+        return 84;
+    }
+    game = init_game();
     if (game.is_valid != true) {
         destroy_game(&game);
         return 84;
