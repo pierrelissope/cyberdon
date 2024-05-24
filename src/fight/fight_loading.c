@@ -5,7 +5,6 @@
 ** fight loading
 */
 
-#include "ai_values.h"
 #include "dict.h"
 #include "fight_entity.h"
 #include "fight_macros.h"
@@ -136,9 +135,6 @@ static void sync_stats(fight_t *fight, physical_entity_t *npc)
 {
     fill_entity_stats(fight->npc, fight->npc_stats);
     fill_entity_stats(fight->player, fight->player_stats);
-    fight->player->base_stats.attack += 10;
-    fight->player->base_stats.stamina += 300;
-    fight->player->base_stats.stamina_regen += 50;
     fight->level = get_npc_level(npc);
     srand(time(0));
 }

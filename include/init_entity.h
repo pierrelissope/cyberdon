@@ -13,7 +13,8 @@ enum Entity {
     PLAYER = 0,
     VILLAGER = 1,
     FIGHTER1,
-    FIGHTER2
+    FIGHTER2,
+    BLUE_GIRLV,
 };
 
 typedef struct entity_type_s {
@@ -33,6 +34,10 @@ static const entity_type_t INIT_ENITY_TYPE[] = {
     {
         .type_str = "fighter2",
         .type_enum = FIGHTER2
+    },
+    {
+        .type_str = "blue_girl",
+        .type_enum = BLUE_GIRLV
     },
     {
         .type_str = NULL,

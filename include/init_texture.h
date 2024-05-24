@@ -238,7 +238,48 @@ static const init_texture_t FIGHTER2_TEXTURE_INIT[MAX_SPRITE_SHEETS] = {
         .texture_name = 0
     },
 };
-
+static const init_texture_t BLUE_GIRL_TEXTURE_INIT[MAX_SPRITE_SHEETS] = {
+    {
+        .texture_path = "./assets/spritesheets/blue_girl/up.png",
+        .texture_name = IDLE
+    },
+    {
+        .texture_path = "./assets/spritesheets/blue_girl/up.png",
+        .texture_name = UP
+    },
+    {
+        .texture_path = "./assets/spritesheets/blue_girl/down.png",
+        .texture_name = DOWN
+    },
+    {
+        .texture_path = "./assets/spritesheets/blue_girl/left.png",
+        .texture_name = LEFT
+    },
+    {
+        .texture_path = "./assets/spritesheets/blue_girl/right.png",
+        .texture_name = RIGHT
+    },
+    {
+        .texture_path = "./assets/spritesheets/blue_girl/up_left.png",
+        .texture_name = UP_LEFT
+    },
+    {
+        .texture_path = "./assets/spritesheets/blue_girl/up_right.png",
+        .texture_name = UP_RIGHT
+    },
+    {
+        .texture_path = "./assets/spritesheets/blue_girl/down_left.png",
+        .texture_name = DOWN_LEFT
+    },
+    {
+        .texture_path = "./assets/spritesheets/blue_girl/down_right.png",
+        .texture_name = DOWN_RIGHT
+    },
+    {
+        .texture_path = NULL,
+        .texture_name = 0
+    },
+};
 
 static const init_texture_t VILLAGER_TEXTURE_INIT[MAX_SPRITE_SHEETS] = {
     {
