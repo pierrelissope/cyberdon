@@ -12,6 +12,7 @@
 #include "dialog.h"
 #include "myutils.h"
 #include "fight.h"
+#include "mymenu.h"
 
 static void free_triple_array(char ***array)
 {
@@ -55,6 +56,7 @@ void process_npc_interaction(physical_entity_t *npc,
         return;
     sfRenderWindow_setView(game->window, sfRenderWindow_getDefaultView(game->window));
     if (npc->current_action == FIGHT) {
+        play_transition_screen(game->window, game->tiles_dict);
         if (run_fight(game, game->player, npc, 0) == 1) {
             if (my_arraylen((void **)npc->actions) > LAST)
                 npc->current_action = LAST;

@@ -9,6 +9,7 @@
 #include "init_texture.h"
 #include "entity.h"
 #include "dict.h"
+#include "mymenu.h"
 
 static const int ANNIMATION_COOLDOWN = 90;
 static const float LOADING_TIME = 0.6;
@@ -35,7 +36,7 @@ loading_page_t init_loading_page(dict_t *tiles_dict)
     return loading_page;
 }
 
-static void annimate_loading_screen(loading_page_t *loading_page)
+void annimate_loading_screen(loading_page_t *loading_page)
 {
     int now = sfTime_asMilliseconds(
         sfClock_getElapsedTime(loading_page->animation_clock));
