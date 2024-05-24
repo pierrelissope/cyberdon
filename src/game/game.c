@@ -42,7 +42,9 @@ static int load_assets_dicts(game_t *game)
         !dict_insert(&game->sheets_dict, FIGHTER1,
         load_textures_dict(FIGHTER1_TEXTURE_INIT)) ||
         !dict_insert(&game->sheets_dict, FIGHTER2,
-        load_textures_dict(FIGHTER2_TEXTURE_INIT)))
+        load_textures_dict(FIGHTER2_TEXTURE_INIT)) ||
+        !dict_insert(&game->sheets_dict, BLUE_GIRLV,
+        load_textures_dict(BLUE_GIRL_TEXTURE_INIT)))
         return EXIT_FAILURE;
     game->tiles_dict = load_textures_dict(TILES_TEXTURE_INIT);
     game->items_dict = load_textures_dict(ITEMS_TEXTURE_INIT);
