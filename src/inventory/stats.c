@@ -101,7 +101,7 @@ stats_t create_stats(char const *name, dict_t *sheets_dict, sfFont *font)
 
     strcpy(stats.name, name);
     stats.sprite = sfSprite_create();
-    stats.hp = 100;
+    stats.hp = 30;
     stats.attack = 1;
     stats.speed = 1;
     stats.defense = 1;

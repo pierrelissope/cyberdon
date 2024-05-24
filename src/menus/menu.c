@@ -70,7 +70,7 @@ sfText *create_text_mh(char *string, sfVector2f position,
 
     sfText_setString(text, string);
     sfText_setFont(text, font);
-    sfText_setCharacterSize(text, is_selected ? 70 : 50);
+    sfText_setCharacterSize(text, is_selected ? 80 : 50);
     sfText_setColor(text, sfWhite);
     sfText_setPosition(text, position);
     return text;
@@ -141,6 +141,8 @@ void menu(game_t *game)
 
     while (sfRenderWindow_isOpen(game->window) &&
         game->game_state == IN_MENU) {
+        sfRenderWindow_clear(game->window, sfBlack);
+        draw_menu_image(game->window, game->game_info->specifier);
         handle_events(game->window, &selected_item, menu_items, game);
         blink(clock, rect);
         draw_menu(game->window, rect, &selected_item, menu_items);

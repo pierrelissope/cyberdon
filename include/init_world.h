@@ -230,10 +230,6 @@ static const init_world_t WALLS_BLOCK_INIT[] =
         .texture_name = WHITE_WALL
     },
     {
-        .c = 't',
-        .texture_name = TABLE9
-    },
-    {
         .c = 'v',
         .texture_name = BEDROOM_WALL
     },

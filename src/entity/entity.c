@@ -137,11 +137,13 @@ void move_entity(physical_entity_t *entity, sfEvent *event,
 {
     sfFloatRect new_rect = {0};
     sfVector2f mouvement = get_movement(game);
+    float delta_time = sfTime_asSeconds(
+        sfClock_restart(game->status.movement_clock)) * 60;
 
     change_entity_sprite(entity, mouvement);
     new_rect = sfRectangleShape_getGlobalBounds(entity->rect);
-    new_rect.left += mouvement.x * entity->velocity;
-    new_rect.top += mouvement.y * entity->velocity;
+    new_rect.left += mouvement.x * entity->velocity * delta_time;
+    new_rect.top += mouvement.y * entity->velocity * delta_time;
     if (still_collide(&new_rect, world) && dont_collide(&new_rect, world) &&
         !collide_npc(entity->name, &new_rect, world))
         sfRectangleShape_setPosition(entity->rect,

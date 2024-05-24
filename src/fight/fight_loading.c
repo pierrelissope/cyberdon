@@ -5,7 +5,6 @@
 ** fight loading
 */
 
-#include "ai_values.h"
 #include "dict.h"
 #include "fight_entity.h"
 #include "fight_macros.h"
@@ -95,7 +94,7 @@ static bool load_text(fight_t *fight)
         &(FIGHTER_INIT[fight->player_stats->fighter_skin]), true))
         return true;
     if (load_fighter_text(fight,
-        &(FIGHTER_INIT[fight->npc_stats->fighter_skin]), false))
+        &(FIGHTER_INIT[get_npc_skin(fight->npc_stats)]), false))
         return true;
     return false;
 }
@@ -136,9 +135,6 @@ static void sync_stats(fight_t *fight, physical_entity_t *npc)
 {
     fill_entity_stats(fight->npc, fight->npc_stats);
     fill_entity_stats(fight->player, fight->player_stats);
-    fight->player->base_stats.attack += 10;
-    fight->player->base_stats.stamina += 300;
-    fight->player->base_stats.stamina_regen += 50;
     fight->level = get_npc_level(npc);
     srand(time(0));
 }
@@ -157,8 +153,6 @@ fight_t *load_fight(game_t *game, physical_entity_t *player,
     fight->view = init_fight_view();
     fight->fps_clock = sfClock_create();
     fight->stamina_clock = sfClock_create();
-    if (fight->view == NULL)
-        return NULL;
     sfRenderWindow_setView(game->window, fight->view);
     sfRenderWindow_setKeyRepeatEnabled(game->window, sfFalse);
     if (load_text(fight) || load_arena(fight) ||

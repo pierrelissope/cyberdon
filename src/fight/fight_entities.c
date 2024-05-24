@@ -6,6 +6,7 @@
 */
 
 #include "dict.h"
+#include "fight.h"
 #include "fight_entity.h"
 #include "fight_macros.h"
 #include "init_fighters.h"
@@ -83,7 +84,7 @@ fighter_entity_t *init_fighter_entity(physical_entity_t *entity_stats,
         entity->name = fight->player_stats->fighter_skin;
     } else {
         entity->looking_left = true;
-        entity->name = fight->npc_stats->fighter_skin;
+        entity->name = get_npc_skin(fight->npc_stats);
     }
     entity->annimation_sheets = init_annimations(entity, fight->text_dict);
     init_data(entity);

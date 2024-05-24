@@ -43,16 +43,13 @@ void uptdate_stamina_rec_size(fight_t *fight)
 
 bool decrease_stamina(fighter_entity_t *entity, int ammount)
 {
-    if (entity->state == HIT)
+    if (entity->stats.stamina - ammount -
+        ((float) entity->base_stats.strenght) < 0) {
         return false;
-    if (entity->stats.stamina - ammount *
-        ((float) entity->base_stats.attack / 2) <= 0) {
-        return false;
-    } else {
-        entity->stats.stamina -= ammount *
-        ((float) entity->base_stats.attack / 2);
-        return true;
     }
+    entity->stats.stamina -= ammount -
+        ((float) entity->base_stats.strenght);
+    return true;
 }
 
 bool stamina_regen(fighter_entity_t *entity)

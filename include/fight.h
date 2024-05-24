@@ -30,3 +30,4 @@ void stamina_regen(fighter_entity_t *entity);
 bool decrease_stamina(fighter_entity_t *entity, int ammount);
 arenas_t get_npc_arena(physical_entity_t *npc);
 ai_levels_t get_npc_level(physical_entity_t *npc);
+fighters_t get_npc_skin(physical_entity_t *npc);

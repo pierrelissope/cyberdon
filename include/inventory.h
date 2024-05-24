@@ -36,6 +36,8 @@ void speed_orb_effect(stats_t *stats);
 void strength_orb_effect(stats_t *stats);
 void stamina_orb_effect(stats_t *stats);
 void stamina_regen_orb_effect(stats_t *stats);
+void golden_apainyaye_effect(stats_t *stats);
+void tete_de_neuille_effect(stats_t *stats);
 
 static const inventory_items_link_t ITEMS_LINK_ARRAY[] =
 {
@@ -44,6 +46,18 @@ static const inventory_items_link_t ITEMS_LINK_ARRAY[] =
         .enum_type = SPEED_ORB,
         .description = "A mysterious blue orb which\nimproves speed",
         .effect = speed_orb_effect
+    },
+    {
+        .str_type = "apanyeur_orb",
+        .enum_type = GOLDEN_APAINYAYE,
+        .description = "A mysterious golden orb which\nimproves everything",
+        .effect = golden_apainyaye_effect
+    },
+    {
+        .str_type = "neuille_orb",
+        .enum_type = BRUUUH,
+        .description = "A mysterious orb which\nimproves nun buff everything",
+        .effect = tete_de_neuille_effect
     },
     {
         .str_type = "strength_orb",

@@ -238,7 +238,48 @@ static const init_texture_t FIGHTER2_TEXTURE_INIT[MAX_SPRITE_SHEETS] = {
         .texture_name = 0
     },
 };
-
+static const init_texture_t BLUE_GIRL_TEXTURE_INIT[MAX_SPRITE_SHEETS] = {
+    {
+        .texture_path = "./assets/spritesheets/blue_girl/up.png",
+        .texture_name = IDLE
+    },
+    {
+        .texture_path = "./assets/spritesheets/blue_girl/up.png",
+        .texture_name = UP
+    },
+    {
+        .texture_path = "./assets/spritesheets/blue_girl/down.png",
+        .texture_name = DOWN
+    },
+    {
+        .texture_path = "./assets/spritesheets/blue_girl/left.png",
+        .texture_name = LEFT
+    },
+    {
+        .texture_path = "./assets/spritesheets/blue_girl/right.png",
+        .texture_name = RIGHT
+    },
+    {
+        .texture_path = "./assets/spritesheets/blue_girl/up_left.png",
+        .texture_name = UP_LEFT
+    },
+    {
+        .texture_path = "./assets/spritesheets/blue_girl/up_right.png",
+        .texture_name = UP_RIGHT
+    },
+    {
+        .texture_path = "./assets/spritesheets/blue_girl/down_left.png",
+        .texture_name = DOWN_LEFT
+    },
+    {
+        .texture_path = "./assets/spritesheets/blue_girl/down_right.png",
+        .texture_name = DOWN_RIGHT
+    },
+    {
+        .texture_path = NULL,
+        .texture_name = 0
+    },
+};
 
 static const init_texture_t VILLAGER_TEXTURE_INIT[MAX_SPRITE_SHEETS] = {
     {
@@ -408,13 +449,13 @@ static const init_texture_t TILES_TEXTURE_INIT[] = {
         .texture_path = "./assets/blocks/batiment2x2.png",
         .texture_name = BATIMENT2X2,
         .rect = {0, 0, 256, 500},
-        .frame_nb = 1
+        .frame_nb = 4
     },
     {
         .texture_path = "./assets/blocks/little_batiment2x1.png",
         .texture_name = LITTLE_BATIMENT2X1,
         .rect = {0, 0, 256, 294},
-        .frame_nb = 1
+        .frame_nb = 4
     },
     {
         .texture_path = "./assets/blocks/city.png",
@@ -528,13 +569,13 @@ static const init_texture_t TILES_TEXTURE_INIT[] = {
         .texture_path = "./assets/blocks/voiturev2.png",
         .texture_name = CAR2,
         .rect = {0, 0, 165, 110},
-        .frame_nb = 1
+        .frame_nb = 4
     },
     {
         .texture_path = "./assets/blocks/arbol.png",
         .texture_name = TREE,
         .rect = {0, 0, 128, 163},
-        .frame_nb = 1
+        .frame_nb = 4
     },
     {
         .texture_path = "./assets/blocks/long_building.png",
@@ -546,7 +587,7 @@ static const init_texture_t TILES_TEXTURE_INIT[] = {
         .texture_path = "./assets/blocks/3_vu_1.png",
         .texture_name = BUILDING_3V1,
         .rect = {0, 0, 256, 404},
-        .frame_nb = 1
+        .frame_nb = 4
     },
     {
         .texture_path = "./assets/blocks/3_vu_2.png",
@@ -744,6 +785,18 @@ static const init_texture_t ITEMS_TEXTURE_INIT[] = {
     {
         .texture_path = "./assets/items/speed_orb.png",
         .texture_name = SPEED_ORB,
+        .rect = {0, 0, 80, 80},
+        .frame_nb = 1,
+    },
+    {
+        .texture_path = "./assets/items/apagnan.png",
+        .texture_name = GOLDEN_APAINYAYE,
+        .rect = {0, 0, 80, 80},
+        .frame_nb = 1,
+    },
+    {
+        .texture_path = "./assets/items/tetedeneuille.png",
+        .texture_name = BRUUUH,
         .rect = {0, 0, 80, 80},
         .frame_nb = 1,
     },

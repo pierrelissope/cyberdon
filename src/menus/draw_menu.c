@@ -15,15 +15,15 @@ static void init_ressouces(sfFont **font, sfVector2f *jouer_text_pos,
     sfVector2f *param_text_pos, sfVector2f *quitter_text_pos)
 {
     *font = sfFont_createFromFile("assets/font/font.ttf");
-    *jouer_text_pos = (sfVector2f){915, 500};
-    *param_text_pos = (sfVector2f){915, 560};
-    *quitter_text_pos = (sfVector2f){915, 620};
+    *jouer_text_pos = (sfVector2f){900, 450};
+    *param_text_pos = (sfVector2f){900, 550};
+    *quitter_text_pos = (sfVector2f){900, 650};
 }
 
 static void create_menu_texts(sfText **texts,
     sfFont *font, int selected_item, menu_item_t *ptr_fct)
 {
-    sfVector2f positions[] = {{915, 500}, {915, 560}, {915, 620}};
+    sfVector2f positions[] = {{900, 450}, {900, 550}, {900, 650}};
 
     for (int i = 0; i < 3; ++i) {
         texts[i] = create_text_mh(ptr_fct[i].selected_item, positions[i],
@@ -68,6 +68,19 @@ static void cleanup_resources(sfFont *font, sfText **texts)
     sfFont_destroy(font);
 }
 
+void draw_menu_image(sfRenderWindow *window, int specifier)
+{
+    sfTexture *bg;
+    sfSprite *bg_sprite = sfSprite_create();
+
+    if (specifier == 0)
+        bg = sfTexture_createFromFile("./assets/bg.png", NULL);
+    else
+        bg = sfTexture_createFromFile("./assets/bg2.png", NULL);
+    sfSprite_setTexture(bg_sprite, bg, sfTrue);
+    sfRenderWindow_drawSprite(window, bg_sprite, NULL);
+}
+
 void draw_menu(sfRenderWindow *window,
     sfRectangleShape *rect, int *selected_item, menu_item_t *ptr_fct)
 {
@@ -80,7 +93,6 @@ void draw_menu(sfRenderWindow *window,
     init_ressouces(&font, &jouer_text_pos, &param_text_pos, &quitter_text_pos);
     create_menu_texts(texts, font, *selected_item, ptr_fct);
     update_selected_item(window, selected_item, texts);
-    sfRenderWindow_clear(window, sfBlack);
     draw_menu_texts(window, texts);
     draw_selection_rectangle(window, rect, texts[*selected_item]);
     sfRenderWindow_display(window);

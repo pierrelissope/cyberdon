@@ -11,6 +11,8 @@
 typedef enum arenas_e {
     DEFAULT,
     STREET,
+    BAR,
+    SUS,
     ARENA_END
 } arenas_t;
 
@@ -73,21 +75,23 @@ static const fighter_state_t STATE_LOCKS[] = {
     ATTACK_DOWN,
     ATTACK_UP,
 };
+
 static const fighter_state_t STATE_LOCKS_BYPASS[] = {
     ATTACK_JUMP,
     HIT,
 };
+
 static const fighter_state_t N_OF_LOCKS = 8;
 static const fighter_state_t N_OF_BYPASS = 1;
 
 static const float CROUCH_POS_OFFSET = 50;
 static const float CROUCH_HEIGHT_OFFSET = 1.25;
 
-static const int STAMINA_REGEN = 250;
+static const int STAMINA_REGEN = 400;
 
 static const int BASE_SPEED = 10;
 
-static const int BASE_STAMINA_DECAY = 4;
+static const int BASE_STAMINA_DECAY = 3;
 
 static const int BASE_JUMP_POWER = 14;
 

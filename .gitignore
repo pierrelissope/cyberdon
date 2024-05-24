@@ -1,6 +1,5 @@
 *.o
 *coding-style*
-myrpg
 *.out
 unit_tests
 *.log
@@ -14,3 +13,4 @@ unit_tests
 *.gcda
 compile_flags.txt
 .vscode
+my_rpg

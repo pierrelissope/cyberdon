@@ -33,6 +33,8 @@ typedef enum game_state_e {
 typedef enum item_type_e {
     EMPTY_ITEM = 0,
     SPEED_ORB,
+    GOLDEN_APAINYAYE,
+    BRUUUH,
     STRENGTH_ORB,
     STAMINA_ORB,
     STAMINA_REGEN_ORB,
@@ -141,6 +143,7 @@ typedef struct Physical_Entity_s {
     int current_frame;
     int animation_cooldown;
     fighters_t fighter_skin;
+    char *fighter_skin_str;
 } physical_entity_t;
 
 typedef struct block_s {
@@ -202,6 +205,7 @@ typedef struct status_s {
     bool is_valid;
     sfClock *status_clock;
     sfClock *escape_clock;
+    sfClock *movement_clock;
 } status_t;
 
 typedef struct game_info {
@@ -242,3 +246,9 @@ typedef struct annimation_s {
     int n_of_frames;
     int current_frame;
 } annimation_t;
+
+typedef struct save_s {
+    stats_t stats;
+    char current_map[100];
+    sfVector2f pos;
+} save_t;

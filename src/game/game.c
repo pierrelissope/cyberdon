@@ -6,6 +6,7 @@
 */
 
 #include "game.h"
+#include "fight_transfer.h"
 #include "init_texture.h"
 #include "init_entity.h"
 #include "view.h"
@@ -41,7 +42,9 @@ static int load_assets_dicts(game_t *game)
         !dict_insert(&game->sheets_dict, FIGHTER1,
         load_textures_dict(FIGHTER1_TEXTURE_INIT)) ||
         !dict_insert(&game->sheets_dict, FIGHTER2,
-        load_textures_dict(FIGHTER2_TEXTURE_INIT)))
+        load_textures_dict(FIGHTER2_TEXTURE_INIT)) ||
+        !dict_insert(&game->sheets_dict, BLUE_GIRLV,
+        load_textures_dict(BLUE_GIRL_TEXTURE_INIT)))
         return EXIT_FAILURE;
     game->tiles_dict = load_textures_dict(TILES_TEXTURE_INIT);
     game->items_dict = load_textures_dict(ITEMS_TEXTURE_INIT);
@@ -73,6 +76,7 @@ game_t init_game(void)
     game.world = init_world();
     game.player = init_entity(PLAYER_START_POS, PLAYER, "playername",
         game.sheets_dict);
+    game.player->fighter_skin = BLACK_GUY;
     if (!game.player->is_valid)
         return game;
     game.player_view = init_player_view();

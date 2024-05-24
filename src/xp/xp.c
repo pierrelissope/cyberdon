@@ -51,7 +51,7 @@ static void update_next(stats_t *stats, char *text)
     reset_string(text);
 }
 
-static void update_stats_texts(stats_t *stats)
+void update_stats_texts(stats_t *stats)
 {
     char text[100];
 

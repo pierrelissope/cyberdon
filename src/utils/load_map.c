@@ -87,6 +87,7 @@ static void set_entity_components(physical_entity_t *entity, char **tokens)
 {
     entity->difficulty = strdup(tokens[3]);
     entity->arena = strdup(tokens[4]);
+    entity->fighter_skin_str = strdup(tokens[5]);
 }
 
 static sfVector2f get_token_coords(char *coords)
@@ -110,7 +111,7 @@ static int parse_level_entities(char **lines,
 
     for (int i = 1; lines[i]; i++) {
         tokens = my_str_to_all_array(lines[i], ";");
-        if (my_strlen_array(tokens) != 5)
+        if (my_strlen_array(tokens) != 6)
             return EXIT_FAILURE;
         entity = init_entity(get_token_coords(tokens[2]),
             get_entity_type(tokens[1]), tokens[0], sheets_dict);
