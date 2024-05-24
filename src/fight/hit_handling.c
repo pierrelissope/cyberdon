@@ -15,6 +15,7 @@
 #include <SFML/System/Types.h>
 #include <SFML/System/Vector2.h>
 #include <stdbool.h>
+#include <stdlib.h>
 
 void hit(fighter_entity_t *entity)
 {
@@ -60,10 +61,11 @@ void on_hit(fighter_entity_t *hited, fighter_entity_t *hiter, fight_t *fight)
         return;
     hited->annimation_lock = true;
     sfClock_restart(hited->i_counter);
+    if (rand() % 100 <= 1 + hited->base_stats.defense)
+        return;
     if ((1 + hiter->base_stats.attack + hiter->base_stats.strenght)
         - hited->base_stats.defense > 0)
         hited->stats.hp -=
-            (1 + hiter->base_stats.attack + hiter->base_stats.strenght)
-            - hited->base_stats.defense;
+            (1 + hiter->base_stats.attack + hiter->base_stats.strenght);
     uptdate_hp_rec_size(fight);
 }

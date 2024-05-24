@@ -39,6 +39,14 @@ static const struct link_arena_s LINK_ARENA[] = {
         .arena = STREET
     },
     {
+        .str = "bar",
+        .arena = BAR
+    },
+    {
+        .str = "sus",
+        .arena = SUS
+    },
+    {
         NULL,
         ARENA_END,
     }

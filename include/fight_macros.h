@@ -11,6 +11,8 @@
 typedef enum arenas_e {
     DEFAULT,
     STREET,
+    BAR,
+    SUS,
     ARENA_END
 } arenas_t;
 

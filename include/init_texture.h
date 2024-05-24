@@ -449,13 +449,13 @@ static const init_texture_t TILES_TEXTURE_INIT[] = {
         .texture_path = "./assets/blocks/batiment2x2.png",
         .texture_name = BATIMENT2X2,
         .rect = {0, 0, 256, 500},
-        .frame_nb = 1
+        .frame_nb = 4
     },
     {
         .texture_path = "./assets/blocks/little_batiment2x1.png",
         .texture_name = LITTLE_BATIMENT2X1,
         .rect = {0, 0, 256, 294},
-        .frame_nb = 1
+        .frame_nb = 4
     },
     {
         .texture_path = "./assets/blocks/city.png",
@@ -569,13 +569,13 @@ static const init_texture_t TILES_TEXTURE_INIT[] = {
         .texture_path = "./assets/blocks/voiturev2.png",
         .texture_name = CAR2,
         .rect = {0, 0, 165, 110},
-        .frame_nb = 1
+        .frame_nb = 4
     },
     {
         .texture_path = "./assets/blocks/arbol.png",
         .texture_name = TREE,
         .rect = {0, 0, 128, 163},
-        .frame_nb = 1
+        .frame_nb = 4
     },
     {
         .texture_path = "./assets/blocks/long_building.png",
@@ -587,7 +587,7 @@ static const init_texture_t TILES_TEXTURE_INIT[] = {
         .texture_path = "./assets/blocks/3_vu_1.png",
         .texture_name = BUILDING_3V1,
         .rect = {0, 0, 256, 404},
-        .frame_nb = 1
+        .frame_nb = 4
     },
     {
         .texture_path = "./assets/blocks/3_vu_2.png",

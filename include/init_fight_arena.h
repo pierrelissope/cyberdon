@@ -23,6 +23,8 @@ static const sfIntRect BACKGROUND_REC = {
 static const char *ARENA_FOLDERS[] = {
     [DEFAULT] = "assets/arenas/default/",
     [STREET] = "assets/arenas/street/",
+    [BAR] = "assets/arenas/bar/",
+    [SUS] = "assets/arenas/sus/",
     NULL
 };
 
