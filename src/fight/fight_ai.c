@@ -82,10 +82,6 @@ static fighter_state_t permanent_checks(fight_t *fight)
         if (rand() % 2) {
             fight->npc->crouching = true;
             action = CROUCH;
-        } else {
-            decrease_stamina(fight->npc,
-            BASE_STAMINA_DECAY + fight->npc->base_stats.strenght);
-            action = JUMP;
         }
     }
     return action;
@@ -138,8 +134,9 @@ static fighter_state_t high_stamina_action(fight_t *fight)
     float d = get_distance(fight);
 
     if (d <= AI_LEVELS[fight->level].distance_to_hit) {
-        decrease_stamina(fight->npc,
-        BASE_STAMINA_DECAY + fight->npc->base_stats.strenght);
+        if (!decrease_stamina(fight->npc,
+            BASE_STAMINA_DECAY + fight->npc->base_stats.strenght))
+            return IDLE;
         if (fight->player->crouching)
             fight->npc->looking_down = true;
         if (fight->player->sprite_pos.y <=
