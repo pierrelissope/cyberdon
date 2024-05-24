@@ -64,7 +64,6 @@ static int my_if(sfEvent event, game_info_t *game_info, int ci_si[])
     return 0;
 }
 
-
 static void my_keybinding_two(sfRenderWindow *window,
     game_info_t *game_info, char *action_name)
 {
@@ -80,12 +79,12 @@ static void my_keybinding_two(sfRenderWindow *window,
     sfText_destroy(msg_csfml);
 }
 
-sfKeyCode get_new_key(sfRenderWindow *window)
+int get_new_key(sfRenderWindow *window)
 {
     sfEvent event;
 
     while (sfRenderWindow_waitEvent(window, &event))
-        if (event.type ==sfEvtKeyPressed)
+        if (event.type == sfEvtKeyPressed)
             return event.key.code;
 }
 

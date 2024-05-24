@@ -25,7 +25,7 @@ static void free_triple_array(char ***array)
 static char **parse_single_action(char *action)
 {
     char **tokens = my_str_to_all_array(action, ";");
-    
+
     return tokens;
 }
 
@@ -48,28 +48,37 @@ char ***parse_npc_interaction(char *npc_name)
     return actions;
 }
 
+static void process_fight_interaction(game_t *game, physical_entity_t *npc)
+{
+    play_transition_screen(game->window, game->tiles_dict);
+    if (run_fight(game, game->player, npc, 0) == 1) {
+        if (my_arraylen((void **)npc->actions) > LAST)
+            npc->current_action = LAST;
+        sfRenderWindow_setView(game->window, game->player_view);
+        return free_triple_array(npc->actions);
+    } else {
+        sfRenderWindow_setView(game->window, game->player_view);
+        return free_triple_array(npc->actions);
+    }
+}
+
 void process_npc_interaction(physical_entity_t *npc,
     game_t *game, sfEvent *event)
 {
     npc->actions = parse_npc_interaction(npc->name);
     if (!npc->actions)
         return;
-    sfRenderWindow_setView(game->window, sfRenderWindow_getDefaultView(game->window));
+    sfRenderWindow_setView(game->window,
+        sfRenderWindow_getDefaultView(game->window));
     if (npc->current_action == FIGHT) {
-        play_transition_screen(game->window, game->tiles_dict);
-        if (run_fight(game, game->player, npc, 0) == 1) {
-            if (my_arraylen((void **)npc->actions) > LAST)
-                npc->current_action = LAST;
-            sfRenderWindow_setView(game->window, game->player_view);
-            return free_triple_array(npc->actions);
-        } else {
-            sfRenderWindow_setView(game->window, game->player_view);
-            return free_triple_array(npc->actions);
-        }
+        return process_fight_interaction(game, npc);
     }
-    for (size_t i = 0; npc->actions && npc->actions[npc->current_action][i] != NULL; ++i)
-        displayDialogue(game->window, npc->actions[npc->current_action][i], game->font, event);
-    if (npc->current_action == FIRST && my_arraylen((void **)npc->actions) > FIGHT)
+    for (size_t i = 0; npc->actions &&
+        npc->actions[npc->current_action][i] != NULL; ++i)
+        display_dialogue(game, npc->actions[npc->current_action][i],
+            npc, event);
+    if (npc->current_action == FIRST &&
+        my_arraylen((void **)npc->actions) > FIGHT)
         npc->current_action = FIGHT;
     sfRenderWindow_setView(game->window, game->player_view);
     free_triple_array(npc->actions);
@@ -82,19 +91,17 @@ void handle_npc_interactions(physical_entity_t *entity,
     sfFloatRect new_rect = sfRectangleShape_getGlobalBounds(entity->rect);
     world_t *world = &game->world;
 
-    new_rect.left -= 10;
-    new_rect.top -= 10;
-    new_rect.height += 20;
-    new_rect.width += 20;
-    for (int i = 0; world->entities && world->entities[i]; i++) {
+    new_rect = (sfFloatRect){new_rect.left - 20, new_rect.top - 20,
+        new_rect.height + 40, new_rect.width + 40};
+    for (int i = 0; game->world.entities && game->world.entities[i]; i++) {
         if (strcmp(entity->name, world->entities[i]->name) == 0)
             continue;
         entity_rect = sfRectangleShape_getGlobalBounds(
-            world->entities[i]->rect);
+            game->world.entities[i]->rect);
         if (sfFloatRect_intersects(&new_rect, &entity_rect, NULL) &&
             sfKeyboard_isKeyPressed(sfKeyEnter) && sfTime_asSeconds(
             sfClock_getElapsedTime(game->status.status_clock)) > 0.7) {
-            process_npc_interaction(world->entities[i], game, event);
+            process_npc_interaction(game->world.entities[i], game, event);
             sfClock_restart(game->status.status_clock);
             return;
         }

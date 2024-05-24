@@ -37,10 +37,16 @@ static int load_assets_dicts(game_t *game)
     if (!dict_insert(&game->sheets_dict, PLAYER,
         load_textures_dict(PLAYER_TEXTURE_INIT)) ||
         !dict_insert(&game->sheets_dict, VILLAGER,
-        load_textures_dict(VILLAGER_TEXTURE_INIT)))
+        load_textures_dict(VILLAGER_TEXTURE_INIT)) ||
+        !dict_insert(&game->sheets_dict, FIGHTER1,
+        load_textures_dict(FIGHTER1_TEXTURE_INIT)) ||
+        !dict_insert(&game->sheets_dict, FIGHTER2,
+        load_textures_dict(FIGHTER2_TEXTURE_INIT)))
         return EXIT_FAILURE;
     game->tiles_dict = load_textures_dict(TILES_TEXTURE_INIT);
     game->items_dict = load_textures_dict(ITEMS_TEXTURE_INIT);
+    if (game->tiles_dict == NULL || game->items_dict == NULL)
+        return EXIT_FAILURE;
     return EXIT_SUCCESS;
 }
 
@@ -134,6 +140,8 @@ void process_ingame(game_t *game, sfEvent *event)
     }
     animate_world(&(game->world));
     update_entity(game->player);
+    for (size_t i = 0; game->world.entities && game->world.entities[i]; ++i)
+        update_entity(game->world.entities[i]);
     center_view(game->player_view, game->player->rect, game);
     draw_game(game);
 }
@@ -142,7 +150,8 @@ void run_game(game_t *game)
 {
     sfEvent event;
 
-    game->window = WIN_CREATE;
+    game->window = sfRenderWindow_create((sfVideoMode){1920, 1080, 32},
+        "MyRPG", sfClose | sfResize, NULL);
     sfRenderWindow_setFramerateLimit(game->window, 60);
     while (sfRenderWindow_isOpen(game->window)) {
         if (handle_event(game, &event) == sfEvtClosed)
