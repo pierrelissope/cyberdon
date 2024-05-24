@@ -789,6 +789,18 @@ static const init_texture_t ITEMS_TEXTURE_INIT[] = {
         .frame_nb = 1,
     },
     {
+        .texture_path = "./assets/items/apagnan.png",
+        .texture_name = GOLDEN_APAINYAYE,
+        .rect = {0, 0, 80, 80},
+        .frame_nb = 1,
+    },
+    {
+        .texture_path = "./assets/items/tetedeneuille.png",
+        .texture_name = BRUUUH,
+        .rect = {0, 0, 80, 80},
+        .frame_nb = 1,
+    },
+    {
         .texture_path = "./assets/items/strength_orb.png",
         .texture_name = STRENGTH_ORB,
         .rect = {0, 0, 80, 80},

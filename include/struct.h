@@ -33,6 +33,8 @@ typedef enum game_state_e {
 typedef enum item_type_e {
     EMPTY_ITEM = 0,
     SPEED_ORB,
+    GOLDEN_APAINYAYE,
+    BRUUUH,
     STRENGTH_ORB,
     STAMINA_ORB,
     STAMINA_REGEN_ORB,
