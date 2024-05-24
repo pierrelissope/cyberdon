@@ -15,7 +15,7 @@
 #define LEVELS_MAP_PATHS "./levels/"
 
 static const int TILE_SIZE = 50;
-static const sfVector2f PLAYER_START_POS = {150, 180};
+static const sfVector2f PLAYER_START_POS = {300, 350};
 
 physical_entity_t *init_entity(sfVector2f pos, int type, char *name,
     dict_t *sheets_dict);
