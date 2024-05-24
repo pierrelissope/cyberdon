@@ -80,7 +80,7 @@ game_t init_game(void)
         return game;
     init_game_components(&game);
     game.game_info = init_game_info();
-    game.game_state = IN_GAME;
+    game.game_state = IN_MENU;
     if (!game.game_info)
         return game;
     return game;
