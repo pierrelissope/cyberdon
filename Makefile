@@ -22,16 +22,24 @@ SRC =		./src/entity/entity.c \
 			./src/utils/vector.c \
 			./src/utils/sprite_sorting.c \
 			./src/world/world.c \
+			./src/menus/menu.c \
+			./src/menus/draw_menu.c \
+			./src/menus/param.c \
 			./src/fight/fight_ai.c	\
 			./src/fight/fight_display.c	\
 			./src/fight/fight_entities.c	\
 			./src/fight/fight_loading.c	\
 			./src/fight/fight_unloading.c	\
+			./src/fight/fight_ui_loading.c	\
 			./src/fight/fight_events.c	\
 			./src/fight/fight_loop.c	\
 			./src/fight/fight_movement.c	\
 			./src/fight/movement_actions.c	\
 			./src/fight/attack_actions.c	\
+			./src/fight/hit_handling.c	\
+			./src/fight/stamina_handling.c	\
+			./src/fight/state_handling.c	\
+			./src/fight/npc_info.c	\
 			./src/world/load_level.c \
 			./src/world/parsing.c \
 			./src/world/animate.c \
@@ -41,7 +49,27 @@ SRC =		./src/entity/entity.c \
 			./src/status/status.c \
 			./src/menus/loading_screen.c \
 			./src/entity/destroy.c \
-			./src/world/destroy.c
+			./src/world/destroy.c \
+			./src/world/draw.c \
+			./src/world/stack.c \
+			./src/inventory/inventory.c \
+			./src/inventory/init.c \
+			./src/inventory/insert.c \
+			./src/chest/chest.c \
+			./src/chest/content.c \
+			./src/inventory/stats.c \
+			./src/inventory/items_effects.c \
+			./src/inventory/items_effects2.c \
+			./src/inventory/item_description.c \
+			./src/inventory/dragg_item.c \
+			./src/inventory/draw.c \
+			./src/inventory/update.c \
+			./src/inventory/destroy.c \
+			./src/entity/npc_interaction.c \
+			./src/entity/dialog.c \
+			./src/menus/transition_screen.c \
+			./src/menus/utils.c \
+			./src/xp/xp.c
 
 SRCOBJ =	$(SRC:.c=.o)
 
@@ -84,7 +112,7 @@ CPPFLAGS = -iquote ./include
 CRITFLAGS = -lcriterion
 GCOVRFLAGS = --coverage
 
-NAME =	myrpg
+NAME =	my_rpg
 
 TEST_NAME	=	unit_tests
 

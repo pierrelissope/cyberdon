@@ -32,9 +32,18 @@ static void destroy_annimation(annimation_t **annimations)
 
 static void destroy_fighter_entity(fighter_entity_t *entity)
 {
-    sfClock_destroy(entity->ability_clock);
     sfClock_destroy(entity->clock);
+    sfClock_destroy(entity->i_counter);
     destroy_annimation(entity->annimation_sheets);
+    free(entity);
+}
+
+void destroy_ui(fight_t *fight)
+{
+    sfRectangleShape_destroy(fight->ui.npc_hp);
+    sfRectangleShape_destroy(fight->ui.player_hp);
+    sfRectangleShape_destroy(fight->ui.npc_stamina);
+    sfRectangleShape_destroy(fight->ui.player_stamina);
 }
 
 void destroy_dict_text(void *to_free)
@@ -48,9 +57,12 @@ void destroy_fight(fight_t *fight)
 {
     destroy_fighter_entity(fight->player);
     destroy_fighter_entity(fight->npc);
-    dict_destroy(fight->text_dict, destroy_dict_text);
     sfView_destroy(fight->view);
+    sfClock_destroy(fight->fps_clock);
+    sfClock_destroy(fight->stamina_clock);
     sfRectangleShape_destroy(fight->background);
     sfRectangleShape_destroy(fight->foreground);
+    destroy_ui(fight);
+    dict_destroy(fight->text_dict, destroy_dict_text);
     free(fight);
 }

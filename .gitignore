@@ -5,6 +5,7 @@ myrpg
 unit_tests
 *.log
 #*#
+*.json
 *~
 .#*
 *ccore.*
@@ -12,3 +13,4 @@ unit_tests
 *.gcno
 *.gcda
 compile_flags.txt
+.vscode

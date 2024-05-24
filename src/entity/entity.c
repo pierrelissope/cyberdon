@@ -9,18 +9,17 @@
 #include "string.h"
 #include "entity.h"
 #include "init_texture.h"
+#include "inventory.h"
 #include "myutils.h"
 
-const int ANIMATION_COOLDOWN = 100;
+static const int ANIMATION_COOLDOWN = 100;
 
-const int MAP_TILE_SIZE = 50;
+static const int ENTITY_RECT_SIZE = 15;
 
-const int ENTITY_RECT_SIZE = 15;
+static const sfVector2f FRAME_SIZE = {1024 / 8, 128};
+static const int FRAME_NUMBER = 9;
 
-const sfVector2f FRAME_SIZE = {1024 / 8, 128};
-const int FRAME_NUMBER = 8;
-
-const float BASE_VELOCITY = 4.3;
+static const float BASE_VELOCITY = 4.3;
 
 static void setup_entity(physical_entity_t *entity, sfVector2f pos)
 {
@@ -44,6 +43,7 @@ physical_entity_t *init_entity(sfVector2f pos, int type, char *name,
     physical_entity_t *entity = calloc(1, sizeof(physical_entity_t));
 
     strcpy(entity->name, name);
+    entity->font = sfFont_createFromFile("./assets/font/default.ttf");
     entity->type = type;
     entity->sprite_sheets = dup_sprites(dict_get(sheets_dict, type));
     entity->current_sprite_sheet = dict_get(entity->sprite_sheets, IDLE);
@@ -51,29 +51,33 @@ physical_entity_t *init_entity(sfVector2f pos, int type, char *name,
     entity->last_animation_update = sfClock_getElapsedTime(entity->clock);
     entity->rect = sfRectangleShape_create();
     entity->velocity = BASE_VELOCITY;
-    if (!entity->rect || !entity->clock || !entity->sprite_sheets)
+    if (!entity->rect || !entity->clock ||
+        !entity->sprite_sheets || !entity->font)
         return entity;
+    entity->inventory = create_inventory((sfVector2f){50, 300},
+        "player_inventory", entity->font);
+    entity->stats = create_stats(name, sheets_dict, entity->font);
     setup_entity(entity, pos);
     return entity;
 }
 
-static sfVector2f get_movement(sfEvent *event)
+static sfVector2f get_movement(game_t *game)
 {
     sfVector2f movement = {0, 0};
 
-    if (sfKeyboard_isKeyPressed(sfKeyLeft)) {
+    if (sfKeyboard_isKeyPressed(game->game_info->key[MOVE_LEFT])) {
         movement.x += -1;
         movement.y += 1;
     }
-    if (sfKeyboard_isKeyPressed(sfKeyRight)) {
+    if (sfKeyboard_isKeyPressed(game->game_info->key[MOVE_RIGHT])) {
         movement.x += 1;
         movement.y += -1;
     }
-    if (sfKeyboard_isKeyPressed(sfKeyUp)) {
+    if (sfKeyboard_isKeyPressed(game->game_info->key[MOVE_UP])) {
         movement.y += -1;
         movement.x += -1;
     }
-    if (sfKeyboard_isKeyPressed(sfKeyDown)) {
+    if (sfKeyboard_isKeyPressed(game->game_info->key[MOVE_DOWN])) {
         movement.y += 1;
         movement.x += 1;
     }
@@ -128,10 +132,11 @@ static void change_entity_sprite(physical_entity_t *entity, sfVector2f mvt)
     change_linear_sprite(entity, mvt);
 }
 
-void move_entity(physical_entity_t *entity, sfEvent *event, world_t *world)
+void move_entity(physical_entity_t *entity, sfEvent *event,
+    world_t *world, game_t *game)
 {
     sfFloatRect new_rect = {0};
-    sfVector2f mouvement = get_movement(event);
+    sfVector2f mouvement = get_movement(game);
 
     change_entity_sprite(entity, mouvement);
     new_rect = sfRectangleShape_getGlobalBounds(entity->rect);
@@ -165,13 +170,12 @@ void draw_entity(void *entity, sfRenderWindow *window)
 {
     physical_entity_t *nentity = entity;
 
-    sfRenderWindow_drawRectangleShape(window, nentity->rect, NULL);
     sfSprite_setOrigin(nentity->current_sprite_sheet,
         (sfVector2f){FRAME_SIZE.x / 2, FRAME_SIZE.y * 1.7});
     sfSprite_setPosition(nentity->current_sprite_sheet,
         isom_pos_converter((sfVector2f){
-        sfRectangleShape_getPosition(nentity->rect).x / MAP_TILE_SIZE,
-        sfRectangleShape_getPosition(nentity->rect).y / MAP_TILE_SIZE}));
+        sfRectangleShape_getPosition(nentity->rect).x / TILE_SIZE,
+        sfRectangleShape_getPosition(nentity->rect).y / TILE_SIZE}));
     sfRenderWindow_drawSprite(window,
         nentity->current_sprite_sheet, NULL);
 }

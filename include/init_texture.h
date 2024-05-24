@@ -13,16 +13,49 @@
 #define MAX_SPRITE_SHEETS 100
 
 enum Tiles {
+    CITY,
+    POUBELLE1F1,
+    POUBELLE1F2,
+    POUBELLE1F3,
+    POUBELLE1F4,
+    CARTON,
+    CARTON2,
+    TABLE1,
+    TABLE2,
+    TABLE3,
+    HERB,
+    TABLE4,
+    TABLE6,
+    TABLE9,
+    TABLE12,
+    TABLE13,
+    TABLE56,
+    TABLE57,
+    MANHOLE,
     LOADING_PAGE_SHEET,
+    BATIMENT2X2,
+    BATIMENT2X1,
+    LITTLE_BATIMENT2X1,
+    SKINNY_BATIMENT2X1,
+    CHEST,
     GRASS_BLOCK,
     STONE_BLOCK,
     STONE_WALL,
     WOOD_WALL,
     BUILDING_1,
+    BUILDING_2,
+    BUILDING_3V1,
+    BUILDING_3V2,
+    BUILDING_4V1,
+    BUILDING_4V2,
+    LONGBUILDING,
     COLLISION_BLOCK,
     STREET_LAMP,
     BEDROOM_WALL,
     BEDROOM_POSTER_WALL,
+    CAR,
+    CAR2,
+    TREE,
     WOOD_FLOOR,
     WOOD_FLOOR2,
     WHITE_WALL,
@@ -34,7 +67,27 @@ enum Tiles {
     LIBRARY,
     CLOSET,
     POOR_TABLE,
-    ARROW_WALL
+    ARROW_WALL,
+    ROAD_CHUNK,
+    ROAD_CHUNKR,
+    ROAD_CHUNKE,
+    ROAD_CHUNK1,
+    ROAD_CHUNK2,
+    ROAD_CHUNK3,
+    ROAD_CHUNK4,
+    ROAD_CHUNK5,
+    ROAD_CHUNK6,
+    SIDE_WALK_CHUNK,
+    SIDE_WALK_CHUNK1,
+    SIDE_WALK_CHUNK1B,
+    SIDE_WALK_CHUNK2,
+    SIDE_WALK_CHUNK3,
+    SIDE_WALK_CHUNK4,
+    SIDE_WALK_TILE,
+    SIDE_WALK_TILE1,
+    GRADIANT_WALL,
+    INVERSE_GRADIANT_WALL,
+    TRANSITION,
 };
 
 enum Spritesheets {
@@ -47,6 +100,7 @@ enum Spritesheets {
     RIGHT,
     UP,
     DOWN,
+    PORTRAIT
 };
 
 typedef struct init_texture_s {
@@ -99,41 +153,128 @@ static const init_texture_t PLAYER_TEXTURE_INIT[MAX_SPRITE_SHEETS] = {
     },
 };
 
-static const init_texture_t VILLAGER_TEXTURE_INIT[MAX_SPRITE_SHEETS] = {
+static const init_texture_t FIGHTER1_TEXTURE_INIT[MAX_SPRITE_SHEETS] = {
     {
-        .texture_path = "./assets/spritesheets/player/up.png",
+        .texture_path = "./assets/spritesheets/fighter1/idle.png",
         .texture_name = IDLE
     },
     {
-        .texture_path = "./assets/spritesheets/player/up.png",
+        .texture_path = "./assets/spritesheets/fighter1/up.png",
         .texture_name = UP
     },
     {
-        .texture_path = "./assets/spritesheets/player/down.png",
+        .texture_path = "./assets/spritesheets/fighter1/down.png",
         .texture_name = DOWN
     },
     {
-        .texture_path = "./assets/spritesheets/player/left.png",
+        .texture_path = "./assets/spritesheets/fighter1/left.png",
         .texture_name = LEFT
     },
     {
-        .texture_path = "./assets/spritesheets/player/right.png",
+        .texture_path = "./assets/spritesheets/fighter1/right.png",
         .texture_name = RIGHT
     },
     {
-        .texture_path = "./assets/spritesheets/player/up_left.png",
+        .texture_path = "./assets/spritesheets/fighter1/up_left.png",
         .texture_name = UP_LEFT
     },
     {
-        .texture_path = "./assets/spritesheets/player/up_right.png",
+        .texture_path = "./assets/spritesheets/fighter1/up_right.png",
         .texture_name = UP_RIGHT
     },
     {
-        .texture_path = "./assets/spritesheets/player/down_left.png",
+        .texture_path = "./assets/spritesheets/fighter1/down_left.png",
         .texture_name = DOWN_LEFT
     },
     {
-        .texture_path = "./assets/spritesheets/player/down_right.png",
+        .texture_path = "./assets/spritesheets/fighter1/down_right.png",
+        .texture_name = DOWN_RIGHT
+    },
+    {
+        .texture_path = NULL,
+        .texture_name = 0
+    },
+};
+
+static const init_texture_t FIGHTER2_TEXTURE_INIT[MAX_SPRITE_SHEETS] = {
+    {
+        .texture_path = "./assets/spritesheets/fighter2/idle.png",
+        .texture_name = IDLE
+    },
+    {
+        .texture_path = "./assets/spritesheets/fighter2/up.png",
+        .texture_name = UP
+    },
+    {
+        .texture_path = "./assets/spritesheets/fighter2/down.png",
+        .texture_name = DOWN
+    },
+    {
+        .texture_path = "./assets/spritesheets/fighter2/left.png",
+        .texture_name = LEFT
+    },
+    {
+        .texture_path = "./assets/spritesheets/fighter2/right.png",
+        .texture_name = RIGHT
+    },
+    {
+        .texture_path = "./assets/spritesheets/fighter2/up_left.png",
+        .texture_name = UP_LEFT
+    },
+    {
+        .texture_path = "./assets/spritesheets/fighter2/up_right.png",
+        .texture_name = UP_RIGHT
+    },
+    {
+        .texture_path = "./assets/spritesheets/fighter2/down_left.png",
+        .texture_name = DOWN_LEFT
+    },
+    {
+        .texture_path = "./assets/spritesheets/fighter2/down_right.png",
+        .texture_name = DOWN_RIGHT
+    },
+    {
+        .texture_path = NULL,
+        .texture_name = 0
+    },
+};
+
+
+static const init_texture_t VILLAGER_TEXTURE_INIT[MAX_SPRITE_SHEETS] = {
+    {
+        .texture_path = "./assets/spritesheets/villager/up.png",
+        .texture_name = IDLE
+    },
+    {
+        .texture_path = "./assets/spritesheets/villager/up.png",
+        .texture_name = UP
+    },
+    {
+        .texture_path = "./assets/spritesheets/villager/down.png",
+        .texture_name = DOWN
+    },
+    {
+        .texture_path = "./assets/spritesheets/villager/left.png",
+        .texture_name = LEFT
+    },
+    {
+        .texture_path = "./assets/spritesheets/villager/right.png",
+        .texture_name = RIGHT
+    },
+    {
+        .texture_path = "./assets/spritesheets/villager/up_left.png",
+        .texture_name = UP_LEFT
+    },
+    {
+        .texture_path = "./assets/spritesheets/villager/up_right.png",
+        .texture_name = UP_RIGHT
+    },
+    {
+        .texture_path = "./assets/spritesheets/villager/down_left.png",
+        .texture_name = DOWN_LEFT
+    },
+    {
+        .texture_path = "./assets/spritesheets/villager/down_right.png",
         .texture_name = DOWN_RIGHT
     },
     {
@@ -148,6 +289,150 @@ static const init_texture_t TILES_TEXTURE_INIT[] = {
         .texture_name = LOADING_PAGE_SHEET,
         .rect = {0, 0, 1134 / 5, 168},
         .frame_nb = 5,
+    },
+    {
+        .texture_path = "./assets/spritesheets/loading_page/transition.png",
+        .texture_name = TRANSITION,
+        .rect = {0, 0, 1920, 1080},
+        .frame_nb = 8
+    },
+    {
+        .texture_path = "./assets/spritesheets/props/poubelle/POUBELLE.png",
+        .texture_name = POUBELLE1F1,
+        .rect = {0, 0, 128, 127},
+        .frame_nb = 1,
+    },
+    {
+        .texture_path = "./assets/spritesheets/props/poubelle/POUBELLE2.png",
+        .texture_name = POUBELLE1F2,
+        .rect = {0, 0, 128, 127},
+        .frame_nb = 1,
+    },
+    {
+        .texture_path = "./assets/spritesheets/props/poubelle/POUBELLE3.png",
+        .texture_name = POUBELLE1F3,
+        .rect = {0, 0, 128, 127},
+        .frame_nb = 1,
+    },
+    {
+        .texture_path = "./assets/spritesheets/props/poubelle/POUBELLE4.png",
+        .texture_name = POUBELLE1F4,
+        .rect = {0, 0, 128, 127},
+        .frame_nb = 1,
+    },
+    {
+        .texture_path = "./assets/spritesheets/props/carton/CARTON1.png",
+        .texture_name = CARTON,
+        .rect = {0, 0, 128, 127},
+        .frame_nb = 1,
+    },
+    {
+        .texture_path = "./assets/spritesheets/props/carton/CARTON2.png",
+        .texture_name = CARTON2,
+        .rect = {0, 0, 128, 127},
+        .frame_nb = 1,
+    },
+    {
+        .texture_path = "./assets/spritesheets/props/manhole/manhole.png",
+        .texture_name = MANHOLE,
+        .rect = {0, 0, 128, 127},
+        .frame_nb = 1,
+    },
+    {
+        .texture_path = "./assets/spritesheets/props/table/TABLE1.png",
+        .texture_name = TABLE1,
+        .rect = {0, 0, 128, 127},
+        .frame_nb = 1,
+    },
+    {
+        .texture_path = "./assets/spritesheets/props/table/TABLE2.png",
+        .texture_name = TABLE2,
+        .rect = {0, 0, 128, 127},
+        .frame_nb = 1,
+    },
+    {
+        .texture_path = "./assets/spritesheets/props/table/TABLE3.png",
+        .texture_name = TABLE3,
+        .rect = {0, 0, 128, 127},
+        .frame_nb = 1,
+    },
+    {
+        .texture_path = "./assets/spritesheets/props/table/TABLE4.png",
+        .texture_name = TABLE4,
+        .rect = {0, 0, 128, 127},
+        .frame_nb = 1,
+    },
+    {
+        .texture_path = "./assets/spritesheets/props/table/TABLE6.png",
+        .texture_name = TABLE6,
+        .rect = {0, 0, 128, 127},
+        .frame_nb = 1,
+    },
+    {
+        .texture_path = "./assets/spritesheets/props/table/TABLE9.png",
+        .texture_name = TABLE9,
+        .rect = {0, 0, 128, 127},
+        .frame_nb = 1,
+    },
+    {
+        .texture_path = "./assets/spritesheets/props/table/TABLE12.png",
+        .texture_name = TABLE12,
+        .rect = {0, 0, 128, 127},
+        .frame_nb = 1,
+    },
+    {
+        .texture_path = "./assets/spritesheets/props/table/TABLE13.png",
+        .texture_name = TABLE13,
+        .rect = {0, 0, 128, 127},
+        .frame_nb = 1,
+    },
+    {
+        .texture_path = "./assets/blocks/chest.png",
+        .texture_name = CHEST,
+        .rect = {0, 0, 256, 94},
+        .frame_nb = 1,
+    },
+    {
+        .texture_path = "./assets/spritesheets/props/table/TABLE56.png",
+        .texture_name = TABLE56,
+        .rect = {0, 0, 128, 127},
+        .frame_nb = 1,
+    },
+    {
+        .texture_path = "./assets/spritesheets/props/table/TABLE57.png",
+        .texture_name = TABLE57,
+        .rect = {0, 0, 128, 128},
+        .frame_nb = 1,
+    },
+    {
+        .texture_path = "./assets/blocks/batiment2x2.png",
+        .texture_name = BATIMENT2X2,
+        .rect = {0, 0, 256, 500},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/little_batiment2x1.png",
+        .texture_name = LITTLE_BATIMENT2X1,
+        .rect = {0, 0, 256, 294},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/city.png",
+        .texture_name = CITY,
+        .rect = {0, 0, 128, 454},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/skinny_batiment2x1.png",
+        .texture_name = SKINNY_BATIMENT2X1,
+        .rect = {0, 0, 256, 227},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/batiment2x1.png",
+        .texture_name = BATIMENT2X1,
+        .rect = {0, 0, 256, 416},
+        .frame_nb = 1
     },
     {
         .texture_path = "./assets/blocks/collision_block.png",
@@ -170,6 +455,12 @@ static const init_texture_t TILES_TEXTURE_INIT[] = {
     {
         .texture_path = "./assets/blocks/wood_floor.png",
         .texture_name = WOOD_FLOOR,
+        .rect = {0, 0, 128, 105},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/herbe.png",
+        .texture_name = HERB,
         .rect = {0, 0, 128, 105},
         .frame_nb = 1
     },
@@ -228,6 +519,54 @@ static const init_texture_t TILES_TEXTURE_INIT[] = {
         .frame_nb = 1
     },
     {
+        .texture_path = "./assets/blocks/voiture.png",
+        .texture_name = CAR,
+        .rect = {0, 0, 165, 110},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/voiturev2.png",
+        .texture_name = CAR2,
+        .rect = {0, 0, 165, 110},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/arbol.png",
+        .texture_name = TREE,
+        .rect = {0, 0, 128, 163},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/long_building.png",
+        .texture_name = LONGBUILDING,
+        .rect = {0, 0, 512, 509},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/3_vu_1.png",
+        .texture_name = BUILDING_3V1,
+        .rect = {0, 0, 256, 404},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/3_vu_2.png",
+        .texture_name = BUILDING_3V2,
+        .rect = {0, 0, 256, 404},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/4_vu_1.png",
+        .texture_name = BUILDING_4V1,
+        .rect = {0, 0, 256, 404},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/4_vu_2.png",
+        .texture_name = BUILDING_4V2,
+        .rect = {0, 0, 256, 404},
+        .frame_nb = 1
+    },
+    {
         .texture_path = "./assets/blocks/poor_table.png",
         .texture_name = POOR_TABLE,
         .rect = {0, 0, 256, 270},
@@ -270,10 +609,167 @@ static const init_texture_t TILES_TEXTURE_INIT[] = {
         .frame_nb = 7
     },
     {
+        .texture_path = "./assets/blocks/building_2.png",
+        .texture_name = BUILDING_2,
+        .rect = {0, 0, 256, 527},
+        .frame_nb = 7
+    },
+    {
         .texture_path = "./assets/blocks/streetlamp.png",
         .texture_name = STREET_LAMP,
         .rect = {0, 0, 128, 230},
         .frame_nb = 7
+    },
+    {
+        .texture_path = "./assets/blocks/floors/Road_Chunk.png",
+        .texture_name = ROAD_CHUNK,
+        .rect = {0, 0, 128, 105},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/floors/Road_Chunk.png",
+        .texture_name = ROAD_CHUNKR,
+        .rect = {256, 0, 128, 105},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/floors/Road_Chunk6.png",
+        .texture_name = ROAD_CHUNKE,
+        .rect = {256, 0, 128, 105},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/floors/Road_Chunk1.png",
+        .texture_name = ROAD_CHUNK1,
+        .rect = {0, 0, 128, 105},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/floors/Road_Chunk2.png",
+        .texture_name = ROAD_CHUNK2,
+        .rect = {0, 0, 128, 105},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/floors/Road_Chunk3.png",
+        .texture_name = ROAD_CHUNK3,
+        .rect = {0, 0, 128, 105},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/floors/Road_Chunk4.png",
+        .texture_name = ROAD_CHUNK4,
+        .rect = {0, 0, 128, 105},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/floors/Road_Chunk5.png",
+        .texture_name = ROAD_CHUNK5,
+        .rect = {0, 0, 128, 105},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/floors/Road_Chunk6.png",
+        .texture_name = ROAD_CHUNK6,
+        .rect = {0, 0, 128, 105},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/floors/Sidewalk_Chunk.png",
+        .texture_name = SIDE_WALK_CHUNK,
+        .rect = {0, 0, 128, 105},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/floors/Sidewalk_Chunk1.png",
+        .texture_name = SIDE_WALK_CHUNK1,
+        .rect = {0, 0, 128, 105},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/floors/Sidewalk_Chunk1.png",
+        .texture_name = SIDE_WALK_CHUNK1B,
+        .rect = {256, 0, 128, 105},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/floors/Sidewalk_Chunk2.png",
+        .texture_name = SIDE_WALK_CHUNK2,
+        .rect = {0, 0, 128, 105},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/floors/Sidewalk_Chunk3.png",
+        .texture_name = SIDE_WALK_CHUNK3,
+        .rect = {0, 0, 128, 105},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/floors/Sidewalk_Chunk4.png",
+        .texture_name = SIDE_WALK_CHUNK4,
+        .rect = {0, 0, 128, 105},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/floors/Sidewalk_Tile.png",
+        .texture_name = SIDE_WALK_TILE,
+        .rect = {0, 0, 128, 105},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/floors/Sidewalk_Tile1.png",
+        .texture_name = SIDE_WALK_TILE1,
+        .rect = {0, 0, 128, 105},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/gradiant_wall.png",
+        .texture_name = GRADIANT_WALL,
+        .rect = {0, 0, 128, 454},
+        .frame_nb = 4
+    },
+    {
+        .texture_path = "./assets/blocks/inverse_gradiant_wall.png",
+        .texture_name = INVERSE_GRADIANT_WALL,
+        .rect = {0, 0, 128, 454},
+        .frame_nb = 4
+    },
+    {
+        .texture_path = NULL,
+        .texture_name = 0
+    },
+};
+
+static const init_texture_t ITEMS_TEXTURE_INIT[] = {
+    {
+        .texture_path = "./assets/items/speed_orb.png",
+        .texture_name = SPEED_ORB,
+        .rect = {0, 0, 80, 80},
+        .frame_nb = 1,
+    },
+    {
+        .texture_path = "./assets/items/strength_orb.png",
+        .texture_name = STRENGTH_ORB,
+        .rect = {0, 0, 80, 80},
+        .frame_nb = 1,
+    },
+    {
+        .texture_path = "./assets/items/strength_orb.png",
+        .texture_name = STAMINA_ORB,
+        .rect = {0, 0, 80, 80},
+        .frame_nb = 1,
+    },
+    {
+        .texture_path = "./assets/items/strength_orb.png",
+        .texture_name = STAMINA_REGEN_ORB,
+        .rect = {0, 0, 80, 80},
+        .frame_nb = 1,
+    },
+    {
+        .texture_path = "./assets/items/strength_orb.png",
+        .texture_name = VITALITY_ORB,
+        .rect = {0, 0, 80, 80},
+        .frame_nb = 1,
     },
     {
         .texture_path = NULL,

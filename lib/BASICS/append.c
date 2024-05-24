@@ -14,8 +14,7 @@ void **append_ptr(void ***ptr, void *entity, int *len)
     if (*ptr == NULL) {
         *ptr = smalloc(sizeof(void *) * 2);
     } else {
-        *ptr = my_realloc(*ptr, sizeof(void *) * (len_ptr + 1),
-            sizeof(void *) * (len_ptr + 2));
+        *ptr = realloc(*ptr, sizeof(void *) * (len_ptr + 2));
     }
     if (*ptr == NULL)
         return NULL;

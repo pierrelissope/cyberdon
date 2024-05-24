@@ -11,6 +11,7 @@
 #include "fight.h"
 #include "fight_actions.h"
 #include <SFML/Config.h>
+#include <SFML/Graphics/RenderWindow.h>
 #include <SFML/Window/Event.h>
 #include <SFML/Window/Keyboard.h>
 #include <stdbool.h>
@@ -37,9 +38,11 @@ static int handle_pre_fight_event(game_t *, fight_t *fight,
     fight->player->crouching = false;
     fight->player->velocity.x = 0;
     if (sfKeyboard_isKeyPressed(sfKeyRight))
-        fight->player->velocity.x = 10;
+        fight->player->velocity.x =
+            (BASE_SPEED + fight->player->base_stats.speed);
     if (sfKeyboard_isKeyPressed(sfKeyLeft))
-        fight->player->velocity.x = -10;
+        fight->player->velocity.x =
+            -1 * (BASE_SPEED + fight->player->base_stats.speed);
     if (sfKeyboard_isKeyPressed(sfKeyUp))
         fight->player->looking_up = true;
     if (sfKeyboard_isKeyPressed(sfKeyDown))
@@ -71,8 +74,9 @@ static void handle_ai_actions(fight_t *fight)
     fight->npc->looking_up = false;
     fight->npc->crouching = false;
     fight->npc->velocity.x = 0;
-    ai_movement_pick(fight);
-    action = ai_action_pick(fight);
+    action = ai_movement_pick(fight);
+    if (action != JUMP)
+        action = ai_action_pick(fight);
     action = pick_attack(fight->npc, action);
     action = pick_walking_annimation(fight->npc, action);
     change_state(fight->npc, action);
@@ -93,11 +97,20 @@ static int key_events(fight_t *fight)
 {
     fighter_state_t action = IDLE;
 
-    if (sfKeyboard_isKeyPressed(sfKeyX))
-        action = ATTACK;
+    if (sfKeyboard_isKeyPressed(sfKeyD)) {
+        fight->debug_mode = !fight->debug_mode;
+    }
+    if (sfKeyboard_isKeyPressed(sfKeyX)) {
+        if (decrease_stamina(fight->player,
+            BASE_STAMINA_DECAY + fight->player->base_stats.strenght))
+            action = ATTACK;
+    }
     if (sfKeyboard_isKeyPressed(sfKeySpace) &&
-        fight->player->velocity.y == 0)
-        action = JUMP;
+        fight->player->velocity.y == 0) {
+        if (decrease_stamina(fight->player,
+            BASE_STAMINA_DECAY + fight->player->base_stats.strenght))
+            action = JUMP;
+    }
     return action;
 }
 
@@ -107,8 +120,10 @@ int handle_fight_event(game_t *game, fight_t *fight, sfEvent *event)
 
     handle_pre_fight_event(game, fight, &action);
     while (sfRenderWindow_pollEvent(game->window, event)) {
-        if (event->type == sfEvtClosed)
+        if (event->type == sfEvtClosed) {
+            sfRenderWindow_close(game->window);
             return sfEvtClosed;
+        }
         if (event->type == sfEvtKeyPressed) {
             action = key_events(fight);
         }

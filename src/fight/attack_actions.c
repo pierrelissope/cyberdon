@@ -50,12 +50,21 @@ void attack(fighter_entity_t *entity)
 
 void attack_crouch(fighter_entity_t *entity)
 {
+    int current_frame =
+        entity->annimation_sheets[entity->state]->current_frame + 1;
+
     pre_attack(entity);
+    entity->hitbox.top += (CROUCH_POS_OFFSET + 20) * current_frame;
+    entity->hitbox.height = (entity->hitbox.height / CROUCH_HEIGHT_OFFSET);
     entity->dmgbox = apply_offset(entity);
 }
 
 void attack_jump(fighter_entity_t *entity)
 {
+    float tmp = entity->velocity.x;
+
     pre_attack(entity);
+    entity->velocity.y = 0;
+    entity->velocity.x = tmp;
     entity->dmgbox = apply_offset(entity);
 }

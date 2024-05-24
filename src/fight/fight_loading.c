@@ -5,22 +5,27 @@
 ** fight loading
 */
 
+#include "ai_values.h"
 #include "dict.h"
-#include "fight_macros.h"
 #include "fight_entity.h"
+#include "fight_macros.h"
+#include "fight.h"
 #include "struct.h"
 #include "init_fight_arena.h"
 #include "init_fighters.h"
 #include "view.h"
 
 #include <SFML/Config.h>
+#include <SFML/Graphics/Color.h>
 #include <SFML/Graphics/RectangleShape.h>
 #include <SFML/Graphics/RenderWindow.h>
 #include <SFML/Graphics/Texture.h>
 #include <SFML/Graphics/Types.h>
+#include <SFML/System/Clock.h>
 #include <SFML/System/Vector2.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <time.h>
 
 static bool init_rects(fight_t *fight)
 {
@@ -60,13 +65,20 @@ static bool load_arena(fight_t *fight)
     return init_rects(fight);
 }
 
-static bool load_fighter_text(fight_t *fight, fighter_init_t const *init_info)
+static bool load_fighter_text(fight_t *fight,
+    fighter_init_t const *init_info, bool player)
 {
     char *concat_path = NULL;
     int moves_counter = 0;
+    fight_textures_t text_beg = NPC_IDLE_TEXT;
+    fight_textures_t text_end = NPC_TEXTURES_END;
 
-    for (fight_textures_t i = init_info->text_beg;
-        i < init_info->text_end; ++i) {
+    if (player) {
+        text_beg = PLAYER_IDLE_TEXT;
+        text_end = PLAYER_TEXTURES_END;
+    }
+    for (fight_textures_t i = text_beg;
+        i < text_end; ++i) {
         concat_path = my_strcat(2, init_info->fighter_folder,
             MOVES_INIT[moves_counter].text_file);
         dict_insert(&(fight->text_dict), i,
@@ -77,44 +89,81 @@ static bool load_fighter_text(fight_t *fight, fighter_init_t const *init_info)
     return false;
 }
 
-// REPLACE [NPC1] with npc's skin
 static bool load_text(fight_t *fight)
 {
-    if (load_fighter_text(fight, &(FIGHTER_INIT[PLAYER_FIGHTER])))
+    if (load_fighter_text(fight,
+        &(FIGHTER_INIT[fight->player_stats->fighter_skin]), true))
         return true;
-    if (load_fighter_text(fight, &(FIGHTER_INIT[NPC1])))
+    if (load_fighter_text(fight,
+        &(FIGHTER_INIT[fight->npc_stats->fighter_skin]), false))
         return true;
     return false;
 }
 
 static bool load_fighters(fight_t *fight)
 {
-    fight->player = init_fighter_entity(fight->player_stats, fight);
+    fight->player = init_fighter_entity(fight->player_stats, fight, true);
     if (fight->player == NULL)
         return true;
-    fight->npc = init_fighter_entity(fight->npc_stats, fight);
+    fight->npc = init_fighter_entity(fight->npc_stats, fight, false);
     if (fight->npc == NULL)
         return true;
     return false;
 }
 
+static void fill_entity_stats(fighter_entity_t *entity,
+    physical_entity_t *stats)
+{
+    entity->base_stats.attack =
+        stats->stats.attack + stats->stats.attack_bonus;
+    entity->base_stats.speed =
+        stats->stats.speed + stats->stats.speed_bonus;
+    entity->base_stats.stamina =
+        stats->stats.stamina + stats->stats.stamina_bonus;
+    entity->base_stats.stamina_regen =
+        stats->stats.stamina_regen + stats->stats.stamina_regen_bonus;
+    entity->base_stats.defense =
+        stats->stats.defense + stats->stats.defense_bonus;
+    entity->base_stats.hp =
+        stats->stats.hp + stats->stats.hp_bonus;
+    entity->stats.hp =
+        stats->stats.hp + stats->stats.hp_bonus;
+    entity->stats.stamina =
+        stats->stats.stamina + stats->stats.stamina_bonus;
+}
+
+static void sync_stats(fight_t *fight, physical_entity_t *npc)
+{
+    fill_entity_stats(fight->npc, fight->npc_stats);
+    fill_entity_stats(fight->player, fight->player_stats);
+    fight->player->base_stats.attack += 10;
+    fight->player->base_stats.stamina += 300;
+    fight->player->base_stats.stamina_regen += 50;
+    fight->level = get_npc_level(npc);
+    srand(time(0));
+}
+
 fight_t *load_fight(game_t *game, physical_entity_t *player,
-    physical_entity_t *npc, arenas_t arena)
+    physical_entity_t *npc)
 {
     fight_t *fight = calloc(1, sizeof(fight_t));
 
     if (fight == NULL)
         return NULL;
-    fight->debug_mode = true;
-    fight->arena = arena;
+    fight->debug_mode = false;
+    fight->arena = get_npc_arena(npc);
     fight->npc_stats = npc;
     fight->player_stats = player;
     fight->view = init_fight_view();
+    fight->fps_clock = sfClock_create();
+    fight->stamina_clock = sfClock_create();
     if (fight->view == NULL)
         return NULL;
     sfRenderWindow_setView(game->window, fight->view);
     sfRenderWindow_setKeyRepeatEnabled(game->window, sfFalse);
-    if (load_text(fight) || load_arena(fight) || load_fighters(fight))
+    if (load_text(fight) || load_arena(fight) ||
+        load_fighters(fight) || load_ui(fight))
         return NULL;
+    sync_stats(fight, npc);
     return fight;
 }
