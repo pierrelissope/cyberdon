@@ -15,11 +15,11 @@ static void anti_major_f4(sfRenderWindow *window, int ci_si[],
     game_info_t *game_info, char size_text[])
 {
     sfText *param_text = create_text_mh("Parametres",
-        (sfVector2f){850, 500}, game_info->font, ci_si[0] == 0);
+        (sfVector2f){900, 450}, game_info->font, ci_si[0] == 0);
     sfText *resize_text = create_text_mh(size_text,
-        (sfVector2f){850, 560}, game_info->font, ci_si[0] == 1);
+        (sfVector2f){900, 550}, game_info->font, ci_si[0] == 1);
     sfText *keybind_text = create_text_mh("Keybindings",
-        (sfVector2f){850, 620}, game_info->font, ci_si[0] == 2);
+        (sfVector2f){900, 650}, game_info->font, ci_si[0] == 2);
 
     sfRenderWindow_clear(window, sfBlack);
     sfRenderWindow_drawText(window, param_text, NULL);
@@ -69,7 +69,7 @@ static void my_keybinding_two(sfRenderWindow *window,
 {
     char msg[100];
     sfText *msg_csfml = create_text_mh("Press a new key for ",
-        (sfVector2f){850, 500}, game_info->font, false);
+        (sfVector2f){900, 450}, game_info->font, false);
 
     snprintf(msg, 100, "Press a new key for %s", action_name);
     sfText_setString(msg_csfml, msg);
@@ -123,7 +123,7 @@ static int my_call_if(sfEvent event, int ci_si[],
 void parametres(sfRenderWindow *window, game_info_t *game_info)
 {
     sfText *param_text = create_text_mh("Parametres",
-        (sfVector2f){850, 500}, game_info->font, false);
+        (sfVector2f){900, 450}, game_info->font, false);
     sfClock *clock = sfClock_create();
     int ci_si[2] = {1, 0};
     sfEvent event;
