@@ -44,12 +44,17 @@ enum Tiles {
     WOOD_WALL,
     BUILDING_1,
     BUILDING_2,
+    BUILDING_3V1,
+    BUILDING_3V2,
+    BUILDING_4V1,
+    BUILDING_4V2,
     LONGBUILDING,
     COLLISION_BLOCK,
     STREET_LAMP,
     BEDROOM_WALL,
     BEDROOM_POSTER_WALL,
     CAR,
+    CAR2,
     TREE,
     WOOD_FLOOR,
     WOOD_FLOOR2,
@@ -431,6 +436,12 @@ static const init_texture_t TILES_TEXTURE_INIT[] = {
         .frame_nb = 1
     },
     {
+        .texture_path = "./assets/blocks/voiturev2.png",
+        .texture_name = CAR2,
+        .rect = {0, 0, 165, 110},
+        .frame_nb = 1
+    },
+    {
         .texture_path = "./assets/blocks/arbol.png",
         .texture_name = TREE,
         .rect = {0, 0, 128, 163},
@@ -440,6 +451,30 @@ static const init_texture_t TILES_TEXTURE_INIT[] = {
         .texture_path = "./assets/blocks/long_building.png",
         .texture_name = LONGBUILDING,
         .rect = {0, 0, 512, 509},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/3_vu_1.png",
+        .texture_name = BUILDING_3V1,
+        .rect = {0, 0, 256, 404},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/3_vu_2.png",
+        .texture_name = BUILDING_3V2,
+        .rect = {0, 0, 256, 404},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/4_vu_1.png",
+        .texture_name = BUILDING_4V1,
+        .rect = {0, 0, 256, 404},
+        .frame_nb = 1
+    },
+    {
+        .texture_path = "./assets/blocks/4_vu_2.png",
+        .texture_name = BUILDING_4V2,
+        .rect = {0, 0, 256, 404},
         .frame_nb = 1
     },
     {
