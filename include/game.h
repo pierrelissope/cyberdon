@@ -12,6 +12,7 @@
 
 #define FONT    sfFont_createFromFile("assets/font/font.ttf")
 
+void draw_menu_image(sfRenderWindow *window, int specifier);
 game_t init_game(void);
 int handle_event(game_t *game, sfEvent *event);
 int handle_inventory_event(sfRenderWindow *window,
