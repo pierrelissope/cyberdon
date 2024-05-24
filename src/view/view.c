@@ -10,7 +10,7 @@
 #include "view.h"
 #include "myutils.h"
 
-static const float CINEMATIC_TIME = 0;
+static const float CINEMATIC_TIME = 0.4;
 
 sfView *init_player_view(void)
 {
