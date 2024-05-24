@@ -6,6 +6,7 @@
 */
 
 #include "game.h"
+#include "fight_transfer.h"
 #include "init_texture.h"
 #include "init_entity.h"
 #include "view.h"
@@ -73,6 +74,7 @@ game_t init_game(void)
     game.world = init_world();
     game.player = init_entity(PLAYER_START_POS, PLAYER, "playername",
         game.sheets_dict);
+    game.player->fighter_skin = BLACK_GUY;
     if (!game.player->is_valid)
         return game;
     game.player_view = init_player_view();

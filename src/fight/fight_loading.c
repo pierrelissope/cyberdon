@@ -95,7 +95,7 @@ static bool load_text(fight_t *fight)
         &(FIGHTER_INIT[fight->player_stats->fighter_skin]), true))
         return true;
     if (load_fighter_text(fight,
-        &(FIGHTER_INIT[fight->npc_stats->fighter_skin]), false))
+        &(FIGHTER_INIT[get_npc_skin(fight->npc_stats)]), false))
         return true;
     return false;
 }
@@ -157,8 +157,6 @@ fight_t *load_fight(game_t *game, physical_entity_t *player,
     fight->view = init_fight_view();
     fight->fps_clock = sfClock_create();
     fight->stamina_clock = sfClock_create();
-    if (fight->view == NULL)
-        return NULL;
     sfRenderWindow_setView(game->window, fight->view);
     sfRenderWindow_setKeyRepeatEnabled(game->window, sfFalse);
     if (load_text(fight) || load_arena(fight) ||

@@ -5,12 +5,9 @@
 ** entities
 */
 
-#include "dict.h"
 #include "string.h"
-#include "entity.h"
 #include "inventory.h"
 #include "dialog.h"
-#include "myutils.h"
 #include "fight.h"
 #include "mymenu.h"
 #include "xp.h"

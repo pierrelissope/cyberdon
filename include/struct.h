@@ -141,6 +141,7 @@ typedef struct Physical_Entity_s {
     int current_frame;
     int animation_cooldown;
     fighters_t fighter_skin;
+    char *fighter_skin_str;
 } physical_entity_t;
 
 typedef struct block_s {
