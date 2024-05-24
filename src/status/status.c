@@ -14,6 +14,7 @@ status_t init_status(void)
 
     status.status_clock = sfClock_create();
     status.escape_clock = sfClock_create();
+    status.movement_clock = sfClock_create();
     status.is_valid = true;
     return status;
 }
@@ -22,4 +23,5 @@ void destroy_status(status_t *status)
 {
     sfClock_destroy(status->status_clock);
     sfClock_destroy(status->escape_clock);
+    sfClock_destroy(status->movement_clock);
 }

@@ -203,6 +203,7 @@ typedef struct status_s {
     bool is_valid;
     sfClock *status_clock;
     sfClock *escape_clock;
+    sfClock *movement_clock;
 } status_t;
 
 typedef struct game_info {
