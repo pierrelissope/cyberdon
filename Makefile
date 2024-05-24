@@ -69,7 +69,8 @@ SRC =		./src/entity/entity.c \
 			./src/entity/dialog.c \
 			./src/menus/transition_screen.c \
 			./src/menus/utils.c \
-			./src/xp/xp.c
+			./src/xp/xp.c \
+			./src/save.c
 
 SRCOBJ =	$(SRC:.c=.o)
 

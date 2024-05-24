@@ -246,3 +246,9 @@ typedef struct annimation_s {
     int n_of_frames;
     int current_frame;
 } annimation_t;
+
+typedef struct save_s {
+    stats_t stats;
+    char current_map[100];
+    sfVector2f pos;
+} save_t;

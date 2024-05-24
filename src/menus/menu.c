@@ -138,6 +138,7 @@ void menu(game_t *game)
     int selected_item = 0;
     sfRectangleShape *rect = create_rectangle();
     sfClock *clock = sfClock_create();
+
     while (sfRenderWindow_isOpen(game->window) &&
         game->game_state == IN_MENU) {
         sfRenderWindow_clear(game->window, sfBlack);
