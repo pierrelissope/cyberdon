@@ -9,7 +9,9 @@
 #include "struct.h"
 #include <SFML/System/Vector2.h>
 #include "basics.h"
+#include "world.h"
 #include <time.h>
+#include "xp.h"
 #include <string.h>
 #include "mh_menu.h"
 
@@ -41,7 +43,9 @@ int main(void)
         destroy_game(&game);
         return 84;
     }
+    load_save(&game);
     run_game(&game);
+    create_save(&game);
     destroy_game(&game);
     return 0;
 }
