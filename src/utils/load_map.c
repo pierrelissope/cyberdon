@@ -89,26 +89,36 @@ static void set_entity_components(physical_entity_t *entity, char **tokens)
     entity->arena = strdup(tokens[4]);
 }
 
+static sfVector2f get_token_coords(char *coords)
+{
+    sfVector2f pos = {0};
+    char **tokens = my_str_to_all_array(coords, ",:");
+
+    if (my_strlen_array(tokens) != 2)
+        return (sfVector2f){0, 0};
+    pos = (sfVector2f)
+        {atof(tokens[0]), atof(tokens[1])};
+    free_str_array(tokens);
+    return pos;
+}
+
 static int parse_level_entities(char **lines,
     physical_entity_t ***entities, dict_t *sheets_dict)
 {
     physical_entity_t *entity = NULL;
-    sfVector2f pos = {0};
-    char **pos_array = NULL;
     char **tokens = NULL;
-    int type = 0;
 
     for (int i = 1; lines[i]; i++) {
         tokens = my_str_to_all_array(lines[i], ";");
-        pos_array = my_str_to_all_array(tokens[2], ",");
-        pos = (sfVector2f){atof(pos_array[0]), atof(pos_array[1])};
-        type = get_entity_type(tokens[1]);
-        entity = init_entity(pos, type, tokens[0], sheets_dict);
+        if (my_strlen_array(tokens) != 5)
+            return EXIT_FAILURE;
+        entity = init_entity(get_token_coords(tokens[2]),
+            get_entity_type(tokens[1]), tokens[0], sheets_dict);
         if (!entity->is_valid)
             return EXIT_FAILURE;
         set_entity_components(entity, tokens);
         append_ptr((void ***)entities, entity, NULL);
-        freef("%t%t", (void **)tokens, (void **)pos_array);
+        freef("%t", (void **)tokens);
     }
     free_str_array(lines);
     return EXIT_SUCCESS;

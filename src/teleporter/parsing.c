@@ -40,6 +40,8 @@ static teleporter_t *create_teleporter(char *coords, dict_t *tiles)
     if (!teleporter)
         return NULL;
     tokens = my_str_to_all_array(coords, ":");
+    if (my_strlen_array(tokens) != 2)
+        return NULL;
     teleporter->sprite = sfSprite_create();
     pos = (sfVector2f){atof(tokens[0]), atof(tokens[1])};
     sfSprite_setTexture(teleporter->sprite,
@@ -72,6 +74,8 @@ static int parse_level_teleporters(char **lines,
         if (my_strlen_array(tokens) != 3)
             return EXIT_FAILURE;
         teleporter = create_teleporter(tokens[0], tiles);
+        if (teleporter == NULL)
+            return EXIT_FAILURE;
         teleporter->destination_level = strdup(tokens[1]);
         teleporter->destination_coord = get_destination_coords(tokens[2]);
         append_ptr((void ***)teleporters, teleporter, NULL);

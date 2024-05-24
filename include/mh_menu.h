@@ -13,14 +13,6 @@
 #ifndef MENU_H_
     #define MENU_H_
     #define ITM_COUNT 3
-    #define SR_X game->game_info->screen_res.x
-    #define SR_Y game->game_info->screen_res.y
-    #define RPG "MyRPG"
-    #define O1 sfClose
-    #define O2 sfResize
-    #define WIN_CFG { SR_X, SR_Y, 32 }
-    #define VID (sfVideoMode)WIN_CFG
-    #define WIN_CREATE sfRenderWindow_create(VID, RPG, O1 | O2, NULL)
 
 typedef struct menu_item_s {
     char *selected_item;

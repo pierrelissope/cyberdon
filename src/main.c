@@ -33,10 +33,15 @@ game_info_t *init_game_info(void)
     return game_info;
 }
 
-int main(int ac, char **av)
+int main(void)
 {
     game_t game = init_game();
 
+    if (game.is_valid != true) {
+        destroy_game(&game);
+        return 84;
+    }
     run_game(&game);
+    destroy_game(&game);
     return 0;
 }

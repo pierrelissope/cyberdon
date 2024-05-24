@@ -13,12 +13,16 @@
 #include "game.h"
 #include "basics.h"
 
-bool my_hover(sfRenderWindow *window, sfText *text)
+static void activate_button(game_t *game, sfEvent *event,
+    menu_item_t *menu_items, int *selected_item)
 {
-    sfVector2i mouse_pos = sfMouse_getPositionRenderWindow(window);
-    sfFloatRect text_bounds = sfText_getGlobalBounds(text);
-
-    return sfFloatRect_contains(&text_bounds, mouse_pos.x, mouse_pos.y);
+    if (event->type == sfEvtKeyPressed && event->key.code == sfKeyReturn)
+        menu_items[*selected_item].action(
+            game->window, game->game_info, game);
+    if (event->type == sfEvtMouseButtonPressed &&
+        event->mouseButton.button == sfMouseLeft)
+        menu_items[*selected_item].action(
+            game->window, game->game_info, game);
 }
 
 static void handle_events(sfRenderWindow *window, int *selected_item,
@@ -29,21 +33,20 @@ static void handle_events(sfRenderWindow *window, int *selected_item,
     while (sfRenderWindow_pollEvent(window, &event)) {
         if (event.type == sfEvtClosed)
             sfRenderWindow_close(window);
-        if (event.type == sfEvtKeyPressed && event.key.code == game->game_info->key[MOVE_DOWN])
+        if (event.type == sfEvtKeyPressed &&
+            event.key.code == game->game_info->key[MOVE_DOWN])
             *selected_item = (*selected_item + 1) % ITM_COUNT;
-        if (event.type == sfEvtKeyPressed && event.key.code == game->game_info->key[MOVE_UP])
+        if (event.type == sfEvtKeyPressed &&
+            event.key.code == game->game_info->key[MOVE_UP])
             *selected_item = (*selected_item + ITM_COUNT - 1) % ITM_COUNT;
         if (event.type == sfEvtKeyPressed && event.key.code == sfKeyEscape &&
             game->game_info->specifier == 1 &&
-            sfTime_asSeconds(sfClock_getElapsedTime(game->status.escape_clock)) > 0.2) {
+            sfTime_asSeconds(sfClock_getElapsedTime(
+                game->status.escape_clock)) > 0.2) {
             sfClock_restart(game->status.escape_clock);
             game->game_state = IN_GAME;
         }
-        if (event.type == sfEvtKeyPressed && event.key.code == sfKeyReturn)
-            menu_items[*selected_item].action(window, game->game_info, game);
-        if (event.type == sfEvtMouseButtonPressed &&
-            event.mouseButton.button == sfMouseLeft)
-            menu_items[*selected_item].action(window, game->game_info, game);
+        activate_button(game, &event, menu_items, selected_item);
     }
 }
 
@@ -99,10 +102,11 @@ sfRectangleShape *create_rectangle(void)
     return rect;
 }
 
-static void parametres_redirect(sfRenderWindow *window, game_info_t *game_info, game_t *) {
+static void parametres_redirect(sfRenderWindow *window,
+    game_info_t *game_info, game_t *)
+{
     parametres(window, game_info);
 }
-
 
 static menu_item_t *my_init_tab(int specifier)
 {
@@ -116,8 +120,7 @@ static menu_item_t *my_init_tab(int specifier)
         menu[2].selected_item = my_strdup("Leave");
         menu[2].action = quitter;
         return menu;
-    }
-    if (specifier == 1){
+    } else {
         menu[0].selected_item = my_strdup("Resume");
         menu[0].action = jouer;
         menu[1].selected_item = my_strdup("Settings");

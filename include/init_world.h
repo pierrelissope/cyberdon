@@ -194,6 +194,10 @@ static const init_world_t WALLS_BLOCK_INIT[] =
         .texture_name = GRADIANT_WALL
     },
     {
+        .c = 'h',
+        .texture_name = INVERSE_GRADIANT_WALL
+    },
+    {
         .c = 'l',
         .texture_name = STREET_LAMP
     },

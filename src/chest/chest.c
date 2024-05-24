@@ -34,7 +34,7 @@ chest_t *create_chest(const char *chest_name,
     return chest;
 }
 
-static item_type_t get_item_enum(char const *item)
+item_type_t get_item_enum(char const *item)
 {
     for (size_t i = 0; ITEMS_LINK_ARRAY[i].str_type != NULL; ++i) {
         if (strcmp(item, ITEMS_LINK_ARRAY[i].str_type) == 0) {
@@ -50,7 +50,7 @@ static inventory_t *build_inventory_content(char const *chest_name,
 {
     inventory_t *inventory = create_inventory((sfVector2f){1300, 300},
         chest_name, font);
-    char *content = open_file("levels/chest_content.conf");
+    char *content = open_file("./levels/chest_content.conf");
     char **lines = my_str_to_all_array(content, "\n");
     char **tokens = NULL;
 
@@ -65,8 +65,7 @@ static inventory_t *build_inventory_content(char const *chest_name,
             insert_item(inventory, get_item_enum(tokens[j]), items_dict);
         free_str_array(tokens);
     }
-    free(content);
-    free_str_array(lines);
+    freef("%a%t", content, (void **)lines);
     return inventory;
 }
 
@@ -88,9 +87,14 @@ static inventory_t *get_chest_inventory(const char *chest_name,
 
 sfVector2f get_pos_by_token(char *coords)
 {
-    char **tokens = my_str_to_all_array(coords, ":");
+    char **tokens = NULL;
     sfVector2f pos = {0};
 
+    if (coords == NULL)
+        return pos;
+    tokens = my_str_to_all_array(coords, ":");
+    if (my_strlen_array(tokens) != 2)
+        return pos;
     pos.x = atof(tokens[0]);
     pos.y = atof(tokens[1]);
     free_str_array(tokens);

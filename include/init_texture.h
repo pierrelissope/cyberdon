@@ -85,7 +85,9 @@ enum Tiles {
     SIDE_WALK_CHUNK4,
     SIDE_WALK_TILE,
     SIDE_WALK_TILE1,
-    GRADIANT_WALL
+    GRADIANT_WALL,
+    INVERSE_GRADIANT_WALL,
+    TRANSITION,
 };
 
 enum Spritesheets {
@@ -98,6 +100,7 @@ enum Spritesheets {
     RIGHT,
     UP,
     DOWN,
+    PORTRAIT
 };
 
 typedef struct init_texture_s {
@@ -150,41 +153,128 @@ static const init_texture_t PLAYER_TEXTURE_INIT[MAX_SPRITE_SHEETS] = {
     },
 };
 
-static const init_texture_t VILLAGER_TEXTURE_INIT[MAX_SPRITE_SHEETS] = {
+static const init_texture_t FIGHTER1_TEXTURE_INIT[MAX_SPRITE_SHEETS] = {
     {
-        .texture_path = "./assets/spritesheets/player/up.png",
+        .texture_path = "./assets/spritesheets/fighter1/idle.png",
         .texture_name = IDLE
     },
     {
-        .texture_path = "./assets/spritesheets/player/up.png",
+        .texture_path = "./assets/spritesheets/fighter1/up.png",
         .texture_name = UP
     },
     {
-        .texture_path = "./assets/spritesheets/player/down.png",
+        .texture_path = "./assets/spritesheets/fighter1/down.png",
         .texture_name = DOWN
     },
     {
-        .texture_path = "./assets/spritesheets/player/left.png",
+        .texture_path = "./assets/spritesheets/fighter1/left.png",
         .texture_name = LEFT
     },
     {
-        .texture_path = "./assets/spritesheets/player/right.png",
+        .texture_path = "./assets/spritesheets/fighter1/right.png",
         .texture_name = RIGHT
     },
     {
-        .texture_path = "./assets/spritesheets/player/up_left.png",
+        .texture_path = "./assets/spritesheets/fighter1/up_left.png",
         .texture_name = UP_LEFT
     },
     {
-        .texture_path = "./assets/spritesheets/player/up_right.png",
+        .texture_path = "./assets/spritesheets/fighter1/up_right.png",
         .texture_name = UP_RIGHT
     },
     {
-        .texture_path = "./assets/spritesheets/player/down_left.png",
+        .texture_path = "./assets/spritesheets/fighter1/down_left.png",
         .texture_name = DOWN_LEFT
     },
     {
-        .texture_path = "./assets/spritesheets/player/down_right.png",
+        .texture_path = "./assets/spritesheets/fighter1/down_right.png",
+        .texture_name = DOWN_RIGHT
+    },
+    {
+        .texture_path = NULL,
+        .texture_name = 0
+    },
+};
+
+static const init_texture_t FIGHTER2_TEXTURE_INIT[MAX_SPRITE_SHEETS] = {
+    {
+        .texture_path = "./assets/spritesheets/fighter2/idle.png",
+        .texture_name = IDLE
+    },
+    {
+        .texture_path = "./assets/spritesheets/fighter2/up.png",
+        .texture_name = UP
+    },
+    {
+        .texture_path = "./assets/spritesheets/fighter2/down.png",
+        .texture_name = DOWN
+    },
+    {
+        .texture_path = "./assets/spritesheets/fighter2/left.png",
+        .texture_name = LEFT
+    },
+    {
+        .texture_path = "./assets/spritesheets/fighter2/right.png",
+        .texture_name = RIGHT
+    },
+    {
+        .texture_path = "./assets/spritesheets/fighter2/up_left.png",
+        .texture_name = UP_LEFT
+    },
+    {
+        .texture_path = "./assets/spritesheets/fighter2/up_right.png",
+        .texture_name = UP_RIGHT
+    },
+    {
+        .texture_path = "./assets/spritesheets/fighter2/down_left.png",
+        .texture_name = DOWN_LEFT
+    },
+    {
+        .texture_path = "./assets/spritesheets/fighter2/down_right.png",
+        .texture_name = DOWN_RIGHT
+    },
+    {
+        .texture_path = NULL,
+        .texture_name = 0
+    },
+};
+
+
+static const init_texture_t VILLAGER_TEXTURE_INIT[MAX_SPRITE_SHEETS] = {
+    {
+        .texture_path = "./assets/spritesheets/villager/up.png",
+        .texture_name = IDLE
+    },
+    {
+        .texture_path = "./assets/spritesheets/villager/up.png",
+        .texture_name = UP
+    },
+    {
+        .texture_path = "./assets/spritesheets/villager/down.png",
+        .texture_name = DOWN
+    },
+    {
+        .texture_path = "./assets/spritesheets/villager/left.png",
+        .texture_name = LEFT
+    },
+    {
+        .texture_path = "./assets/spritesheets/villager/right.png",
+        .texture_name = RIGHT
+    },
+    {
+        .texture_path = "./assets/spritesheets/villager/up_left.png",
+        .texture_name = UP_LEFT
+    },
+    {
+        .texture_path = "./assets/spritesheets/villager/up_right.png",
+        .texture_name = UP_RIGHT
+    },
+    {
+        .texture_path = "./assets/spritesheets/villager/down_left.png",
+        .texture_name = DOWN_LEFT
+    },
+    {
+        .texture_path = "./assets/spritesheets/villager/down_right.png",
         .texture_name = DOWN_RIGHT
     },
     {
@@ -199,6 +289,12 @@ static const init_texture_t TILES_TEXTURE_INIT[] = {
         .texture_name = LOADING_PAGE_SHEET,
         .rect = {0, 0, 1134 / 5, 168},
         .frame_nb = 5,
+    },
+    {
+        .texture_path = "./assets/spritesheets/loading_page/transition.png",
+        .texture_name = TRANSITION,
+        .rect = {0, 0, 1920, 1080},
+        .frame_nb = 8
     },
     {
         .texture_path = "./assets/spritesheets/props/poubelle/POUBELLE.png",
@@ -629,6 +725,12 @@ static const init_texture_t TILES_TEXTURE_INIT[] = {
     {
         .texture_path = "./assets/blocks/gradiant_wall.png",
         .texture_name = GRADIANT_WALL,
+        .rect = {0, 0, 128, 454},
+        .frame_nb = 4
+    },
+    {
+        .texture_path = "./assets/blocks/inverse_gradiant_wall.png",
+        .texture_name = INVERSE_GRADIANT_WALL,
         .rect = {0, 0, 128, 454},
         .frame_nb = 4
     },

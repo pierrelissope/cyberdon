@@ -132,7 +132,8 @@ static void change_entity_sprite(physical_entity_t *entity, sfVector2f mvt)
     change_linear_sprite(entity, mvt);
 }
 
-void move_entity(physical_entity_t *entity, sfEvent *event, world_t *world, game_t *game)
+void move_entity(physical_entity_t *entity, sfEvent *event,
+    world_t *world, game_t *game)
 {
     sfFloatRect new_rect = {0};
     sfVector2f mouvement = get_movement(game);
