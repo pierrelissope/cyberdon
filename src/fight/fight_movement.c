@@ -93,15 +93,17 @@ static void update_fighter_dir(fight_t *fight)
     }
 }
 
-static void check_colisions(fight_t *fight)
+static void check_colisions(fight_t *fight, game_t *game)
 {
     if (!fight->player->hit && sfFloatRect_intersects(&(fight->player->hitbox),
         &(fight->npc->dmgbox), NULL)) {
-        on_hit(fight->player, fight->npc, fight);
+        sfMusic_play(game->sfx.punch);
+        on_hit(fight->player, fight->npc, fight, game);
     }
     if (!fight->npc->hit && sfFloatRect_intersects(&(fight->npc->hitbox),
         &(fight->player->dmgbox), NULL)) {
-        on_hit(fight->npc, fight->player, fight);
+        sfMusic_play(game->sfx.punch);
+        on_hit(fight->npc, fight->player, fight, game);
     }
     fight->player->dmgbox = (sfFloatRect) {0, 0, 0, 0};
     fight->npc->dmgbox = (sfFloatRect) {0, 0, 0, 0};
@@ -116,12 +118,12 @@ static void update_fighters_hits(fighter_entity_t *entity)
         entity->hit = false;
 }
 
-void update_fight(fight_t *fight)
+void update_fight(fight_t *fight, game_t *game)
 {
     update_fighter_dir(fight);
     update_fighters_hits(fight->player);
     update_fighters_hits(fight->player);
-    check_colisions(fight);
+    check_colisions(fight, game);
     apply_gravity(fight->player);
     apply_gravity(fight->npc);
     reverse_side(fight->player);

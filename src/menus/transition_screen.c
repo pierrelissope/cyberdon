@@ -43,7 +43,8 @@ void annimate_transition_screen(loading_page_t *loading_page,
     sfRectangleShape_move(rectangle, (sfVector2f){27, 0});
 }
 
-void play_transition_screen(sfRenderWindow *window, dict_t *tiles_dict)
+void play_transition_screen(sfRenderWindow *window, dict_t *tiles_dict,
+    game_t *game)
 {
     loading_page_t page = init_transition_page(tiles_dict);
     sfRectangleShape *rectangle = sfRectangleShape_create();
@@ -55,6 +56,7 @@ void play_transition_screen(sfRenderWindow *window, dict_t *tiles_dict)
     sfClock_restart(page.animation_clock);
     page.current_frame = 0;
     sfRenderWindow_setView(window, sfRenderWindow_getDefaultView(window));
+    sfMusic_play(game->sfx.fight);
     while (sfRectangleShape_getPosition(rectangle).x <= 0) {
         annimate_transition_screen(&page, rectangle);
         sfRenderWindow_drawRectangleShape(window, rectangle, NULL);

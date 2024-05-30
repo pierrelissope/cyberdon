@@ -15,6 +15,8 @@
 
 static void load_saved_stats(save_t *save, stats_t *stats)
 {
+    stats->current_level = save->stats.current_level;
+    stats->xp_to_levelup = save->stats.xp_to_levelup;
     stats->hp = save->stats.hp;
     stats->defense = save->stats.defense;
     stats->speed = save->stats.speed;

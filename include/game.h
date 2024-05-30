@@ -12,6 +12,8 @@
 
 #define FONT    sfFont_createFromFile("assets/font/font.ttf")
 
+sound_t init_sound(void);
+void destroy_sound(sound_t *sounds);
 void draw_menu_image(sfRenderWindow *window, int specifier);
 game_t init_game(void);
 int handle_event(game_t *game, sfEvent *event);

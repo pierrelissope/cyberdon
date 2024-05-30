@@ -3,6 +3,7 @@
 *.out
 unit_tests
 *.log
+*
 #*#
 *.json
 *~

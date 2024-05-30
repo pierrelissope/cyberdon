@@ -55,7 +55,8 @@ static void uptdate_hp_rec_size(fight_t *fight)
         fight->player->base_stats.hp, fight->ui.player_hp);
 }
 
-void on_hit(fighter_entity_t *hited, fighter_entity_t *hiter, fight_t *fight)
+void on_hit(fighter_entity_t *hited, fighter_entity_t *hiter, fight_t *fight,
+    game_t *game)
 {
     if (!change_state(hited, HIT))
         return;
@@ -64,7 +65,7 @@ void on_hit(fighter_entity_t *hited, fighter_entity_t *hiter, fight_t *fight)
     if (rand() % 100 <= 1 + hited->base_stats.defense)
         return;
     if ((1 + hiter->base_stats.attack + hiter->base_stats.strenght)
-        - hited->base_stats.defense > 0)
+        > 0)
         hited->stats.hp -=
             (1 + hiter->base_stats.attack + hiter->base_stats.strenght);
     uptdate_hp_rec_size(fight);

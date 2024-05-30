@@ -59,6 +59,7 @@ static void init_game_components(game_t *game)
     if (game->font == NULL)
         return;
     game->status = init_status();
+    game->sfx = init_sound();
     if (!game->status.is_valid)
         return;
     game->loading_page = init_loading_page(game->tiles_dict);
@@ -121,6 +122,7 @@ void destroy_game(game_t *game)
     destroy_world(&game->world);
     sfFont_destroy(game->font);
     free_str_array(game->visited_levels);
+    destroy_sound(&game->sfx);
 }
 
 void draw_game(game_t *game)

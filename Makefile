@@ -56,6 +56,7 @@ SRC =		./src/entity/entity.c \
 			./src/inventory/init.c \
 			./src/inventory/insert.c \
 			./src/chest/chest.c \
+			./src/sfx/sfx.c \
 			./src/chest/content.c \
 			./src/inventory/stats.c \
 			./src/inventory/items_effects.c \
@@ -96,7 +97,7 @@ LIBSRC =	lib/freef/arr_flags.c \
 			lib/BASICS/cleanstr.c \
 			lib/BASICS/isdigit.c \
 			lib/BASICS/open_file.c	\
-			lib/BASICS/my_strcat.c	\
+			lib/BASICS/my_strcat.c
 
 LIBOBJ =	$(LIBSRC:.c=.o)
 
@@ -107,7 +108,8 @@ SRC_TEST	=	$(addprefix tests/,\
 OBJ_TEST	=	$(SRC_TEST:.c=.o)
 
 CFLAGS = -Wall -Wextra
-LDLIBS = -lcsfml-graphics -lcsfml-window -lcsfml-system -lm
+LDLIBS = -lcsfml-graphics -lcsfml-window -lcsfml-system \
+	-lcsfml-audio -lm
 CPPFLAGS = -iquote ./include
 
 CRITFLAGS = -lcriterion

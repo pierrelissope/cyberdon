@@ -6,6 +6,7 @@
 */
 
 #include <SFML/Graphics.h>
+#include <SFML/Window/Event.h>
 #include <stdio.h>
 #include <stdbool.h>
 #include "struct.h"
@@ -25,6 +26,21 @@ static void activate_button(game_t *game, sfEvent *event,
             game->window, game->game_info, game);
 }
 
+static void handle_movement_event(sfEvent *event,
+    game_t *game, int *selected_item)
+{
+    if (event->type == sfEvtKeyPressed && (event->key.code == sfKeyLeft ||
+        event->key.code == sfKeyRight || event->key.code == sfKeyUp ||
+        event->key.code == sfKeyDown))
+        sfMusic_play(game->sfx.effect);
+    if (event->type == sfEvtKeyPressed &&
+        event->key.code == game->game_info->key[MOVE_DOWN])
+        *selected_item = (*selected_item + 1) % ITM_COUNT;
+    if (event->type == sfEvtKeyPressed &&
+        event->key.code == game->game_info->key[MOVE_UP])
+        *selected_item = (*selected_item + ITM_COUNT - 1) % ITM_COUNT;
+}
+
 static void handle_events(sfRenderWindow *window, int *selected_item,
     menu_item_t *menu_items, game_t *game)
 {
@@ -33,12 +49,7 @@ static void handle_events(sfRenderWindow *window, int *selected_item,
     while (sfRenderWindow_pollEvent(window, &event)) {
         if (event.type == sfEvtClosed)
             sfRenderWindow_close(window);
-        if (event.type == sfEvtKeyPressed &&
-            event.key.code == game->game_info->key[MOVE_DOWN])
-            *selected_item = (*selected_item + 1) % ITM_COUNT;
-        if (event.type == sfEvtKeyPressed &&
-            event.key.code == game->game_info->key[MOVE_UP])
-            *selected_item = (*selected_item + ITM_COUNT - 1) % ITM_COUNT;
+        handle_movement_event(&event, game, selected_item);
         if (event.type == sfEvtKeyPressed && event.key.code == sfKeyEscape &&
             game->game_info->specifier == 1 &&
             sfTime_asSeconds(sfClock_getElapsedTime(
@@ -51,7 +62,7 @@ static void handle_events(sfRenderWindow *window, int *selected_item,
 }
 
 static void jouer(sfRenderWindow *,
-    game_info_t *game_info, game_t *game)
+    game_info_t *, game_t *game)
 {
     game->game_info->specifier = 1;
     game->game_state = IN_GAME;
@@ -92,20 +103,10 @@ void blink(sfClock *clock, sfRectangleShape *rect)
     }
 }
 
-sfRectangleShape *create_rectangle(void)
-{
-    sfRectangleShape *rect = sfRectangleShape_create();
-
-    sfRectangleShape_setFillColor(rect, sfTransparent);
-    sfRectangleShape_setOutlineColor(rect, sfRed);
-    sfRectangleShape_setOutlineThickness(rect, 2);
-    return rect;
-}
-
 static void parametres_redirect(sfRenderWindow *window,
-    game_info_t *game_info, game_t *)
+    game_info_t *game_info, game_t *game)
 {
-    parametres(window, game_info);
+    parametres(window, game_info, game);
 }
 
 static menu_item_t *my_init_tab(int specifier)

@@ -18,7 +18,7 @@
 
 static int run_frame(fight_t *fight, game_t *game, sfEvent *event)
 {
-    update_fight(fight);
+    update_fight(fight, game);
     if (handle_fight_event(game, fight, event) == sfEvtClosed)
         return -1;
     if (fight->npc->stats.hp <= 0)

@@ -66,7 +66,7 @@ void give_rewards(game_t *game, char **tokens)
 
 static void process_fight_interaction(game_t *game, physical_entity_t *npc)
 {
-    play_transition_screen(game->window, game->tiles_dict);
+    play_transition_screen(game->window, game->tiles_dict, game);
     if (run_fight(game, game->player, npc, 0) == 1) {
         if (my_arraylen((void **)npc->actions) > LAST)
             npc->current_action = LAST;

@@ -57,7 +57,6 @@ static void draw_selection_rectangle(sfRenderWindow *window,
 
     sfRectangleShape_setPosition(rect, rect_pos);
     sfRectangleShape_setSize(rect, rect_size);
-    sfRenderWindow_drawRectangleShape(window, rect, NULL);
 }
 
 static void cleanup_resources(sfFont *font, sfText **texts)

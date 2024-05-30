@@ -17,11 +17,12 @@
 
 game_info_t *init_game_info(void)
 {
-    game_info_t *game_info = malloc(sizeof(game_info_t));
+    game_info_t *game_info = calloc(1, sizeof(game_info_t));
     sfVector2u sizes[] = {{800, 600}, {1280, 720}, {1920, 1080}};
 
     if (!game_info)
         return NULL;
+    game_info->sound_level = 5;
     game_info->font = FONT;
     game_info->save_file = "save/default_save.dat";
     game_info->screen_res.x = 1920;

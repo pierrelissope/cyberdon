@@ -142,7 +142,7 @@ void update_stats(stats_t *stats, inventory_t *inventory)
 {
     stats->hp_bonus = 0;
     stats->defense_bonus = 0;
-    stats->attack = 0;
+    stats->attack_bonus = 0;
     stats->speed_bonus = 0;
     stats->strength_bonus = 0;
     stats->stamina_bonus = 0;

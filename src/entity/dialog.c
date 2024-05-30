@@ -113,6 +113,7 @@ void display_dialogue(game_t *game, char *dialog,
     sfText *text = create_dialog_text(game, dialog, box, sprite);
     sfClock *clock = sfClock_create();
 
+    sfMusic_play(game->sfx.effect);
     while (sfRenderWindow_isOpen(game->window)) {
         if (handle_dialog_events(game->window, event) == sfEvtCount &&
             sfTime_asMilliseconds(sfClock_getElapsedTime(clock)) > 200)

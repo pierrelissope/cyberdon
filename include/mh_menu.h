@@ -23,12 +23,15 @@ typedef struct menu_item_s {
 game_info_t *init_game_info(void);
 sfRectangleShape *create_rectangle(void);
 void menu(game_t *game);
-void parametres(sfRenderWindow *window, game_info_t *game_info);
+void parametres(sfRenderWindow *window, game_info_t *game_info,
+    game_t *game);
 void blink(sfClock *clock, sfRectangleShape *rect);
 void draw_menu(sfRenderWindow *window,
     sfRectangleShape *rect, int *selected_item, menu_item_t *ptr_fct);
 sfText *create_text_mh(char *string, sfVector2f position,
     sfFont *font, bool is_selected);
 bool my_hover(sfRenderWindow *window, sfText *text);
+void clear_menu(sfText *param_text, sfText *sound_text,
+    sfText *keybind_text, sfText *resize_text);
 
 #endif /* !MENU_H_ */

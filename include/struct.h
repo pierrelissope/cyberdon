@@ -10,6 +10,7 @@
 #include "fight_transfer.h"
 #include <SFML/Graphics.h>
 #include <SFML/Graphics/Rect.h>
+#include <SFML/Audio.h>
 #include <SFML/Window.h>
 #include <stdbool.h>
 
@@ -216,7 +217,16 @@ typedef struct game_info {
     sfRenderWindow *window;
     int specifier;
     sfKeyCode key[NUM];
+    int sound_level;
 } game_info_t;
+
+typedef struct sound_s {
+    sfMusic *ost;
+    sfMusic *punch;
+    sfMusic *walk;
+    sfMusic *effect;
+    sfMusic *fight;
+} sound_t;
 
 typedef struct game_s {
     bool is_valid;
@@ -236,6 +246,7 @@ typedef struct game_s {
     sfFont *font;
     char **visited_levels;
     game_info_t *game_info;
+    sound_t sfx;
 } game_t;
 
 typedef struct annimation_s {
