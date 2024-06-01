@@ -61,6 +61,8 @@ typedef enum fight_textures_e {
 
     BACKGROUND_TEXT,
     FORGROUND_TEXT,
+    NPC_PORTRAIT_TEXT,
+    PLAYER_PORTRAIT_TEXT,
     FIGHT_TEXTURES_END
 } fight_textures_t;
 

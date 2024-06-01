@@ -14,3 +14,5 @@ unit_tests
 compile_flags.txt
 .vscode
 my_rpg
+local_sheets
+.save

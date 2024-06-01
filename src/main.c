@@ -9,7 +9,6 @@
 #include "struct.h"
 #include <SFML/System/Vector2.h>
 #include "basics.h"
-#include "world.h"
 #include <time.h>
 #include "xp.h"
 #include <string.h>

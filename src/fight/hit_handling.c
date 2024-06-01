@@ -56,7 +56,7 @@ static void uptdate_hp_rec_size(fight_t *fight)
 }
 
 void on_hit(fighter_entity_t *hited, fighter_entity_t *hiter, fight_t *fight,
-    game_t *game)
+    game_t *)
 {
     if (!change_state(hited, HIT))
         return;

@@ -5,10 +5,12 @@
 ** fight loading
 */
 
+#include "basics.h"
 #include "dict.h"
 #include "fight_entity.h"
 #include "fight_macros.h"
 #include "fight.h"
+#include "init_ui.h"
 #include "struct.h"
 #include "init_fight_arena.h"
 #include "init_fighters.h"
@@ -88,6 +90,21 @@ static bool load_fighter_text(fight_t *fight,
     return false;
 }
 
+static bool load_ui_text(fight_t *fight)
+{
+    char *concat_path = my_strcat(2,
+        FIGHTER_INIT[fight->player_stats->fighter_skin].fighter_folder, "portrait.png");
+
+    dict_insert(&fight->text_dict, PLAYER_PORTRAIT_TEXT,
+        sfTexture_createFromFile(concat_path, &PLAYER_PORTRAIT));
+    free(concat_path);
+    concat_path = my_strcat(2,
+        FIGHTER_INIT[get_npc_skin(fight->npc_stats)].fighter_folder, "portrait.png");
+    dict_insert(&fight->text_dict, NPC_PORTRAIT_TEXT,
+        sfTexture_createFromFile(concat_path, &NPC_PORTRAIT));
+    return false;
+}
+
 static bool load_text(fight_t *fight)
 {
     if (load_fighter_text(fight,
@@ -95,6 +112,8 @@ static bool load_text(fight_t *fight)
         return true;
     if (load_fighter_text(fight,
         &(FIGHTER_INIT[get_npc_skin(fight->npc_stats)]), false))
+        return true;
+    if (load_ui_text(fight))
         return true;
     return false;
 }

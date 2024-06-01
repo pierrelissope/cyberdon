@@ -10,6 +10,8 @@
 #include "fight_macros.h"
 #include "struct.h"
 
+#include <SFML/Graphics/Color.h>
+#include <SFML/Graphics/RectangleShape.h>
 #include <SFML/System/Time.h>
 #include <stdio.h>
 #include <SFML/Graphics/Rect.h>
@@ -118,6 +120,18 @@ static void update_fighters_hits(fighter_entity_t *entity)
         entity->hit = false;
 }
 
+static void update_ui(fight_t *fight)
+{
+    if (fight->player->state == HIT)
+        sfRectangleShape_setOutlineColor(fight->ui.player_portrait, sfRed);
+    else
+        sfRectangleShape_setOutlineColor(fight->ui.player_portrait, sfWhite);
+    if (fight->npc->state == HIT)
+        sfRectangleShape_setOutlineColor(fight->ui.npc_portrait, sfRed);
+    else
+        sfRectangleShape_setOutlineColor(fight->ui.npc_portrait, sfWhite);
+}
+
 void update_fight(fight_t *fight, game_t *game)
 {
     update_fighter_dir(fight);
@@ -139,4 +153,5 @@ void update_fight(fight_t *fight, game_t *game)
         stamina_regen(fight->npc);
         sfClock_restart(fight->stamina_clock);
     }
+    update_ui(fight);
 }

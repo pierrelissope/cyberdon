@@ -5,7 +5,10 @@
 ** fight loading
 */
 
+#include "dict.h"
 #include "fight_entity.h"
+#include "fight_macros.h"
+#include "init_entity.h"
 #include "init_ui.h"
 
 #include <SFML/Config.h>
@@ -54,6 +57,24 @@ static bool init_stamina(ui_t *ui)
 
 static bool init_portraits(fight_t *fight)
 {
+    fight->ui.npc_portrait = sfRectangleShape_create();
+    if (fight->ui.npc_portrait == NULL)
+        return true;
+    fight->ui.player_portrait = sfRectangleShape_create();
+    if (fight->ui.player_portrait == NULL)
+        return true;
+    sfRectangleShape_setSize(fight->ui.player_portrait, PORTRAIT_SIZE);
+    sfRectangleShape_setSize(fight->ui.npc_portrait, PORTRAIT_SIZE);
+    sfRectangleShape_setPosition(fight->ui.player_portrait, PLAYER_PORTRAIT_POS);
+    sfRectangleShape_setPosition(fight->ui.npc_portrait, NPC_PORTRAIT_POS);
+    sfRectangleShape_setTexture(fight->ui.player_portrait, dict_get(fight->text_dict,
+        PLAYER_PORTRAIT_TEXT), false);
+    sfRectangleShape_setTexture(fight->ui.npc_portrait, dict_get(fight->text_dict,
+        NPC_PORTRAIT_TEXT), false);
+    sfRectangleShape_setOutlineColor(fight->ui.player_portrait, sfWhite);
+    sfRectangleShape_setOutlineColor(fight->ui.npc_portrait, sfWhite);
+    sfRectangleShape_setOutlineThickness(fight->ui.npc_portrait, 2.5);
+    sfRectangleShape_setOutlineThickness(fight->ui.player_portrait, 2.5);
     return false;
 }
 
