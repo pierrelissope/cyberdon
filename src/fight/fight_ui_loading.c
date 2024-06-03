@@ -8,7 +8,6 @@
 #include "dict.h"
 #include "fight_entity.h"
 #include "fight_macros.h"
-#include "init_entity.h"
 #include "init_ui.h"
 
 #include <SFML/Config.h>
@@ -86,6 +85,17 @@ static bool init_portraits(fight_t *fight)
     return false;
 }
 
+static bool init_end_rec(sfRectangleShape **rec, sfTexture *text)
+{
+    *rec = sfRectangleShape_create();
+    if (*rec == NULL)
+        return true;
+    sfRectangleShape_setSize(*rec, END_SIZE);
+    sfRectangleShape_setPosition(*rec, END_POS);
+    sfRectangleShape_setTexture(*rec, text, false);
+    return false;
+}
+
 bool load_ui(fight_t *fight)
 {
     if (init_hp(&fight->ui))
@@ -93,6 +103,9 @@ bool load_ui(fight_t *fight)
     if (init_portraits(fight))
         return true;
     if (init_stamina(&fight->ui))
+        return true;
+    if (init_end_rec(&fight->ui.lose, dict_get(fight->text_dict, LOSE_TEXT)) ||
+        init_end_rec(&fight->ui.win, dict_get(fight->text_dict, WIN_TEXT)))
         return true;
     return false;
 }

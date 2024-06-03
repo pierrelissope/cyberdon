@@ -29,6 +29,7 @@ SRC =		./src/entity/entity.c \
 			./src/fight/fight_display.c	\
 			./src/fight/fight_entities.c	\
 			./src/fight/fight_loading.c	\
+			./src/fight/load_fight_text.c	\
 			./src/fight/fight_unloading.c	\
 			./src/fight/fight_ui_loading.c	\
 			./src/fight/fight_events.c	\

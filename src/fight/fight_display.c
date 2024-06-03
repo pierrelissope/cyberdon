@@ -121,3 +121,20 @@ void draw_fight(fight_t *fight, sfRenderWindow *win)
     sfRenderWindow_drawRectangleShape(win, fight->foreground, NULL);
     sfRenderWindow_display(win);
 }
+
+void display_fight_end(fight_t *fight, game_t *game, int carry)
+{
+    sfRenderWindow_clear(game->window, sfBlack);
+    sfRenderWindow_drawRectangleShape(game->window, fight->background, NULL);
+    draw_fighter(fight->player, game->window);
+    if (fight->debug_mode)
+        draw_debug(fight, game->window);
+    if (carry == 1)
+        sfRenderWindow_drawRectangleShape(game->window, fight->ui.win, NULL);
+    if (carry == 2)
+        sfRenderWindow_drawRectangleShape(game->window, fight->ui.lose, NULL);
+    draw_ui(fight, game->window);
+    draw_fighter(fight->npc, game->window);
+    sfRenderWindow_drawRectangleShape(game->window, fight->foreground, NULL);
+    sfRenderWindow_display(game->window);
+}

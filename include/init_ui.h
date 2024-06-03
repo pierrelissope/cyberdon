@@ -68,7 +68,17 @@ static const sfIntRect PLAYER_PORTRAIT = {
     .top = 0
 };
 
+static const sfIntRect END_TEXT_TEXT = {
+    .height = 230,
+    .width = 530,
+    .left = 0,
+    .top = 0
+};
+
 static const sfVector2f PLAYER_PORTRAIT_POS = {.x = 680, .y = 70};
 static const sfVector2f NPC_PORTRAIT_POS = {.x = 1170, .y = 70};
 
 static const sfVector2f PORTRAIT_SIZE = {.x = 70, .y = 100};
+
+static const sfVector2f END_POS = {.x = 651, .y = 338};
+static const sfVector2f END_SIZE = {.x = 510, .y = 230};

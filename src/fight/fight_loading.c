@@ -10,10 +10,8 @@
 #include "fight_entity.h"
 #include "fight_macros.h"
 #include "fight.h"
-#include "init_ui.h"
 #include "struct.h"
 #include "init_fight_arena.h"
-#include "init_fighters.h"
 #include "view.h"
 
 #include <SFML/Config.h>
@@ -64,60 +62,6 @@ static bool load_arena(fight_t *fight)
         sfTexture_createFromFile(concat_path, NULL));
     free(concat_path);
     return init_rects(fight);
-}
-
-static bool load_fighter_text(fight_t *fight,
-    fighter_init_t const *init_info, bool player)
-{
-    char *concat_path = NULL;
-    int moves_counter = 0;
-    fight_textures_t text_beg = NPC_IDLE_TEXT;
-    fight_textures_t text_end = NPC_TEXTURES_END;
-
-    if (player) {
-        text_beg = PLAYER_IDLE_TEXT;
-        text_end = PLAYER_TEXTURES_END;
-    }
-    for (fight_textures_t i = text_beg;
-        i < text_end; ++i) {
-        concat_path = my_strcat(2, init_info->fighter_folder,
-            MOVES_INIT[moves_counter].text_file);
-        dict_insert(&(fight->text_dict), i,
-            sfTexture_createFromFile(concat_path, NULL));
-        free(concat_path);
-        moves_counter++;
-    }
-    return false;
-}
-
-static bool load_ui_text(fight_t *fight)
-{
-    char *concat_path = my_strcat(2,
-        FIGHTER_INIT[fight->player_stats->fighter_skin].fighter_folder,
-        "portrait.png");
-
-    dict_insert(&fight->text_dict, PLAYER_PORTRAIT_TEXT,
-        sfTexture_createFromFile(concat_path, &PLAYER_PORTRAIT));
-    free(concat_path);
-    concat_path = my_strcat(2,
-        FIGHTER_INIT[get_npc_skin(fight->npc_stats)].fighter_folder,
-        "portrait.png");
-    dict_insert(&fight->text_dict, NPC_PORTRAIT_TEXT,
-        sfTexture_createFromFile(concat_path, &NPC_PORTRAIT));
-    return false;
-}
-
-static bool load_text(fight_t *fight)
-{
-    if (load_fighter_text(fight,
-        &(FIGHTER_INIT[fight->player_stats->fighter_skin]), true))
-        return true;
-    if (load_fighter_text(fight,
-        &(FIGHTER_INIT[get_npc_skin(fight->npc_stats)]), false))
-        return true;
-    if (load_ui_text(fight))
-        return true;
-    return false;
 }
 
 static bool load_fighters(fight_t *fight)
@@ -174,6 +118,7 @@ fight_t *load_fight(game_t *game, physical_entity_t *player,
     fight->view = init_fight_view();
     fight->fps_clock = sfClock_create();
     fight->stamina_clock = sfClock_create();
+    fight->end_game_timer = sfClock_create();
     sfRenderWindow_setView(game->window, fight->view);
     sfRenderWindow_setKeyRepeatEnabled(game->window, sfFalse);
     if (load_text(fight) || load_arena(fight) ||

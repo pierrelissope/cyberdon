@@ -14,12 +14,26 @@
 #include <SFML/System/Time.h>
 #include <SFML/System/Types.h>
 #include <SFML/Window/Event.h>
+#include <stdbool.h>
 #include <stdio.h>
 
-static int run_frame(fight_t *fight, game_t *game, sfEvent *event)
+static int handle_endgame_events(game_t *game)
+{
+    sfEvent event;
+
+    while (sfRenderWindow_pollEvent(game->window, &event)) {
+        if (event.type == sfEvtClosed) {
+            sfRenderWindow_close(game->window);
+            return sfEvtClosed;
+        }
+    }
+    return 0;
+}
+
+static int run_frame(fight_t *fight, game_t *game)
 {
     update_fight(fight, game);
-    if (handle_fight_event(game, fight, event) == sfEvtClosed)
+    if (handle_fight_event(game, fight) == sfEvtClosed)
         return -1;
     if (fight->npc->stats.hp <= 0)
         return 1;
@@ -29,18 +43,38 @@ static int run_frame(fight_t *fight, game_t *game, sfEvent *event)
     return 0;
 }
 
-int run_fight(game_t *game, physical_entity_t *player,
-    physical_entity_t *npc, arenas_t arena)
+static bool fight_checks(int *carry, game_t *game,
+    fight_t *fight, bool *end_game)
 {
-    sfEvent event;
+    if (*end_game == false)
+        *carry = run_frame(fight, game);
+    if (*carry == -1)
+        return true;
+    if ((*carry == 1 || *carry == 2) && *end_game == false) {
+        *end_game = true;
+        sfClock_restart(fight->end_game_timer);
+    }
+    if (*end_game) {
+        display_fight_end(fight, game, *carry);
+        handle_endgame_events(game);
+    }
+    if (*end_game &&
+        sfTime_asSeconds(sfClock_getElapsedTime(fight->end_game_timer)) > 1.5)
+        return true;
+    return false;
+}
+
+int run_fight(game_t *game, physical_entity_t *player,
+    physical_entity_t *npc, arenas_t)
+{
     fight_t *fight = load_fight(game, player, npc);
     int carry = 0;
+    bool end_game = false;
 
     if (fight == NULL)
         return -1;
     while (sfRenderWindow_isOpen(game->window)) {
-        carry = run_frame(fight, game, &event);
-        if (carry != 0)
+        if (fight_checks(&carry, game, fight, &end_game))
             break;
     }
     destroy_fight(fight);

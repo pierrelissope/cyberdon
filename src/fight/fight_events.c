@@ -114,17 +114,18 @@ static int key_events(fight_t *fight)
     return action;
 }
 
-int handle_fight_event(game_t *game, fight_t *fight, sfEvent *event)
+int handle_fight_event(game_t *game, fight_t *fight)
 {
     fighter_state_t action = IDLE;
+    sfEvent event;
 
     handle_pre_fight_event(game, fight, &action);
-    while (sfRenderWindow_pollEvent(game->window, event)) {
-        if (event->type == sfEvtClosed) {
+    while (sfRenderWindow_pollEvent(game->window, &event)) {
+        if (event.type == sfEvtClosed) {
             sfRenderWindow_close(game->window);
             return sfEvtClosed;
         }
-        if (event->type == sfEvtKeyPressed) {
+        if (event.type == sfEvtKeyPressed) {
             action = key_events(fight);
         }
     }

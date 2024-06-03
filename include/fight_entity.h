@@ -70,6 +70,8 @@ typedef struct ui_s {
     sfRectangleShape *npc_stamina;
     sfRectangleShape *npc_portrait;
     sfRectangleShape *player_portrait;
+    sfRectangleShape *win;
+    sfRectangleShape *lose;
 } ui_t;
 
 typedef struct fight_s {
@@ -86,6 +88,7 @@ typedef struct fight_s {
     sfRectangleShape *foreground;
     sfClock *fps_clock;
     sfClock *stamina_clock;
+    sfClock *end_game_timer;
     ai_levels_t level;
 } fight_t;
 

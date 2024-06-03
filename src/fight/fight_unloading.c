@@ -59,6 +59,7 @@ void destroy_fight(fight_t *fight)
     destroy_fighter_entity(fight->npc);
     sfView_destroy(fight->view);
     sfClock_destroy(fight->fps_clock);
+    sfClock_destroy(fight->end_game_timer);
     sfClock_destroy(fight->stamina_clock);
     sfRectangleShape_destroy(fight->background);
     sfRectangleShape_destroy(fight->foreground);
