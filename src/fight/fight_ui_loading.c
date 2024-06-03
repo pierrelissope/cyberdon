@@ -55,6 +55,25 @@ static bool init_stamina(ui_t *ui)
     return false;
 }
 
+static void init_portraits_rec(fight_t *fight)
+{
+    sfRectangleShape_setSize(fight->ui.player_portrait, PORTRAIT_SIZE);
+    sfRectangleShape_setSize(fight->ui.npc_portrait, PORTRAIT_SIZE);
+    sfRectangleShape_setPosition(fight->ui.player_portrait,
+        PLAYER_PORTRAIT_POS);
+    sfRectangleShape_setPosition(fight->ui.npc_portrait, NPC_PORTRAIT_POS);
+    sfRectangleShape_setTexture(fight->ui.player_portrait,
+        dict_get(fight->text_dict,
+        PLAYER_PORTRAIT_TEXT), false);
+    sfRectangleShape_setTexture(fight->ui.npc_portrait,
+        dict_get(fight->text_dict,
+        NPC_PORTRAIT_TEXT), false);
+    sfRectangleShape_setOutlineColor(fight->ui.player_portrait, sfWhite);
+    sfRectangleShape_setOutlineColor(fight->ui.npc_portrait, sfWhite);
+    sfRectangleShape_setOutlineThickness(fight->ui.npc_portrait, 2.5);
+    sfRectangleShape_setOutlineThickness(fight->ui.player_portrait, 2.5);
+}
+
 static bool init_portraits(fight_t *fight)
 {
     fight->ui.npc_portrait = sfRectangleShape_create();
@@ -63,18 +82,7 @@ static bool init_portraits(fight_t *fight)
     fight->ui.player_portrait = sfRectangleShape_create();
     if (fight->ui.player_portrait == NULL)
         return true;
-    sfRectangleShape_setSize(fight->ui.player_portrait, PORTRAIT_SIZE);
-    sfRectangleShape_setSize(fight->ui.npc_portrait, PORTRAIT_SIZE);
-    sfRectangleShape_setPosition(fight->ui.player_portrait, PLAYER_PORTRAIT_POS);
-    sfRectangleShape_setPosition(fight->ui.npc_portrait, NPC_PORTRAIT_POS);
-    sfRectangleShape_setTexture(fight->ui.player_portrait, dict_get(fight->text_dict,
-        PLAYER_PORTRAIT_TEXT), false);
-    sfRectangleShape_setTexture(fight->ui.npc_portrait, dict_get(fight->text_dict,
-        NPC_PORTRAIT_TEXT), false);
-    sfRectangleShape_setOutlineColor(fight->ui.player_portrait, sfWhite);
-    sfRectangleShape_setOutlineColor(fight->ui.npc_portrait, sfWhite);
-    sfRectangleShape_setOutlineThickness(fight->ui.npc_portrait, 2.5);
-    sfRectangleShape_setOutlineThickness(fight->ui.player_portrait, 2.5);
+    init_portraits_rec(fight);
     return false;
 }
 
