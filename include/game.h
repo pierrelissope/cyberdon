@@ -22,3 +22,4 @@ int handle_inventory_event(sfRenderWindow *window,
 void run_game(game_t *game);
 void draw_game(game_t *game);
 void destroy_game(game_t *game);
+game_info_t *init_game_info(void);

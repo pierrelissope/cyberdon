@@ -52,9 +52,9 @@ int main(int ac, char **av, char **env)
         destroy_game(&game);
         return 84;
     }
-    load_save(&game);
+    //load_save(&game);
     run_game(&game);
-    create_save(&game);
+    //create_save(&game);
     destroy_game(&game);
     return 0;
 }
