@@ -12,140 +12,85 @@
 #include "struct.h"
 #include "mh_menu.h"
 #include "game.h"
+#include "xp.h"
 #include "basics.h"
 
-static void activate_button(game_t *game, sfEvent *event,
-    menu_item_t *menu_items, int *selected_item)
+
+void init_rects(rect_t *rects)
 {
-    if (event->type == sfEvtKeyPressed && event->key.code == sfKeyReturn)
-        menu_items[*selected_item].action(
-            game->window, game->game_info, game);
-    if (event->type == sfEvtMouseButtonPressed &&
-        event->mouseButton.button == sfMouseLeft)
-        menu_items[*selected_item].action(
-            game->window, game->game_info, game);
+    rects[0] = create_rect(&RECT_INIT[PLAY], "assets/menu/test.png");
+    rects[1] = create_rect(&RECT_INIT[NEW_GAME], "assets/menu/test2.png");
+    rects[2] = create_rect(&RECT_INIT[LOAD], "assets/menu/test3.png");
+    rects[3] = create_rect(&RECT_INIT[LEAVE], "assets/menu/test4.png");
+    rects[4] = create_rect(&RECT_INIT[SETTINGS], "assets/menu/test5.png");
 }
 
-static void handle_movement_event(sfEvent *event,
-    game_t *game, int *selected_item)
+void draw_buttons(sfRenderWindow *window, sfSprite *background_sprite,
+    button_t *buttons, int nbr_butt)
 {
-    if (event->type == sfEvtKeyPressed && (event->key.code == sfKeyLeft ||
-        event->key.code == sfKeyRight || event->key.code == sfKeyUp ||
-        event->key.code == sfKeyDown))
-        sfMusic_play(game->sfx.effect);
-    if (event->type == sfEvtKeyPressed &&
-        event->key.code == game->game_info->key[MOVE_DOWN])
-        *selected_item = (*selected_item + 1) % ITM_COUNT;
-    if (event->type == sfEvtKeyPressed &&
-        event->key.code == game->game_info->key[MOVE_UP])
-        *selected_item = (*selected_item + ITM_COUNT - 1) % ITM_COUNT;
+    sfRenderWindow_drawSprite(window, background_sprite, NULL);
+    for (int i = 0; i < nbr_butt; i++)
+        draw_button(window, buttons[i]);
 }
 
-static void handle_events(sfRenderWindow *window, int *selected_item,
-    menu_item_t *menu_items, game_t *game)
+void draw_rects(sfRenderWindow *window, rect_t *rects)
 {
-    sfEvent event;
+    for (int i = 0; i < 5; i++)
+        sfRenderWindow_drawSprite(window, rects[i].image, NULL);
+}
 
-    while (sfRenderWindow_pollEvent(window, &event)) {
-        if (event.type == sfEvtClosed)
-            sfRenderWindow_close(window);
-        handle_movement_event(&event, game, selected_item);
-        if (event.type == sfEvtKeyPressed && event.key.code == sfKeyEscape &&
-            game->game_info->specifier == 1 &&
-            sfTime_asSeconds(sfClock_getElapsedTime(
-                game->status.escape_clock)) > 0.2) {
-            sfClock_restart(game->status.escape_clock);
-            game->game_state = IN_GAME;
+void update_hover_text(sfRenderWindow *window, sfText *hover_text,
+    button_t *buttons, int nbr_butt)
+{
+    const char *texts[] = {
+        BUTTON_INIT[PLAY].text,
+        BUTTON_INIT[NEW_GAME].text,
+        BUTTON_INIT[LOAD].text,
+        BUTTON_INIT[LEAVE].text,
+        BUTTON_INIT[SETTINGS].text
+    };
+
+    sfText_setString(hover_text, "");
+    for (int i = 0; i < nbr_butt; i++) {
+        if (is_mouse_over_button(window, buttons[i])) {
+            sfText_setString(hover_text, texts[i]);
+            break;
         }
-        activate_button(game, &event, menu_items, selected_item);
     }
 }
 
-static void jouer(sfRenderWindow *,
-    game_info_t *, game_t *game)
+void destroyer(sfText *txt, button_t buttons[], int nbr_butt)
 {
-    game->game_info->specifier = 1;
-    game->game_state = IN_GAME;
-}
-
-static void quitter(sfRenderWindow *window,
-    game_info_t *, game_t *)
-{
-    sfRenderWindow_close(window);
-}
-
-sfText *create_text_mh(char *string, sfVector2f position,
-    sfFont *font, bool is_selected)
-{
-    sfText *text = sfText_create();
-
-    sfText_setString(text, string);
-    sfText_setFont(text, font);
-    sfText_setCharacterSize(text, is_selected ? 80 : 50);
-    sfText_setColor(text, sfWhite);
-    sfText_setPosition(text, position);
-    return text;
-}
-
-void blink(sfClock *clock, sfRectangleShape *rect)
-{
-    sfColor color;
-    sfBool is_visible;
-    sfTime elapsed = sfClock_getElapsedTime(clock);
-
-    if (sfTime_asSeconds(elapsed) > 0.7) {
-        is_visible = sfRectangleShape_getOutlineColor(rect).a == 0
-                    ? sfTrue
-                    : sfFalse;
-        color = is_visible ? sfRed : sfTransparent;
-        sfRectangleShape_setOutlineColor(rect, color);
-        sfClock_restart(clock);
-    }
-}
-
-static void parametres_redirect(sfRenderWindow *window,
-    game_info_t *game_info, game_t *game)
-{
-    parametres(window, game_info, game);
-}
-
-static menu_item_t *my_init_tab(int specifier)
-{
-    menu_item_t *menu = malloc(sizeof(menu_item_t) * 3);
-
-    if (specifier == 0){
-        menu[0].selected_item = my_strdup("Play");
-        menu[0].action = jouer;
-        menu[1].selected_item = my_strdup("Settings");
-        menu[1].action = parametres_redirect;
-        menu[2].selected_item = my_strdup("Leave");
-        menu[2].action = quitter;
-        return menu;
-    } else {
-        menu[0].selected_item = my_strdup("Resume");
-        menu[0].action = jouer;
-        menu[1].selected_item = my_strdup("Settings");
-        menu[1].action = parametres_redirect;
-        menu[2].selected_item = my_strdup("Leave");
-        menu[2].action = quitter;
-        return menu;
-    }
-    return NULL;
+    for (int i = 0; i < nbr_butt; i++)
+        destroy_button(buttons[i]);
+    sfText_destroy(txt);
 }
 
 void menu(game_t *game)
 {
-    menu_item_t *menu_items = my_init_tab(game->game_info->specifier);
-    int selected_item = 0;
-    sfRectangleShape *rect = create_rectangle();
-    sfClock *clock = sfClock_create();
+    sfSprite *background_sprite = load_background("assets/background.png");
+    sfText *hover_text = create_hover_text(game->font);
+    button_t buttons[5];
+    rect_t rects[5];
+    sfEvent event;
 
+    init_rects(rects);
+    init_buttons(buttons, game->font);
     while (sfRenderWindow_isOpen(game->window) &&
         game->game_state == IN_MENU) {
+        while (sfRenderWindow_pollEvent(game->window, &event)) {
+            if (event.type == sfEvtClosed)
+                sfRenderWindow_close(game->window);
+            else if (event.type == sfEvtMouseButtonPressed &&
+                event.mouseButton.button == sfMouseLeft)
+                handle_button_click(game, buttons);
+        }
         sfRenderWindow_clear(game->window, sfBlack);
-        draw_menu_image(game->window, game->game_info->specifier);
-        handle_events(game->window, &selected_item, menu_items, game);
-        blink(clock, rect);
-        draw_menu(game->window, rect, &selected_item, menu_items);
+        draw_buttons(game->window, background_sprite, buttons, 5);
+        draw_rects(game->window, rects);
+        update_hover_text(game->window, hover_text, buttons, 5);
+        sfRenderWindow_drawText(game->window, hover_text, NULL);
+        sfRenderWindow_display(game->window);
     }
+    destroyer(hover_text, buttons, 5);
 }
