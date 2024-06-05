@@ -95,7 +95,7 @@ static const int STAMINA_REGEN = 400;
 
 static const int BASE_SPEED = 10;
 
-static const int BASE_STAMINA_DECAY = 3;
+static const int BASE_STAMINA_DECAY = 4;
 
 static const int BASE_JUMP_POWER = 14;
 
