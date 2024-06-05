@@ -21,8 +21,8 @@ void init_rects(rect_t *rects)
     rects[0] = create_rect(&RECT_INIT[PLAY], "assets/menu/test.png");
     rects[1] = create_rect(&RECT_INIT[NEW_GAME], "assets/menu/test2.png");
     rects[2] = create_rect(&RECT_INIT[LOAD], "assets/menu/test3.png");
-    rects[3] = create_rect(&RECT_INIT[LEAVE], "assets/menu/test4.png");
-    rects[4] = create_rect(&RECT_INIT[SETTINGS], "assets/menu/test5.png");
+    rects[3] = create_rect(&RECT_INIT[LEAVE], "assets/menu/test5.png");
+    rects[4] = create_rect(&RECT_INIT[SETTINGS], "assets/menu/test4.png");
 }
 
 void draw_buttons(sfRenderWindow *window, sfSprite *background_sprite,
