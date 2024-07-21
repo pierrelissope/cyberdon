@@ -2,6 +2,8 @@
 
 Cyberdon is an isometric RPG game developed with CSFML. In this game, you explore a cybernetic world, complete quests, fight enemies, and upgrade your skills.
 
+![Cyberdon Screenshot](assets/screenshot.png)
+
 ## Game Features
 
 - **Isometric View**: Immerse yourself in a 2.5D world with isometric graphics.
